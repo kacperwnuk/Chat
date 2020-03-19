@@ -72,6 +72,8 @@ Zawiera również flagę oznaczającą usunięcie użytkownika.
  - `name_suffix:text` - składowa imienia
  - `address:text` - adres
  - `deleted:boolean=false` - flaga usunięcia konta
+
+Wszystkie, za wyjątkiem `id` i `deleted` mogą być null, co będzie oznaczało, że konto jest usunięte
  
 #### Tabele dla metod logowania
 
@@ -87,6 +89,8 @@ Ale na nasze potrzeby zaimplementujemy coś takiego:
 
 #### Tabela sesji
 
+Każda sesja musi być odnotowana.
+
  - `input_time:timestamp`
  - `id:uuid` - id sesji
  - `user_id:uuid` - id użytkownika
@@ -95,6 +99,7 @@ Ale na nasze potrzeby zaimplementujemy coś takiego:
 #### Tabela historii sesji
 
 Do tej tabeli sesje z użytkownikiem będą raportować swój stan.
+Tak aby można było określić, kto kiedy się logował.
 
  - `input_time:timestamp` - czas wejścia do systemu
  - `id:uuid` - id sesji
@@ -103,7 +108,7 @@ Do tej tabeli sesje z użytkownikiem będą raportować swój stan.
 
 #### Tabela wiadomości
 
-Tabela przechowuje wiadomości
+Tabela przechowuje historyczne wiadomości.
 
  - `input_time:timestamp`
  - `session_id:uuid`
@@ -113,14 +118,13 @@ Tabela przechowuje wiadomości
  - `to_id:uuid`
  - `content:json`
 
-
 ## Serwery
 
 Wszystkie komunikacje odbywają się za pośrednictwem funkcji [`fetch`](node-fetch).
 Parametry przesyłane po `POST`.
 W dalszej części będe adresy URL pisał jakby miąły GET, ale będzie się to odnosiło do POST.
 
-Wszystkie serwery komunikacji będą stały na [`expressjs`](https://expressjs.com/).
+Wszystkie serwery komunikacji będą stały na [`expressjs`](https://expressjs.com/) oraz socketIO do subskrypcji danych.
 
 ### Komunikacja
 
@@ -130,6 +134,7 @@ Komunikacja `serwer:serwer` i `klient:serwer` wygląda następująco.
 
 Serwer przechowuje i udostępnia pliki takie jak: html, js, css, png, json.
 Dodatkowo przechowuje informacje o obecnie dostępnych serwerach logowania.
+Serwerów CDN, może być kilka.
 
 ### Serwer logowania
 
@@ -139,10 +144,14 @@ Jeżeli serwer potwierdził autentyczność użytkownika, tworzy tworzy sesje na
 
 #### Komunikacja z serwerem
 
-|Zapytanie|Argumenty|Opis|Wartość zwracana|
-|---|---|---|---|
-|`/message-send`||wysłanie wiadomości|
-|`/message-get`||pobranie wiadomości|
+Komunikacja polega na pojedyńczych zapytaniach REST
+
+|HTTP Method|Zapytanie|Argumenty|Opis|Wartość zwracana|
+|---|---|---|---|---|
+|GET|`/version`||pobranie wersji serwera|
+|POST|`/login`||pobranie|
+|GET|`/profile`||pobranie mojego profilu|
+|PATCH|`/profile`||zmiana mojego profilu|
 
 ### Serwer sesji
 
@@ -152,8 +161,20 @@ Użytkownik łączy się z serwerm i podaje klucz sesji
 
 #### Komunikacja z serwerem
 
+Komunikacja odbywa się za pomocą ciągłego połączenia, SocketIO, ale zapytania REST teź są obsługiwane.
+
+REST:
+
 |HTTP Method|Zapytanie|Argumenty|Opis|Wartość zwracana|
 |---|---|---|---|---|
-|PUT|`/message`||wysłanie wiadomości|
-|GET|`/message`||pobranie wiadomości|
+|GET|`/version`||pobranie wersji serwera|
+
+SocketIO
+
+|Zapytanie|Argumenty|Opis|Wartość zwracana|
+|---|---|---|---|---|
+|`auth`||przesłanie klucza sesji||
+|`contacts-get`||pobranie listy kontaktów||
+|`message-send`||wysłanie wiadomości||
+|`message-get`||pobranie wiadomości||
 
