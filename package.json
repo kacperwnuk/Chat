@@ -6,8 +6,11 @@
     "scripts": {
         "build-backend": "babel src -d dist --ignore src/frontend",
         "build-frontend": "webpack --mode production",
-        "watch-backend": "babel src -d dist --ignore src/frontend --watch",
-        "watch-frontend": "webpack --mode development --watch"
+        "dev-watch-backend": "babel src -d dist --ignore src/frontend --watch",
+        "dev-watch-frontend": "webpack --mode development --watch",
+        "dev-nodemon-server-cdn": "nodemon dist/backend/server/cdn.js",
+        "dev-nodemon-server-auth": "nodemon dist/backend/server/auth.js",
+        "dev-nodemon-server-main": "nodemon dist/backend/server/main.js"
     },
     "repository": {
         "url": "git+https://github.com/kacperwnuk/Chat.git"
@@ -21,6 +24,7 @@
     "devDependencies": {
         "@babel/cli": "^7.2.3",
         "@babel/core": "^7.8.7",
+        "@babel/node": "^7.8.7",
         "@babel/preset-env": "^7.8.7",
         "@babel/preset-react": "^7.8.3",
         "@babel/register": "^7.4.0",
@@ -30,6 +34,7 @@
         "mini-css-extract-plugin": "^0.9.0",
         "mocha": "^5.2.0",
         "node-sass": "^4.13.1",
+        "nodemon": "^2.0.2",
         "normalize-scss": "^7.0.1",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
