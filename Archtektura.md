@@ -21,7 +21,7 @@ Osoby fizyczne mają kilka metod logowania(np. prze Googla/Facebook'a).
 
 Metoda logowania `authMethod`, to sposób na uwierzytelnienie użytkowników aplikacji.
 W aplikacji przewiduje istnienie wielu metod logowania.
-Każda metoda autoryzacji ma nazwę `name` i parametry `options`.
+Każda metoda autoryzacji ma nazwę `name` i parametry `options`.`
 
 ### Sesja
 
