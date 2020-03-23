@@ -6,11 +6,14 @@
     "scripts": {
         "build-backend": "babel src -d dist --ignore src/frontend",
         "build-frontend": "webpack --mode production",
-        "dev-watch-backend": "babel src -d dist --ignore src/frontend --watch",
-        "dev-watch-frontend": "webpack --mode development --watch",
-        "dev-nodemon-server-cdn": "nodemon dist/backend/server/cdn.js",
-        "dev-nodemon-server-auth": "nodemon dist/backend/server/auth.js",
-        "dev-nodemon-server-main": "nodemon dist/backend/server/main.js"
+        "server-cdn": "node dist/backend/server/cdn.js",
+        "server-auth": "node dist/backend/server/auth.js",
+        "server-main": "node dist/backend/server/main.js",
+        "dev-bulid-backend": "babel src -d dist --ignore src/frontend --watch",
+        "dev-bulid-frontend": "webpack --mode development --watch",
+        "dev-server-cdn": "nodemon dist/backend/server/cdn.js",
+        "dev-server-auth": "nodemon dist/backend/server/auth.js",
+        "dev-server-main": "nodemon dist/backend/server/main.js"
     },
     "repository": {
         "url": "git+https://github.com/kacperwnuk/Chat.git"
@@ -43,6 +46,7 @@
         "webpack-cli": "^3.3.11"
     },
     "dependencies": {
-        "express": "^4.17.1"
+        "express": "^4.17.1",
+        "pg": "^7.18.2"
     }
 }

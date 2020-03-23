@@ -1,6 +1,10 @@
 Kompilacja
 ==========
 
+Z uwagi no to, że nie jest łatwa aplikacja kompilacja, też nie jest trywialna.
+Mamy tak naprawdę 4 projekty w jednym: frontend, backend(w trzech procesach).
+Dodatkowo dochodzi baza danych.
+
 ## Baza danych
 
 Pliki baz danych znajdują się w folderze `./src/database`.
@@ -42,9 +46,29 @@ Przykłady użycia:
 
 ## Backend
 
-Z uwagi no to, że nie jest łatwa aplikacja kompilacja, też nie jest trywialna.
-Mamy tak naprawdę 4 projekty w jednym: frontend, backend(w trzech procesach).
+Aby skompilować kod backend'u należy wpisać komendę: `npm run-script build-backend`
+.
+Ale ponieważ jest to jednorazowa kompilacja, można też uruchomić: `dev-build-backend`, która będzie patrzyła na nasze pliki i rekompilowała, gdy wprowadzimy zmianę.
 
-Aby uruchomić dev
+Uruchamianie można przeprowadzić na pomocą komend: 
+```
+npm run-script server-auth
+npm run-script server-cdn
+npm run-script server-main
+```
+
+Ale z uwagi na to, że musieliśmy by uruchamiać to za każdym razem po kompilacji, możemy też:
+```
+npm run-script dev-server-auth
+npm run-script dev-server-cdn
+npm run-script dev-server-main
+```
+
+Co będzie resetowało serwer po kompilacji.
 
 ## Frontend 
+
+```
+npm run-script bulid-frontend
+npm run-script dev-bulid-frontend
+```
