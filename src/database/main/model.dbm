@@ -11,16 +11,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <schema name="public" layer="0" fill-color="#e1e1e1" sql-disabled="true">
 </schema>
 
-<schema name="rso-main" layer="0" rect-visible="true" fill-color="#e1e1e1">
-	<role name="postgres"/>
-</schema>
-
-<table name="server_journal" layer="0" collapse-mode="2" max-obj-count="6">
+<table name="server_journal" layer="0" collapse-mode="2" max-obj-count="7">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="480" y="100"/>
 	<column name="input_time">
 		<type name="timestamp with time zone" length="0" with-timezone="true"/>
+	</column>
+	<column name="version">
+		<type name="text" length="0"/>
 	</column>
 	<column name="id">
 		<type name="uuid" length="0"/>
@@ -36,12 +35,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 </table>
 
-<table name="session_events" layer="0" collapse-mode="2" max-obj-count="4">
+<table name="session_events" layer="0" collapse-mode="2" max-obj-count="6">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="900" y="80"/>
 	<column name="input_time">
 		<type name="timestamp with time zone" length="0" with-timezone="true"/>
+	</column>
+	<column name="version">
+		<type name="text" length="0"/>
 	</column>
 	<column name="event">
 		<type name="text" length="0"/>
@@ -51,7 +53,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 
 	<customidxs object-type="column">
-		<object name="sessions_id" index="1"/>
+		<object name="sessions_id" index="2"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
@@ -59,12 +61,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</customidxs>
 </table>
 
-<table name="sessions" layer="0" collapse-mode="2" max-obj-count="6">
+<table name="sessions" layer="0" collapse-mode="2" max-obj-count="7">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="480" y="340"/>
 	<column name="input_time">
 		<type name="timestamp with time zone" length="0" with-timezone="true"/>
+	</column>
+	<column name="version">
+		<type name="text" length="0"/>
 	</column>
 	<column name="id" not-null="true">
 		<type name="uuid" length="0"/>
@@ -96,12 +101,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</label>
 </relationship>
 
-<table name="messages" layer="0" collapse-mode="2" max-obj-count="8">
+<table name="messages" layer="0" collapse-mode="2" max-obj-count="9">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="980" y="300"/>
 	<column name="input_time">
 		<type name="timestamp with time zone" length="0" with-timezone="true"/>
+	</column>
+	<column name="version">
+		<type name="text" length="0"/>
 	</column>
 	<column name="from" not-null="true">
 		<type name="uuid" length="0"/>
@@ -123,7 +131,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="sessions_id" index="3"/>
+		<object name="sessions_id" index="4"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
