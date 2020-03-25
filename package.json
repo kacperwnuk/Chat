@@ -5,14 +5,13 @@
     "scripts": {
         "build-backend": "babel src -d dist --ignore src/frontend",
         "build-frontend": "webpack --mode production",
-        "server-cdn": "node dist/backend/server/cdn/index.js",
-        "server-auth": "node dist/backend/server/auth/index.js",
-        "server-main": "node dist/backend/server/main/index.js",
-        "dev-bulid-backend": "babel src -d dist --ignore src/frontend --watch",
-        "dev-bulid-frontend": "webpack --mode development --watch",
-        "dev-server-cdn": "nodemon dist/backend/cdn/index.js",
-        "dev-server-auth": "nodemon dist/backend/auth/index.js",
-        "dev-server-session": "nodemon dist/backend/session/index.js"
+        "server-cdn": "node dist/backend/cdn.js",
+        "server-auth": "node dist/backend/auth.js",
+        "server-main": "node dist/backend/main.js",
+        "dev-bulid": "webpack --mode development --watch",
+        "dev-server-cdn": "nodemon dist/backend/cdn.js",
+        "dev-server-auth": "nodemon dist/backend/auth.js",
+        "dev-server-session": "nodemon dist/backend/session.js"
     },
     "repository": {
         "url": "git+https://github.com/kacperwnuk/Chat.git"
@@ -35,6 +34,7 @@
         "@material-ui/icons": "^4.9.1",
         "@types/express": "^4.17.3",
         "@types/pg": "^7.14.3",
+        "@types/yup": "^0.26.33",
         "babel-loader": "^8.1.0",
         "css-loader": "^3.4.2",
         "html-webpack-plugin": "^3.2.0",
@@ -50,15 +50,19 @@
         "redux": "^4.0.5",
         "sass-loader": "^8.0.2",
         "webpack": "^4.42.1",
-        "webpack-cli": "^3.3.11"
+        "webpack-cli": "^3.3.11",
+        "webpack-node-externals": "^1.7.2"
     },
     "dependencies": {
         "@babel/runtime": "^7.9.2",
+        "body-parser": "^1.19.0",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
+        "http-status-codes": "^1.4.0",
         "lodash": "^4.17.15",
         "pg": "^7.18.2",
         "socket.io": "^2.3.0",
-        "uuid": "^7.0.2"
+        "uuid": "^7.0.2",
+        "yup": "^0.28.3"
     }
 }

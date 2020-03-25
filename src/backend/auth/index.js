@@ -1,1 +1,14 @@
-console.log("Hello World!");
+import {app, makeServer} from "../share/server";
+
+import root_auth from "./root/auth"
+
+makeServer({
+    port: 8082
+}).then(() => {
+
+    console.log("YOLO");
+    root_auth(app);
+
+}).catch(() => {
+    console.error("dupa");
+});

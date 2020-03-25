@@ -16,7 +16,7 @@ import Container from '@material-ui/core/Container';
 import Copyright from "./Copyright";
 import useTranslate from "../hooks/useTranslate";
 import fetchCredentials from "../dataprovider/advances/fetchCredentials";
-import AppError from "../lib/AppError";
+import AppError from "../../share/AppError";
 import FatalError from "./FatalError";
 import App from "../App";
 

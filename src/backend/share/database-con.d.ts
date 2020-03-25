@@ -6,10 +6,10 @@ export interface DatabaseConParams {
     port: number
 }
 
-interface QueryResult<T> {
-    rows: T[],
+interface QueryResult<T = any> {
+    rows: any[],
     fields: {
         name: string
-        fromat: string
+        format: string
     }[]
 }

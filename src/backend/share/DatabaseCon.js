@@ -22,7 +22,7 @@ export default class DatabaseCon {
     /**
      *
      * @param {string} query
-     * @param {any[]} [params]
+     * @param {Array} [params]
      * @return {Promise<QueryResult>}
      */
     query(query, params = []) {
