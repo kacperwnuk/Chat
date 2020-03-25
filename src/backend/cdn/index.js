@@ -1,10 +1,10 @@
 import path from "path";
 import os from "os";
-import rsoApp from "../share/rsoApp";
+import id from "../share/rsoApp";
 import * as express from "express";
 
 const PORT = 8080;
-const app = rsoApp();
+const app = id();
 
 app.use(express.static(path.join(__dirname, "../../public/")));
 

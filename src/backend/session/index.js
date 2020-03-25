@@ -1,3 +1,9 @@
-import {getTime} from "./data-provider";
+import About from "../share/about";
+import {makeServer} from "./server";
 
-getTime().then(console.log);
+About.instance_type = "session";
+
+makeServer().then(() => {
+    console.log("started");
+});
+

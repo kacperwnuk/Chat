@@ -20,22 +20,20 @@ module.exports = {
                     loader: "babel-loader",
                     options: {
                         presets: [
-                            "@babel/preset-env",
+                            [
+                                "@babel/preset-env",
+                                {
+                                    useBuiltIns: "entry",
+                                    corejs: 3,
+                                    targets: {
+                                        chrome: "80"
+                                    }
+                                }
+                            ],
                             "@babel/preset-react"
                         ]
                     }
                 }
-            },
-            {
-                test: /\.(scss|css)$/i,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {},
-                    },
-                    "css-loader",
-                    "sass-loader",
-                ],
             }
         ]
     },
@@ -46,7 +44,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: "ChatRSO",
             filename: "index.html",
-            chunks: ["main"]
+            chunks: ["main"],
         }),
         new MiniCssExtractPlugin({
             filename: "[name].css",
