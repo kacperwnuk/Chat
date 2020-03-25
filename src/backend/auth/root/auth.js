@@ -12,6 +12,7 @@ const requestBody = yup.object({
  * @param {e.Application} app
  */
 export default function (app) {
+
     app.post("/auth",
         expressAsyncMiddleware(async (req, res) => {
 

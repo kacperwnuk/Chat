@@ -11,15 +11,13 @@
 -- -- DROP DATABASE IF EXISTS "rso-main";
 -- CREATE DATABASE "rso-main";
 -- -- ddl-end --
---
-
-SET search_path TO pg_catalog,public;
--- ddl-end --
+-- 
 
 -- object: public.server_journal | type: TABLE --
 -- DROP TABLE IF EXISTS public.server_journal CASCADE;
 CREATE TABLE public.server_journal (
 	input_time timestamp with time zone,
+	version text,
 	id uuid,
 	address text,
 	type text,
@@ -33,6 +31,7 @@ CREATE TABLE public.server_journal (
 -- DROP TABLE IF EXISTS public.session_events CASCADE;
 CREATE TABLE public.session_events (
 	input_time timestamp with time zone,
+	version text,
 	sessions_id uuid NOT NULL,
 	event text,
 	args json
@@ -45,6 +44,7 @@ CREATE TABLE public.session_events (
 -- DROP TABLE IF EXISTS public.sessions CASCADE;
 CREATE TABLE public.sessions (
 	input_time timestamp with time zone,
+	version text,
 	id uuid NOT NULL,
 	"user" uuid,
 	server_address text,
@@ -67,6 +67,7 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- DROP TABLE IF EXISTS public.messages CASCADE;
 CREATE TABLE public.messages (
 	input_time timestamp with time zone,
+	version text,
 	"from" uuid NOT NULL,
 	id uuid NOT NULL,
 	sessions_id uuid,

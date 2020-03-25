@@ -4,12 +4,25 @@
 -- Project Site: pgmodeler.io
 -- Model Author: ---
 
+-- object: "backend-server" | type: ROLE --
+-- DROP ROLE IF EXISTS "backend-server";
+CREATE ROLE "backend-server" WITH 
+	INHERIT
+	LOGIN
+	ENCRYPTED PASSWORD '********';
+-- ddl-end --
+
 
 -- Database creation must be done outside a multicommand file.
 -- These commands were put in this file only as a convenience.
 -- -- object: "rso-user" | type: DATABASE --
 -- -- DROP DATABASE IF EXISTS "rso-user";
--- CREATE DATABASE "rso-user";
+-- CREATE DATABASE "rso-user"
+-- 	ENCODING = 'UTF8'
+-- 	LC_COLLATE = 'en_US.utf8'
+-- 	LC_CTYPE = 'en_US.utf8'
+-- 	TABLESPACE = pg_default
+-- 	OWNER = postgres;
 -- -- ddl-end --
 -- 
 
@@ -17,6 +30,9 @@
 -- DROP TABLE IF EXISTS public.users CASCADE;
 CREATE TABLE public.users (
 	user_id uuid NOT NULL,
+	username text,
+	email text,
+	gender text,
 	law_type text,
 	name_family text,
 	name_given text,
@@ -26,7 +42,10 @@ CREATE TABLE public.users (
 	address text,
 	address_data json,
 	deleted boolean,
-	CONSTRAINT users_pk PRIMARY KEY (user_id)
+	CONSTRAINT users_pk PRIMARY KEY (user_id),
+	CONSTRAINT gender_check CHECK (gender in ('male',  'female',  'other')),
+	CONSTRAINT email_uq UNIQUE (email),
+	CONSTRAINT user_uq UNIQUE (username)
 
 );
 -- ddl-end --
@@ -55,6 +74,18 @@ ON DELETE SET NULL ON UPDATE CASCADE;
 -- object: basic_auth_uq | type: CONSTRAINT --
 -- ALTER TABLE public.basic_auth DROP CONSTRAINT IF EXISTS basic_auth_uq CASCADE;
 ALTER TABLE public.basic_auth ADD CONSTRAINT basic_auth_uq UNIQUE (user_id);
+-- ddl-end --
+
+-- object: grant_3d56f5d60c | type: PERMISSION --
+GRANT SELECT,INSERT,UPDATE,DELETE
+   ON TABLE public.users
+   TO "backend-server";
+-- ddl-end --
+
+-- object: grant_5bdf957960 | type: PERMISSION --
+GRANT SELECT,INSERT,UPDATE,DELETE
+   ON TABLE public.basic_auth
+   TO "backend-server";
 -- ddl-end --
 
 

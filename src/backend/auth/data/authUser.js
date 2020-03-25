@@ -2,6 +2,7 @@ import {databaseUser} from "../../share/server";
 import ServerError from "../../share/ServerError";
 
 /**
+ * Sprawdza czy podana kombinacja username/password jest poprawka, a następnie zwraca obiekt użytkownika lub wyjątek
  *
  * @param {string} username
  * @param {string} password
@@ -16,7 +17,6 @@ from users
 where username=$1::text and password=$2::text
 
     `, [username, password]);
-    console.log([username, password]);
 
     if (result.rows.length === 1) {
         return result.rows[0];
