@@ -20,9 +20,11 @@ declare namespace DatabaseT {
         input_time?: string
         version: string
         session_id: string
+        secret_key: string
         user_id: string
         server_address: string[]
         args: any,
     }
-
 }
+
+export default DatabaseT;

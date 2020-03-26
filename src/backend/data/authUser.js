@@ -1,5 +1,5 @@
-import {databaseUser} from "../../share/server";
-import ServerError from "../../share/ServerError";
+import {databaseUser} from "../lib/server";
+import ServerError from "../lib/ServerError";
 
 /**
  * Sprawdza czy podana kombinacja username/password jest poprawka, a następnie zwraca obiekt użytkownika lub wyjątek

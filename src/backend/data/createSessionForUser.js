@@ -1,8 +1,8 @@
 import {v4 as uuid} from 'uuid';
-import About from "../../share/about";
-import getMyAddress from "../../share/getMyAddress";
-import {databaseMain} from "../../share/server";
-import ServerError from "../../share/ServerError";
+import About from "../lib/about";
+import getMyAddress from "../lib/getMyAddress";
+import {databaseMain} from "../lib/server";
+import ServerError from "../lib/ServerError";
 
 /**
  *
@@ -11,20 +11,19 @@ import ServerError from "../../share/ServerError";
  */
 export default async function (user_id) {
 
-    let session_id = uuid();
+    let session_id = uuid(),
+        secret_key = uuid();
 
     await databaseMain.query(`
     insert into public.sessions
-        (version, session_id, user_id, server_address, args)
-    values ($1::text, $2::uuid, $3::uuid, $4::text[], $5::json);
-    `, [About.version, session_id, user_id, await getMyAddress(), {}]);
+        (version, session_id, secret_key, user_id, server_address, args)
+    values ($1::text, $2::uuid, $3::text, $4::uuid, $5::text[], $6::json);
+    `, [About.version, session_id, secret_key, user_id, await getMyAddress(), {}]);
 
 
     let result = await databaseMain.query(`
     select * from public.sessions where session_id=$1::uuid;
     `, [session_id]);
-
-    console.log(result);
 
     if (result.rows.length === 1) {
         return result.rows[0];

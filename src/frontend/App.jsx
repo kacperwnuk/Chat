@@ -1,14 +1,15 @@
 import React from "react";
-import useUserCredentials from "./hooks/useUserCredentials";
 import LoginScreen from "./components/LoginScreen";
+import useIsLogged from "./hooks/useIsLogged";
+import MainLayout from "./components/MainLayout";
 
 export default function App() {
 
-    let [uc] = useUserCredentials();
+    let isLogged = useIsLogged();
 
-    if (!uc.isLogged) {
+    if (!isLogged) {
         return <LoginScreen/>
     }
 
-    return <div>To jest nasza aplikacja</div>
+    return <MainLayout/>
 }

@@ -1,5 +1,6 @@
 import HttpStatus from "http-status-codes";
 import ServerError from "./ServerError";
+import {ValidationError} from "yup";
 
 /**
  * Warstwa pośrednia do przechwytywania wyjątków z asynchronicznych funkcji express'a
@@ -23,17 +24,29 @@ export default function expressAsyncMiddleware(func) {
                         type: e.type,
                         msg: e.msg
                     }
-                })
+                });
 
-            } else {
+                return;
+            }
 
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR);
+            if (e instanceof ValidationError) {
+                res.status(ServerError.Type.BAD_REQUEST);
                 res.json({
                     error: {
-                        type: "INTERNAL_SERVER_ERROR"
+                        type: ServerError.Type.BAD_REQUEST,
+                        msg: e.message
                     }
-                })
+                });
+
+                return;
             }
+
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR);
+            res.json({
+                error: {
+                    type: "INTERNAL_SERVER_ERROR"
+                }
+            })
         }
     }
 }

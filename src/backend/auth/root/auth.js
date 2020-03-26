@@ -1,7 +1,7 @@
 import * as yup from "yup";
-import expressAsyncMiddleware from "../../share/expressAsyncMiddleware";
-import authUser from "../data/authUser";
-import createSessionForUser from "../data/createSessionForUser";
+import expressAsyncMiddleware from "../../lib/expressAsyncMiddleware";
+import authUser from "../../data/authUser";
+import createSessionForUser from "../../data/createSessionForUser";
 
 const requestBody = yup.object({
     username: yup.string().required(),
@@ -25,9 +25,9 @@ export default function (app) {
             let user = await authUser(username, password);
             let session = await createSessionForUser(user.user_id);
 
-            res.send({
-                user,
-                session
-            });
+            res.send(
+                /**@type{ResponseT.AuthS.auth}*/
+                {user, session}
+            );
         }));
 }

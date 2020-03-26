@@ -1,26 +1,22 @@
-// import path from "path";
-// import os from "os";
-// import * as express from "express";
-//
-// const PORT = 8080;
-// const app = id();
-//
-// app.use(express.static(path.join(__dirname, "../../public/")));
-//
-// app.listen(PORT, () => {
-//     let ifaces = os.networkInterfaces();
-//
-//     let my_ips = Object.keys(ifaces)
-//         .map(ifname => ifaces[ifname])
-//         .reduce((a, i) => [...a, ...i], [])
-//         .filter(iface => iface.family === "IPv4")
-//         .map(iface => {
-//             return iface.address;
-//         });
-//
-//     console.log([
-//         "Uruchomiono:",
-//         ...my_ips.map(ip => `\thttp://${ip}:${PORT}`)
-//     ].join(os.EOL));
-// });
-//
+import os from "os";
+import * as express from "express";
+import About from "../lib/about";
+import {makeServer, app} from "../lib/server";
+import getMyAddress from "../lib/getMyAddress";
+
+About.instance_type = "cdn";
+
+makeServer({
+    port: 8080
+}).then(async (port) => {
+
+    let my_ips = await getMyAddress();
+
+    console.log([
+        "Uruchomiono:",
+        ...my_ips.map(ip => `\thttp://${ip}:${port}`)
+    ].join(os.EOL));
+
+    app.use(express.static("./dist/public/"));
+});
+

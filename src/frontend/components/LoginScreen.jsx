@@ -15,10 +15,11 @@ import Container from '@material-ui/core/Container';
 
 import Copyright from "./Copyright";
 import useTranslate from "../hooks/useTranslate";
-import fetchCredentials from "../dataprovider/advances/fetchCredentials";
-import AppError from "../../share/AppError";
+import AppError from "../lib/AppError";
 import FatalError from "./FatalError";
-import App from "../App";
+import {useDispatch} from "react-redux";
+import {useDataProvider} from "../lib/DataProvider";
+import {setAuthData} from "../redux/reducers/authData";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -40,9 +41,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function LoginScreen() {
+export default function () {
     const classes = useStyles();
     const translate = useTranslate();
+
+    const dispatch = useDispatch();
+    const data_provider = useDataProvider();
 
     const [isConnecting, setIsConnection] = React.useState(false);
     const [error, setError] = React.useState(AppError.Type.NONE);
@@ -55,29 +59,19 @@ export default function LoginScreen() {
 
         setIsConnection(true);
 
-        setTimeout(async () => {
-            try {
-                let uc = await fetchCredentials(username, password);
+        data_provider.authCredentials(
+            username,
+            password
+        ).then(auth_data => {
 
-            } catch (e) {
-                if (e instanceof AppError) {
+            dispatch(setAuthData(auth_data));
 
-                    if (e.type === AppError.Type.CREDENTIALS) {
-                        setError(AppError.Type.CREDENTIALS);
-                        return;
-                    }
+        }).catch(error => {
 
-                    if (e.type === AppError.Type.CONNECTION) {
-                        setError(AppError.Type.CONNECTION);
-                        return;
-                    }
-                }
-
-                setError(AppError.Type.FATAL);
-            }
-
+            setError(error instanceof AppError ? error.type : AppError.Type.FATAL);
             setIsConnection(false);
-        }, 1000);
+
+        });
     }
 
     if (error === AppError.Type.FATAL) {
@@ -95,6 +89,7 @@ export default function LoginScreen() {
                     {translate("login_screen.sign_invite")}
                 </Typography>
                 <form className={classes.form} noValidate>
+
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -107,7 +102,7 @@ export default function LoginScreen() {
                         autoFocus
                         onChange={e => setUsername(e.target.value)}
                         disabled={isConnecting}
-                        error={error === AppError.Type.CREDENTIALS}
+                        error={error === AppError.Type.ACCESS_DENIED}
                     />
                     <TextField
                         variant="outlined"
@@ -121,10 +116,8 @@ export default function LoginScreen() {
                         autoComplete="current-password"
                         onChange={e => setPassword(e.target.value)}
                         disabled={isConnecting}
-                        error={error === AppError.Type.CREDENTIALS}
+                        error={error === AppError.Type.ACCESS_DENIED}
                     />
-
-
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary"/>}
                         label={translate("login_screen.remember_me")}
@@ -136,6 +129,7 @@ export default function LoginScreen() {
                         color="primary"
                         className={classes.submit}
                         onClick={authUser}
+                        disabled={isConnecting}
                     >
                         {translate("login_screen.submit")}
                     </Button>

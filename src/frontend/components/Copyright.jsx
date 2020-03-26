@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import useTranslate from "../hooks/useTranslate";
 
-export default function Copyright() {
+export default function () {
     const translate = useTranslate();
 
     return (

@@ -17,9 +17,8 @@ export default class AppError {
 }
 
 AppError.Type = {
-    NONE: null,
-    FATAL: -1,
+    NONE: undefined,
+    FATAL: "FATAL",
     ACCESS_DENIED: "ACCESS_DENIED",
-    CONNECTION: 1,
-    // ...HttpStatus
+    CONNECTION: "CONNECTION",
 };

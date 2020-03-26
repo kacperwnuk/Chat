@@ -22,8 +22,13 @@ const serverConfig = {
             use: {
                 loader: "babel-loader",
                 options: {
+                    plugins: [
+                        "@babel/plugin-proposal-nullish-coalescing-operator"
+                    ],
                     presets: [
-                        ["@babel/preset-env", {targets: {node: "13"}}]
+                        ["@babel/preset-env", {
+                            targets: {node: "13"}
+                        }]
                     ]
                 }
             }
@@ -51,16 +56,17 @@ const clientConfig = {
             use: {
                 loader: "babel-loader",
                 options: {
+                    plugins: [
+                        "@babel/plugin-proposal-nullish-coalescing-operator"
+                    ],
                     presets: [
-                        [
-                            "@babel/preset-env",
-                            {
-                                useBuiltIns: "entry",
-                                corejs: 3,
-                                targets: {chrome: "80"}
-                            }
-                        ],
-                        "@babel/preset-react"
+                        "@babel/preset-react",
+                        ["@babel/preset-env", {
+                            useBuiltIns: "entry",
+                            corejs: 3,
+                            targets: {chrome: "80"},
+
+                        }],
                     ]
                 }
             }

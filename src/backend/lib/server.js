@@ -1,5 +1,6 @@
 import http from "http";
 import express from "express";
+import cors from "cors";
 import socketIO from "socket.io";
 import About from "./about";
 import bodyParser from "body-parser";
@@ -23,6 +24,11 @@ export let databaseUser = null;
 /**@type{DatabaseCon}*/
 export let databaseMain = null;
 
+/**
+ *
+ * @param port
+ * @return {Promise<number>}
+ */
 export async function makeServer({
                                      port
                                  }) {
@@ -35,13 +41,18 @@ export async function makeServer({
 
     //https://stackoverflow.com/questions/5710358/how-to-retrieve-post-query-parameters
 
-    // to support JSON-encoded bodies
-    app.use(bodyParser.json());
 
     // to support URL-encoded bodies
     app.use(bodyParser.urlencoded({
         extended: true
     }));
+
+    // to support JSON-encoded bodies
+    app.use(bodyParser.json());
+
+    // enable CORS
+    app.use(cors());
+
 
 
     server = new http.Server(app);
@@ -55,4 +66,5 @@ export async function makeServer({
 
     server.listen(port);
 
+    return port;
 }

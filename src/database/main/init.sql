@@ -4,12 +4,28 @@
 -- Project Site: pgmodeler.io
 -- Model Author: ---
 
+SET check_function_bodies = false;
+-- ddl-end --
+
+-- object: "backend-server" | type: ROLE --
+-- DROP ROLE IF EXISTS "backend-server";
+CREATE ROLE "backend-server" WITH 
+	INHERIT
+	LOGIN
+	ENCRYPTED PASSWORD '********';
+-- ddl-end --
+
 
 -- Database creation must be done outside a multicommand file.
 -- These commands were put in this file only as a convenience.
 -- -- object: "rso-main" | type: DATABASE --
 -- -- DROP DATABASE IF EXISTS "rso-main";
--- CREATE DATABASE "rso-main";
+-- CREATE DATABASE "rso-main"
+-- 	ENCODING = 'UTF8'
+-- 	LC_COLLATE = 'en_US.utf8'
+-- 	LC_CTYPE = 'en_US.utf8'
+-- 	TABLESPACE = pg_default
+-- 	OWNER = postgres;
 -- -- ddl-end --
 -- 
 
@@ -30,11 +46,11 @@ CREATE TABLE public.server_journal (
 -- object: public.session_events | type: TABLE --
 -- DROP TABLE IF EXISTS public.session_events CASCADE;
 CREATE TABLE public.session_events (
-	input_time timestamp with time zone,
+	input_time timestamp with time zone NOT NULL DEFAULT current_timestamp,
 	version text,
-	sessions_id uuid NOT NULL,
 	event text,
-	args json
+	args json,
+	session_id uuid NOT NULL
 );
 -- ddl-end --
 -- ALTER TABLE public.session_events OWNER TO postgres;
@@ -43,13 +59,14 @@ CREATE TABLE public.session_events (
 -- object: public.sessions | type: TABLE --
 -- DROP TABLE IF EXISTS public.sessions CASCADE;
 CREATE TABLE public.sessions (
-	input_time timestamp with time zone,
-	version text,
-	id uuid NOT NULL,
-	"user" uuid,
-	server_address text,
-	args json,
-	CONSTRAINT sessions_pk PRIMARY KEY (id)
+	input_time timestamp with time zone NOT NULL DEFAULT current_timestamp,
+	version text NOT NULL,
+	session_id uuid NOT NULL,
+	user_id uuid NOT NULL,
+	server_address text[] NOT NULL,
+	args json NOT NULL,
+	secret_key text NOT NULL,
+	CONSTRAINT sessions_pk PRIMARY KEY (session_id)
 
 );
 -- ddl-end --
@@ -58,8 +75,8 @@ CREATE TABLE public.sessions (
 
 -- object: sessions_fk | type: CONSTRAINT --
 -- ALTER TABLE public.session_events DROP CONSTRAINT IF EXISTS sessions_fk CASCADE;
-ALTER TABLE public.session_events ADD CONSTRAINT sessions_fk FOREIGN KEY (sessions_id)
-REFERENCES public.sessions (id) MATCH FULL
+ALTER TABLE public.session_events ADD CONSTRAINT sessions_fk FOREIGN KEY (session_id)
+REFERENCES public.sessions (session_id) MATCH FULL
 ON DELETE RESTRICT ON UPDATE CASCADE;
 -- ddl-end --
 
@@ -69,12 +86,12 @@ CREATE TABLE public.messages (
 	input_time timestamp with time zone,
 	version text,
 	"from" uuid NOT NULL,
-	id uuid NOT NULL,
-	sessions_id uuid,
+	message_id uuid NOT NULL,
 	to_type text,
 	to_id uuid,
 	content json,
-	CONSTRAINT messages_pk PRIMARY KEY ("from",id)
+	session_id uuid,
+	CONSTRAINT messages_pk PRIMARY KEY ("from",message_id)
 
 );
 -- ddl-end --
@@ -83,9 +100,96 @@ CREATE TABLE public.messages (
 
 -- object: sessions_fk | type: CONSTRAINT --
 -- ALTER TABLE public.messages DROP CONSTRAINT IF EXISTS sessions_fk CASCADE;
-ALTER TABLE public.messages ADD CONSTRAINT sessions_fk FOREIGN KEY (sessions_id)
-REFERENCES public.sessions (id) MATCH FULL
+ALTER TABLE public.messages ADD CONSTRAINT sessions_fk FOREIGN KEY (session_id)
+REFERENCES public.sessions (session_id) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: public.active_sessions | type: VIEW --
+-- DROP VIEW IF EXISTS public.active_sessions CASCADE;
+CREATE VIEW public.active_sessions
+AS 
+
+SELECT sessions.input_time,
+    sessions.version,
+    sessions.server_address,
+    sessions.args,
+    sessions.user_id,
+    sessions.session_id
+   FROM sessions
+  WHERE (sessions.input_time > (CURRENT_TIMESTAMP - '00:02:00'::interval));
+-- ddl-end --
+-- ALTER VIEW public.active_sessions OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.emit_session_create_event | type: FUNCTION --
+-- DROP FUNCTION IF EXISTS public.emit_session_create_event() CASCADE;
+CREATE FUNCTION public.emit_session_create_event ()
+	RETURNS trigger
+	LANGUAGE plpgsql
+	VOLATILE 
+	CALLED ON NULL INPUT
+	SECURITY INVOKER
+	COST 1
+	AS $$
+begin
+
+insert into public.session_events
+    ("version", session_id, "event", args)
+values ('database', new.session_id, 'create','{}'::json);
+
+return new;
+
+end
+$$;
+-- ddl-end --
+-- ALTER FUNCTION public.emit_session_create_event() OWNER TO postgres;
+-- ddl-end --
+
+-- object: emit_session_create_event | type: TRIGGER --
+-- DROP TRIGGER IF EXISTS emit_session_create_event ON public.sessions CASCADE;
+CREATE TRIGGER emit_session_create_event
+	AFTER INSERT 
+	ON public.sessions
+	FOR EACH ROW
+	EXECUTE PROCEDURE public.emit_session_create_event();
+-- ddl-end --
+
+-- object: public.user_contacts | type: TABLE --
+-- DROP TABLE IF EXISTS public.user_contacts CASCADE;
+CREATE TABLE public.user_contacts (
+	user_id uuid NOT NULL,
+	contact_id uuid NOT NULL,
+	is_accepted boolean NOT NULL DEFAULT false,
+	CONSTRAINT user_contacts_pk PRIMARY KEY (user_id,contact_id)
+
+);
+-- ddl-end --
+-- ALTER TABLE public.user_contacts OWNER TO postgres;
+-- ddl-end --
+
+-- object: grant_c0c7f582a3 | type: PERMISSION --
+GRANT SELECT,INSERT,UPDATE,DELETE
+   ON TABLE public.messages
+   TO "backend-server";
+-- ddl-end --
+
+-- object: grant_f6b64f3440 | type: PERMISSION --
+GRANT SELECT,INSERT
+   ON TABLE public.sessions
+   TO "backend-server";
+-- ddl-end --
+
+-- object: grant_5c72c67b79 | type: PERMISSION --
+GRANT SELECT,INSERT,UPDATE,DELETE
+   ON TABLE public.session_events
+   TO "backend-server";
+-- ddl-end --
+
+-- object: grant_f4278f8c86 | type: PERMISSION --
+GRANT SELECT,INSERT
+   ON TABLE public.server_journal
+   TO "backend-server";
 -- ddl-end --
 
 

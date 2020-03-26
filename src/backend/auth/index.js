@@ -1,4 +1,4 @@
-import {app, makeServer} from "../share/server";
+import {app, makeServer} from "../lib/server";
 
 import root_auth from "./root/auth"
 

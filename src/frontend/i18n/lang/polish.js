@@ -1,4 +1,7 @@
 export default {
+    app: {
+        name: "RSO/Chat"
+    },
     login_screen: {
         sign_invite: "Zaloguj się",
         email_label: "Adres Email",
