@@ -44,11 +44,19 @@ Przykłady użycia:
 ./src/database/remove.sh main
 ```
 
-## Backend
+## Budowanie
 
-Aby skompilować kod backend'u należy wpisać komendę: `npm run-script build-backend`
-.
-Ale ponieważ jest to jednorazowa kompilacja, można też uruchomić: `dev-build-backend`, która będzie patrzyła na nasze pliki i rekompilowała, gdy wprowadzimy zmianę.
+Aby zbudować projekt jednorazowo:
+```
+npm run-script bulid
+```
+
+W przypadku kiedy wprawadzamy zmiany na bieżąco, ta komenda będzie na rekompilowała cały projekt gdy pliki źródłowe zostaną zmienione. 
+```
+npm run-script dev-bulid
+```
+
+## Uruchamianie
 
 Uruchamianie można przeprowadzić na pomocą komend: 
 ```
@@ -63,12 +71,4 @@ npm run-script dev-server-auth
 npm run-script dev-server-cdn
 npm run-script dev-server-main
 ```
-
 Co będzie resetowało serwer po kompilacji.
-
-## Frontend 
-
-```
-npm run-script bulid-frontend
-npm run-script dev-bulid-frontend
-```
