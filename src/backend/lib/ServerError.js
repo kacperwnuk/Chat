@@ -4,16 +4,12 @@ export default class ServerError {
     /**
      *
      * @param {number} type
-     * @param [msg]
-     * @param [data]
+     * @param {string} [msg]
      */
-    constructor(type, msg, data) {
+    constructor(type, msg = "") {
         this.type = type;
         this.msg = msg;
-        this.data = data;
     }
-
-
 }
 
 ServerError.Type = HttpStatus;

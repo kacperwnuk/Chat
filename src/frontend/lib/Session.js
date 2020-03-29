@@ -81,10 +81,17 @@ export default class Session {
     /**
      *
      * @param {MessagePrototypeData} msg
-     * @return {Promise<DatabaseT.MessageT>}
+     * @return {Promise<DatabaseT.Message>}
      */
     sendMessage(msg) {
         return this.message("sendMessage", msg);
     }
 
+    /**
+     *
+     * @return {Promise<string[]>}
+     */
+    getMyContacts() {
+        return this.message("getMyContacts");
+    }
 }

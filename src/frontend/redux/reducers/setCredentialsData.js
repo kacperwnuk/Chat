@@ -1,4 +1,4 @@
-import {SET_CREDENTIALS_DATA} from "../actions";
+import {createAction, SET_CREDENTIALS_DATA} from "../actions";
 
 /**
  *
@@ -6,10 +6,7 @@ import {SET_CREDENTIALS_DATA} from "../actions";
  * @return {*}
  */
 export function setCredentialsData(credential_data) {
-    return {
-        type: SET_CREDENTIALS_DATA,
-        data: credential_data
-    }
+    return createAction(SET_CREDENTIALS_DATA, credential_data);
 }
 
 export function makeLogout() {

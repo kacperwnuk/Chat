@@ -4,10 +4,11 @@ import {AuthData} from "../../share/types";
 declare namespace AppData {
 
     interface State {
-        user: DatabaseT.UserT | null
+        user: DatabaseT.User | null
         auth_data: AuthData | null
         backend_data: BackendData
         session_state: SessionState | null
+        contact_list: LoadingObject<ContactList>
     }
 
     interface BackendData {
@@ -15,12 +16,14 @@ declare namespace AppData {
         auth_url: string
         cdn_url: string
     }
+
+    type ContactList = string[]
 }
 
-interface LoadingObject<T> {
+type LoadingObject<T> = {
     state: "loading" | "loaded" | "error"
     error?: object
     data?: T
-}
+} | undefined;
 
 export default AppData;

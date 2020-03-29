@@ -2,7 +2,7 @@ import {MessageContent} from "./types";
 
 declare namespace DatabaseT {
 
-    interface UserT {
+    interface User {
         user_id: string
         law_type: string
         username: string
@@ -18,7 +18,7 @@ declare namespace DatabaseT {
         email: string
     }
 
-    interface SessionT {
+    interface Session {
         input_time?: string
         version: string
         session_id: string
@@ -28,7 +28,7 @@ declare namespace DatabaseT {
         args: any,
     }
 
-    interface MessageT {
+    interface Message {
         input_type: string
         version: string
         from: string

@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 /**
  *
  * @param {AppData.State} store
- * @return {DatabaseT.UserT}
+ * @return {DatabaseT.User}
  */
 function selector(store) {
     return store.user;
@@ -12,7 +12,7 @@ function selector(store) {
 
 /**
  *
- * @return {DatabaseT.UserT | null}
+ * @return {DatabaseT.User | null}
  */
 export default function () {
     let user_data = useSelector(selector);

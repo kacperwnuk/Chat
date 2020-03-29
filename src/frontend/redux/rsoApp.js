@@ -14,7 +14,8 @@ const initial_state = {
         cdn_url: "localhost:8080",
         auth_url: "localhost:8082",
         session_url: "localhost:8081"
-    }
+    },
+    contact_list: null
 };
 
 /**

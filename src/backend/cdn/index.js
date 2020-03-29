@@ -1,6 +1,6 @@
 import os from "os";
 import * as express from "express";
-import About from "../lib/about";
+import About from "../lib/About";
 import {makeServer, app} from "../lib/server";
 import getMyAddress from "../lib/getMyAddress";
 

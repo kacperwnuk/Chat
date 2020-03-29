@@ -5,7 +5,7 @@ declare namespace ResponseT {
 
     namespace AuthS {
         interface auth {
-            user: DatabaseT.UserT
+            user: DatabaseT.User
             auth_data: AuthData
         }
     }

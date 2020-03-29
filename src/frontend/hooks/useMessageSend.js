@@ -3,7 +3,7 @@ import AppError from "../lib/AppError";
 
 /**
  *
- * @return {function(proto:MessagePrototypeData): DatabaseT.MessageT}
+ * @return {function(proto:MessagePrototypeData): DatabaseT.Message}
  */
 export default function () {
     const session = useSession();

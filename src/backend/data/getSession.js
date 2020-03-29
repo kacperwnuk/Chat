@@ -3,7 +3,7 @@ import {databaseMain, databaseUser} from "../lib/server";
 /**
  *
  * @param {string} session_id
- * @return {Promise<DatabaseT.SessionT | null>}
+ * @return {Promise<DatabaseT.Session | null>}
  */
 export default async function (session_id) {
     let response = await databaseMain.query(`

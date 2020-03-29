@@ -1,7 +1,7 @@
 import isAuthData from "../../share/data-checker/isAuthData";
 import getSession from "../data/getSession";
 import logger from "../../share/logger";
-import {socketOnceMiddleware, socketOnMiddleware} from "./socketOnMiddleware";
+import {socketOnceMiddleware, socketOnMiddleware} from "../lib/socketOnMiddleware";
 import isMessagePrototypeData from "../../share/data-checker/isMessagePrototypeData";
 import sendMessage from "../data/sendMessage";
 
@@ -33,13 +33,17 @@ export default function (socket) {
             user_id = session.user_id;
             session_id = session.session_id;
 
-            initMessagingWithSocket(socket);
+            initMessagingWithAuthSocket(socket);
             return true;
         }
     });
 
+    socketOnMiddleware(socket, "disconnect", async () => {
+        myLogger.info("disconnected");
+    });
 
-    function initMessagingWithSocket(socket) {
+
+    function initMessagingWithAuthSocket(socket) {
 
         socketOnMiddleware(socket, "sendMessage", async (msg_proto) => {
             msg_proto = await isMessagePrototypeData(msg_proto);
@@ -51,6 +55,11 @@ export default function (socket) {
                 to_id: msg_proto.to_id,
                 content: msg_proto.content
             });
+        });
+
+        socketOnMiddleware(socket, "getMyContacts", async () => {
+
+            return []
         });
     }
 }

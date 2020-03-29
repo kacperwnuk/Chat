@@ -1,4 +1,4 @@
-import About from "../lib/about";
+import About from "../lib/About";
 import {io, makeServer} from "../lib/server";
 import handleNewSession from "./handleNewSession";
 

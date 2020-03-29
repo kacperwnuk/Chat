@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 /**
  *
  * @param {AppData.State} store
- * @return {DatabaseT.SessionT}
+ * @return {DatabaseT.Session}
  */
 function selector(store) {
     return store.auth_data;
@@ -11,7 +11,7 @@ function selector(store) {
 
 /**
  *
- * @return {DatabaseT.SessionT | null}
+ * @return {DatabaseT.Session | null}
  */
 export default function () {
     let session_data = useSelector(selector);

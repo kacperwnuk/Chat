@@ -1,6 +1,7 @@
 import HttpStatus from "http-status-codes";
 import ServerError from "./ServerError";
 import {ValidationError} from "yup";
+import resolveError from "./resolveError";
 
 /**
  * Warstwa pośrednia do przechwytywania wyjątków z asynchronicznych funkcji express'a
@@ -8,45 +9,16 @@ import {ValidationError} from "yup";
  * @param {function(req:e.Request, res:e.Response)} func
  * @return {function(req:e.Request, res:e.Response, next:e.NextFunction)}
  */
-export default function expressAsyncMiddleware(func) {
+export default function (func) {
     return async (req, res, next) => {
         try {
             await func(req, res);
             next();
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            error = resolveError(error);
 
-            if (e instanceof ServerError) {
-
-                res.status(e.type);
-                res.json({
-                    error: {
-                        type: e.type,
-                        msg: e.msg
-                    }
-                });
-
-                return;
-            }
-
-            if (e instanceof ValidationError) {
-                res.status(ServerError.Type.BAD_REQUEST);
-                res.json({
-                    error: {
-                        type: ServerError.Type.BAD_REQUEST,
-                        msg: e.message
-                    }
-                });
-
-                return;
-            }
-
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR);
-            res.json({
-                error: {
-                    type: "INTERNAL_SERVER_ERROR"
-                }
-            })
+            res.status(error.type);
+            res.json({error});
         }
     }
 }

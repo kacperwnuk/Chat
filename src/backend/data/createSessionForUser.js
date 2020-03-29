@@ -1,5 +1,5 @@
 import {v4 as uuid} from 'uuid';
-import About from "../lib/about";
+import About from "../lib/About";
 import getMyAddress from "../lib/getMyAddress";
 import {databaseMain} from "../lib/server";
 import ServerError from "../lib/ServerError";
@@ -7,7 +7,7 @@ import ServerError from "../lib/ServerError";
 /**
  *
  * @param {string} user_id
- * @return {Promise<DatabaseT.SessionT>}
+ * @return {Promise<DatabaseT.Session>}
  */
 export default async function (user_id) {
 

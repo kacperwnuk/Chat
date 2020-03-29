@@ -1,3 +1,5 @@
+import resolveError from "./resolveError";
+
 /**
  *
  * @param socket
@@ -12,7 +14,7 @@ export function socketOnMiddleware(socket, name, func) {
             let data = await func(...args);
             cb({data})
         } catch (error) {
-            cb({error});
+            cb({error: resolveError(error)});
         }
     })
 }
@@ -31,8 +33,7 @@ export function socketOnceMiddleware(socket, name, func) {
             let data = await func(...args);
             cb({data})
         } catch (error) {
-            cb({error});
+            cb({error: resolveError(error)});
         }
     })
 }
-

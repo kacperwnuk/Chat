@@ -1,11 +1,12 @@
 import {databaseMain} from "../lib/server";
-import About from "../lib/about";
+import About from "../lib/About";
 import {v4 as uuid} from 'uuid';
 import ServerError from "../lib/ServerError";
 
 /**
- * @param {DatabaseT.MessageT} msg
- * @return {Promise<void>}
+ *
+ * @param {{session_id:string, from:string, to_type:string, to_id:string, content:string}} msg
+ * @return {Promise<DatabaseT.Message>}
  */
 export default async function (msg) {
 
@@ -18,7 +19,6 @@ export default async function (msg) {
             values ($1::text, $2::uuid, $3::uuid, $4::uuid, $5::text, $6::uuid, $7::json);
         `, [About.version, msg.session_id, msg.from, id, msg.to_type, msg.to_id, msg.content]);
     } catch (e) {
-        console.log(e);
         throw new ServerError(ServerError.Type.INTERNAL_SERVER_ERROR);
     }
 

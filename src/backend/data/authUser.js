@@ -6,7 +6,7 @@ import ServerError from "../lib/ServerError";
  *
  * @param {string} username
  * @param {string} password
- * @return {Promise<DatabaseT.UserT>}
+ * @return {Promise<DatabaseT.User>}
  */
 export default async function (username, password) {
     let result = await databaseUser.query(`

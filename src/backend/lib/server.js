@@ -2,7 +2,7 @@ import http from "http";
 import express from "express";
 import cors from "cors";
 import ioServer from "socket.io";
-import About from "./about";
+import About from "./About";
 import bodyParser from "body-parser";
 import DatabaseCon from "./DatabaseCon";
 import env from "./env";

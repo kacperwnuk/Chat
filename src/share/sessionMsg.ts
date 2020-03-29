@@ -1,17 +1,18 @@
 import DatabaseT from "./database";
 
 interface ClientMsg {
-    "authSession": (session: DatabaseT.SessionT) => boolean
+    "authSession": (session: DatabaseT.Session) => boolean
 
-    "getMessage": (id: string) => DatabaseT.MessageT
-    "sendMessage": (message: DatabaseT.MessageT) => DatabaseT.MessageT
+    "getMessage": (id: string) => DatabaseT.Message
+    "sendMessage": (message: DatabaseT.Message) => DatabaseT.Message
 
-    "getContactsId": () => string[]
-    "getContact": (contact_id: string) => DatabaseT.MessageT
-    "createContact": (contact_id: string) => void
+    "getMyContacts": () => string[]
+    "getUserData": (user_id: string) => DatabaseT.Message
+    "makeNewContact": (user_id: string) => void
 }
 
 
 interface ServerMsg {
-    "newMessage": (message: DatabaseT.MessageT) => void
+    "newMessage": (message: DatabaseT.Message) => void
+    "newContact": (user_id: string) => void
 }
