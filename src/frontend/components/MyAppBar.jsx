@@ -7,6 +7,13 @@ import {makeStyles} from "@material-ui/core/styles";
 import useTranslate from "../hooks/useTranslate";
 import UserAvatar from "./UserAvatar";
 import SessionStatusIcon from "./SessionStatusIcon";
+import Popover from "@material-ui/core/Popover";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import InboxIcon from '@material-ui/icons/Inbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
 
 const useStyles = makeStyles((theme) => ({
     iconLeft: {
@@ -40,10 +47,58 @@ export default function (props) {
                 </div>
 
                 <div className={classes.iconRight}>
-                    <UserAvatar/>
+                    <AvatarMenu/>
                 </div>
 
             </Toolbar>
         </AppBar>
     </div>
+}
+
+function AvatarMenu() {
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    function handleClick(event) {
+        setAnchorEl(event.currentTarget);
+    }
+
+    function handleClose() {
+        setAnchorEl(null);
+    }
+
+    const open = Boolean(anchorEl);
+
+    return <>
+        <UserAvatar onClick={handleClick}/>
+
+        <Popover
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+            }}
+        >
+            <List component="nav" aria-label="main mailbox folders">
+                <ListItem button>
+                    <ListItemIcon>
+                        <InboxIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="Inbox"/>
+                </ListItem>
+                <ListItem button>
+                    <ListItemIcon>
+                        <DraftsIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="Drafts"/>
+                </ListItem>
+            </List>
+        </Popover>
+    </>
 }
