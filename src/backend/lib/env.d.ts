@@ -1,4 +1,4 @@
-import {DatabaseConParams} from "./database-con";
+import {DatabaseConParams} from "./DatabaseCon";
 
 interface ENV {
     database: {

@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 
 /**
  *
- * @param {ApplicationState} store
+ * @param {AppData.State} store
  * @return {DatabaseT.UserT}
  */
 function selector(store) {

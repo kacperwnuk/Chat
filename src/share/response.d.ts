@@ -1,11 +1,12 @@
 import DatabaseT from "./database";
+import {AuthData} from "./types";
 
 declare namespace ResponseT {
 
     namespace AuthS {
         interface auth {
             user: DatabaseT.UserT
-            session: DatabaseT.SessionT
+            auth_data: AuthData
         }
     }
 }

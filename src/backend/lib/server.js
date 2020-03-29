@@ -1,7 +1,7 @@
 import http from "http";
 import express from "express";
 import cors from "cors";
-import socketIO from "socket.io";
+import ioServer from "socket.io";
 import About from "./about";
 import bodyParser from "body-parser";
 import DatabaseCon from "./DatabaseCon";
@@ -15,7 +15,7 @@ export let server = null;
 /**@type{e.Application}*/
 export let app = null;
 
-/**@type{socketIO}*/
+/**@type{SocketIO.Server}*/
 export let io = null;
 
 /**@type{DatabaseCon}*/
@@ -54,15 +54,12 @@ export async function makeServer({
     app.use(cors());
 
 
-
     server = new http.Server(app);
-    io = socketIO(server);
-
+    io = ioServer(server);
 
     app.get("/about", (req, res) => {
         res.json(About);
     });
-
 
     server.listen(port);
 

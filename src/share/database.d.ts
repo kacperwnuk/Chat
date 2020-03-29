@@ -1,3 +1,5 @@
+import {MessageContent} from "./types";
+
 declare namespace DatabaseT {
 
     interface UserT {
@@ -24,6 +26,18 @@ declare namespace DatabaseT {
         user_id: string
         server_address: string[]
         args: any,
+    }
+
+    interface MessageT {
+        input_type: string
+        version: string
+        from: string
+        message_id: string
+        to_type: string
+        to_id: string
+        content: MessageContent
+        session_id: string
+        read: boolean
     }
 }
 

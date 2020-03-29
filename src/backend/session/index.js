@@ -1,11 +1,14 @@
 import About from "../lib/about";
-import {makeServer} from "../lib/server";
+import {io, makeServer} from "../lib/server";
+import handleNewSession from "./handleNewSession";
 
 About.instance_type = "session";
 
 makeServer({
     port: 8081
 }).then(() => {
-    console.log("started");
+
+    io.on("connection", handleNewSession)
+
 });
 

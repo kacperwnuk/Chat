@@ -6,10 +6,14 @@ import ChatIcon from '@material-ui/icons/Chat';
 import {makeStyles} from "@material-ui/core/styles";
 import useTranslate from "../hooks/useTranslate";
 import UserAvatar from "./UserAvatar";
+import SessionStatusIcon from "./SessionStatusIcon";
 
 const useStyles = makeStyles((theme) => ({
-    icon: {
+    iconLeft: {
         marginRight: theme.spacing(2),
+    },
+    iconRight: {
+        marginLeft: theme.spacing(2),
     },
     title: {
         flexGrow: 1,
@@ -24,11 +28,21 @@ export default function (props) {
 
         <AppBar position="relative">
             <Toolbar>
-                <ChatIcon className={classes.icon}/>
+
+                <ChatIcon className={classes.iconLeft}/>
+
                 <Typography variant="h6" color="inherit" noWrap className={classes.title}>
                     {translate("app.name")}
                 </Typography>
-                <UserAvatar/>
+
+                <div className={classes.iconRight}>
+                    <SessionStatusIcon/>
+                </div>
+
+                <div className={classes.iconRight}>
+                    <UserAvatar/>
+                </div>
+
             </Toolbar>
         </AppBar>
     </div>

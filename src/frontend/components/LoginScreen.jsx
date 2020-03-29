@@ -18,8 +18,7 @@ import useTranslate from "../hooks/useTranslate";
 import AppError from "../lib/AppError";
 import FatalError from "./FatalError";
 import {useDispatch} from "react-redux";
-import {useDataProvider} from "../lib/DataProvider";
-import {setAuthData} from "../redux/reducers/authData";
+import {useCredentialsAuthentication} from "../hooks/useCredentialsAuthentication";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -46,7 +45,7 @@ export default function () {
     const translate = useTranslate();
 
     const dispatch = useDispatch();
-    const data_provider = useDataProvider();
+    const credentialsAuthentication = useCredentialsAuthentication();
 
     const [isConnecting, setIsConnection] = React.useState(false);
     const [error, setError] = React.useState(AppError.Type.NONE);
@@ -59,14 +58,15 @@ export default function () {
 
         setIsConnection(true);
 
-        data_provider.authCredentials(
+        credentialsAuthentication(
             username,
             password
         ).then(auth_data => {
 
-            dispatch(setAuthData(auth_data));
+            setIsConnection(false);
 
         }).catch(error => {
+            console.log(error);
 
             setError(error instanceof AppError ? error.type : AppError.Type.FATAL);
             setIsConnection(false);

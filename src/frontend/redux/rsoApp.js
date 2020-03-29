@@ -1,18 +1,19 @@
 import {
-    SET_AUTH_DATA
+    SET_CREDENTIALS_DATA, SET_SESSION_STATE
 } from "./actions";
 
 /**
  *
  * @type {AppData.State}
  */
-const initialState = {
+const initial_state = {
     user: null,
-    session: null,
-    backendData: {
-        cdnUrl: "localhost:8080",
-        authUrl: "localhost:8082",
-        sessionUrl: "localhost:8081"
+    auth_data: null,
+    session_state: null,
+    backend_data: {
+        cdn_url: "localhost:8080",
+        auth_url: "localhost:8082",
+        session_url: "localhost:8081"
     }
 };
 
@@ -22,15 +23,21 @@ const initialState = {
  * @param {{type:string, data:any}} action
  * @return {AppData.State}
  */
-export default function rsoApp(state = initialState, action) {
+export default function rsoApp(state = initial_state, action) {
 
     switch (action.type) {
 
-        case SET_AUTH_DATA:
+        case SET_CREDENTIALS_DATA:
             return {
                 ...state,
                 user: action.data.user,
-                session: action.data.session
+                auth_data: action.data.auth_data
+            };
+
+        case SET_SESSION_STATE:
+            return {
+                ...state,
+                session_state: action.data
             };
 
         default:

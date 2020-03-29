@@ -1,13 +1,12 @@
-import React from "react";
 import {useSelector} from "react-redux";
 
 /**
  *
- * @param {ApplicationState} store
+ * @param {AppData.State} store
  * @return {DatabaseT.SessionT}
  */
 function selector(store) {
-    return store.session;
+    return store.auth_data;
 }
 
 /**

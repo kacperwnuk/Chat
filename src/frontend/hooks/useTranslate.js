@@ -10,7 +10,7 @@ function translate(lang, id) {
  *
  * @return {function(id:string)}
  */
-export default function useTranslate() {
+export default function () {
     const language = React.useContext(LanguageContext);
 
     return (id) => translate(language, id);

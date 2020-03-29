@@ -5,7 +5,7 @@ import rootReducer from "./rsoApp"
 
 const store = createStore(rootReducer);
 
-export default function ReduxStore({children}) {
+export default function ({children}) {
     return <Provider store={store}>
         {children}
     </Provider>

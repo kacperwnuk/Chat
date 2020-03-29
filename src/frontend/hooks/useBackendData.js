@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
  * @return {AppData.BackendData}
  */
 function selector(store) {
-    return store.backendData;
+    return store.backend_data;
 }
 
 /**
