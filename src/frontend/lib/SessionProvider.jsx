@@ -1,44 +1,42 @@
 import React from "react";
 import {useDispatch} from "react-redux";
-import useBackendData from "../hooks/useBackendData";
-import useSessionData from "../hooks/useAuthData";
-import Session from "./Session";
+import Session, {SessionState} from "./Session";
+import {useBackendData} from "../redux/reducers/backend_data";
+import {useCredentials} from "../redux/reducers/credentials_data";
 
 export const SessionContext = React.createContext(null);
 
-export default function ({children}) {
+export default function SessionProvider({children}) {
 
     const dispatch = useDispatch();
     const backend_data = useBackendData();
-    const auth_data = useSessionData();
+    const credential_data = useCredentials();
 
-    /**@type{[Session|null, function(value:Session|null)]}*/
     const [session, setSession] = React.useState(null);
-
-    React.useEffect(() => {
-        async function newSession() {
-
-            if (session instanceof Session) {
-                session.destructor();
-            }
-
-            if (backend_data === null || auth_data == null) {
-                setSession(null);
-            } else {
-                setSession(new Session(backend_data, auth_data, dispatch));
-            }
-        }
-
-        newSession();
-
-    }, [backend_data, auth_data]);
+    const [session_state, setSessionState] = React.useState(null);
 
 
-    if (session instanceof Session) {
-        session._dispatch = dispatch;
+    if (backend_data === null || credential_data == null) {
+        setSession(null);
+    } else {
+        let newSession = new Session(backend_data, credential_data.auth_data, dispatch);
+        setSession(newSession);
     }
 
-    return <SessionContext.Provider value={session}>
+    if (session instanceof Session)
+        session._setState = setSessionState;
+
+    return <SessionContext.Provider value={session_state === SessionState.Connected ? session : null}>
         {children}
     </SessionContext.Provider>
+}
+
+/**
+ *
+ * @return {Session | null}
+ */
+export function useSession() {
+    let session = React.useContext(SessionContext);
+
+    return session ?? null;
 }

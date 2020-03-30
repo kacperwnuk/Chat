@@ -1,5 +1,6 @@
 import io from "socket.io-client";
-import {SET_SESSION_STATE} from "../redux/actions";
+import {SESSION_STATE_SET} from "../redux/actions";
+import deferredPromise from "../../share/deferredPromise";
 
 /**
  * enum dla stany sesji
@@ -50,10 +51,7 @@ export default class Session {
     }
 
     _setState(state) {
-        this._dispatch({
-            type: SET_SESSION_STATE,
-            data: state
-        })
+
     }
 
     destructor() {

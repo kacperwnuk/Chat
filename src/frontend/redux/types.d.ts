@@ -4,12 +4,20 @@ import {AuthData} from "../../share/types";
 declare namespace AppData {
 
     interface State {
-        user: DatabaseT.User | null
-        auth_data: AuthData | null
+        credentials_data: LoadingObject<CredentialsData>
         backend_data: BackendData
         session_state: SessionState | null
         contact_list: LoadingObject<ContactList>
+        message_dictionary: Dictionary<DatabaseT.Message>
+        user_dictionary: Dictionary<DatabaseT.User>
+        unread_messages: Dictionary<DatabaseT.Message>
     }
+
+    interface CredentialsData {
+        user: DatabaseT.User | null
+        auth_data: AuthData | null
+    }
+
 
     interface BackendData {
         session_url: string
@@ -20,9 +28,10 @@ declare namespace AppData {
     type ContactList = string[]
 }
 
+type Dictionary<T> = { [key: string]: T }
+
 type LoadingObject<T> = {
-    state: "loading" | "loaded" | "error"
-    error?: object
+    error?: AppError
     data?: T
 } | undefined;
 

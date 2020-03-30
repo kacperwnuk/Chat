@@ -1,6 +1,7 @@
 import {
-    SET_CREDENTIALS_DATA, SET_SESSION_STATE
+    CREDENTIALS_DATA_SET, SESSION_STATE_SET
 } from "./actions";
+import {commitCredentials} from "./reducers/credentials_data";
 
 /**
  *
@@ -24,18 +25,14 @@ const initial_state = {
  * @param {{type:string, data:any}} action
  * @return {AppData.State}
  */
-export default function rsoApp(state = initial_state, action) {
+export default function myApp(state = initial_state, action) {
 
     switch (action.type) {
 
-        case SET_CREDENTIALS_DATA:
-            return {
-                ...state,
-                user: action.data.user,
-                auth_data: action.data.auth_data
-            };
+        case CREDENTIALS_DATA_SET:
+            return commitCredentials(state, action.data);
 
-        case SET_SESSION_STATE:
+        case SESSION_STATE_SET:
             return {
                 ...state,
                 session_state: action.data
