@@ -4,6 +4,7 @@ import logger from "../../share/logger";
 import {socketOnceMiddleware, socketOnMiddleware} from "../lib/socketOnMiddleware";
 import isMessagePrototypeData from "../../share/data-checker/isMessagePrototypeData";
 import sendMessage from "../data/sendMessage";
+import getUserContacts from "../data/getUserContacts";
 
 /**
  *
@@ -59,7 +60,7 @@ export default function (socket) {
 
         socketOnMiddleware(socket, "getMyContacts", async () => {
 
-            return []
+            return await getUserContacts(user_id);
         });
     }
 }

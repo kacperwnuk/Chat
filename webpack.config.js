@@ -4,6 +4,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const nodeExternals = require("webpack-node-externals");
 
+const babel_plugins = [
+    "@babel/plugin-proposal-optional-chaining",
+    "@babel/plugin-proposal-nullish-coalescing-operator",
+];
+
 const serverConfig = {
     target: "node",
     entry: {
@@ -22,9 +27,7 @@ const serverConfig = {
             use: {
                 loader: "babel-loader",
                 options: {
-                    plugins: [
-                        "@babel/plugin-proposal-nullish-coalescing-operator"
-                    ],
+                    plugins: babel_plugins,
                     presets: [
                         ["@babel/preset-env", {
                             targets: {node: "13"}
@@ -56,9 +59,7 @@ const clientConfig = {
             use: {
                 loader: "babel-loader",
                 options: {
-                    plugins: [
-                        "@babel/plugin-proposal-nullish-coalescing-operator"
-                    ],
+                    plugins: babel_plugins,
                     presets: [
                         "@babel/preset-react",
                         ["@babel/preset-env", {

@@ -1,23 +1,22 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import useMessageCreator from "../hooks/useMessageSend";
 
 export default function MessageComposer({}) {
 
     const [message, setMessage] = React.useState("");
-    const messageCreator = useMessageCreator();
+    // const messageCreator = useMessageCreator();
 
     function handleChange(event) {
         setMessage(event.target.value);
     }
 
     function handleSend() {
-        messageCreator({
-            to_type: "user",
-            to_id: "qq",
-            content: message
-        })
+        // messageCreator({
+        //     to_type: "user",
+        //     to_id: "qq",
+        //     content: message
+        // })
     }
 
     return <div>

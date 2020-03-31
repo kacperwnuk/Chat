@@ -5,7 +5,7 @@ import {
     CREDENTIALS_DATA_SET, CREDENTIALS_DATA_REQUEST
 } from "../actions";
 import AppError from "../../lib/AppError";
-import {selectorBackendData} from "./backend_data";
+import {backendDataSelector} from "./backend_data";
 import {select, call, put} from "redux-saga/effects";
 
 
@@ -14,7 +14,7 @@ import {select, call, put} from "redux-saga/effects";
  * @param {AppData.State} store
  * @return {AppData.CredentialsData|null}
  */
-function selectCredentials(store) {
+function credentialsSelector(store) {
     return store.credentials_data?.data ?? null;
 }
 
@@ -23,7 +23,7 @@ function selectCredentials(store) {
  * @param {AppData.State} store
  * @return {AppError|null}
  */
-function selectorCredentialsError(store) {
+function credentialsErrorSelector(store) {
     return store.credentials_data?.error ?? null;
 }
 
@@ -45,7 +45,7 @@ export function commitCredentials(state, data) {
  * @return {AppData.CredentialsData}
  */
 export function useCredentials() {
-    let user_data = useSelector(selectCredentials);
+    let user_data = useSelector(credentialsSelector);
 
     return user_data ?? null;
 }
@@ -55,7 +55,7 @@ export function useCredentials() {
  * @return {AppError|null}
  */
 export function useCredentialsError() {
-    let session_data = useSelector(selectorCredentialsError);
+    let session_data = useSelector(credentialsErrorSelector);
 
     return session_data ?? null;
 }
@@ -106,11 +106,11 @@ async function credentialsAuthentication(auth_url, username, password) {
  */
 export function* fetchCredentialsDataSaga(action) {
     try {
-        const backend_data = yield select(selectorBackendData);
+        const backend_data = yield select(backendDataSelector);
 
         const credential_data = yield call(
             credentialsAuthentication,
-            backend_data.auth_data,
+            backend_data.auth_url,
             action.data.username,
             action.data.password
         );

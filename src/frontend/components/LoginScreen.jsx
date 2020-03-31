@@ -18,7 +18,7 @@ import useTranslate from "../hooks/useTranslate";
 import AppError from "../lib/AppError";
 import FatalError from "./FatalError";
 import {useDispatch} from "react-redux";
-import {useCredentialsAuthentication} from "../hooks/useCredentialsAuthentication";
+import {makeCredentialsDataRequestAction, useCredentialsError} from "../redux/reducers/credentials_data";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -45,10 +45,9 @@ export default function () {
     const translate = useTranslate();
 
     const dispatch = useDispatch();
-    const credentialsAuthentication = useCredentialsAuthentication();
+    const credentials_error = useCredentialsError();
 
     const [isConnecting, setIsConnection] = React.useState(false);
-    const [error, setError] = React.useState(AppError.Type.NONE);
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
 
@@ -58,23 +57,15 @@ export default function () {
 
         setIsConnection(true);
 
-        credentialsAuthentication(
-            username,
-            password
-        ).then(auth_data => {
-
-            setIsConnection(false);
-
-        }).catch(error => {
-            console.log(error);
-
-            setError(error instanceof AppError ? error.type : AppError.Type.FATAL);
-            setIsConnection(false);
-
-        });
+        dispatch(
+            makeCredentialsDataRequestAction(
+                username,
+                password
+            )
+        );
     }
 
-    if (error === AppError.Type.FATAL) {
+    if (credentials_error === AppError.Type.FATAL) {
         return <FatalError/>
     }
 
@@ -102,7 +93,7 @@ export default function () {
                         autoFocus
                         onChange={e => setUsername(e.target.value)}
                         disabled={isConnecting}
-                        error={error === AppError.Type.ACCESS_DENIED}
+                        error={credentials_error === AppError.Type.ACCESS_DENIED}
                     />
                     <TextField
                         variant="outlined"
@@ -116,7 +107,7 @@ export default function () {
                         autoComplete="current-password"
                         onChange={e => setPassword(e.target.value)}
                         disabled={isConnecting}
-                        error={error === AppError.Type.ACCESS_DENIED}
+                        error={credentials_error === AppError.Type.ACCESS_DENIED}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary"/>}

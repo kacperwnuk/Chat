@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
  * @param {AppData.State} store
  * @return {AppData.BackendData}
  */
-export function selectorBackendData(store) {
+export function backendDataSelector(store) {
     return store.backend_data;
 }
 
@@ -13,5 +13,5 @@ export function selectorBackendData(store) {
  * @return {AppData.BackendData}
  */
 export function useBackendData() {
-    return  useSelector(selectorBackendData);
+    return  useSelector(backendDataSelector);
 }

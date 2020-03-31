@@ -1,10 +1,9 @@
-import useUserData from "./useUserData";
+import {useCredentials} from "../redux/reducers/credentials_data";
 
 /**
  *
  * @return {boolean}
  */
-export default function () {
-    let user_data = useUserData();
-    return !!user_data;
+export default function useIsLogged() {
+    return useCredentials() !== null;
 }

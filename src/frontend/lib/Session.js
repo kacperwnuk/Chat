@@ -22,7 +22,7 @@ export default class Session {
      * @param {function} dispatch
      */
     constructor(backend_data, auth_data, dispatch) {
-        console.log("Session.const");
+        console.log("Session.constructor");
 
         this._backend_data = backend_data;
         this._dispatch = dispatch;
