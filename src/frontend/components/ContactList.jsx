@@ -1,8 +1,7 @@
 import React from "react";
-import useContactList from "../hooks/useContactList";
 
 export default function ContactList() {
-    const contactList = useContactList();
+    const contactList = [];
 
     if (contactList === null)
         return <div>Ładowanie</div>

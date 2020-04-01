@@ -4,11 +4,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const nodeExternals = require("webpack-node-externals");
 
-const babel_plugins = [
-    "@babel/plugin-proposal-optional-chaining",
-    "@babel/plugin-proposal-nullish-coalescing-operator",
-];
-
 const serverConfig = {
     target: "node",
     entry: {
@@ -22,23 +17,13 @@ const serverConfig = {
     },
     module: {
         rules: [{
-            test: /\.js$/,
+            test: /\.ts$/,
+            use: "ts-loader",
             exclude: /node_modules/,
-            use: {
-                loader: "babel-loader",
-                options: {
-                    plugins: babel_plugins,
-                    presets: [
-                        ["@babel/preset-env", {
-                            targets: {node: "13"}
-                        }]
-                    ]
-                }
-            }
         }]
     },
     resolve: {
-        extensions: [".js", ".json"],
+        extensions: [".ts", ".json"],
     },
     externals: [nodeExternals()]
 };
@@ -54,27 +39,13 @@ const clientConfig = {
     },
     module: {
         rules: [{
-            test: /\.(js|jsx)$/,
+            test: /\.(ts|jsx)$/,
+            use: "ts-loader",
             exclude: /node_modules/,
-            use: {
-                loader: "babel-loader",
-                options: {
-                    plugins: babel_plugins,
-                    presets: [
-                        "@babel/preset-react",
-                        ["@babel/preset-env", {
-                            useBuiltIns: "entry",
-                            corejs: 3,
-                            targets: {chrome: "80"},
-
-                        }],
-                    ]
-                }
-            }
         }]
     },
     resolve: {
-        extensions: [".js", ".jsx", ".json"],
+        extensions: [".ts", ".js", ".jsx", ".json"],
     },
     plugins: [
         new HtmlWebpackPlugin({

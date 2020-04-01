@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 
 import Copyright from "./Copyright";
 import useTranslate from "../hooks/useTranslate";
-import AppError from "../lib/AppError";
+import {AppErrorType} from "../lib/AppError";
 import FatalError from "./FatalError";
 import {useDispatch} from "react-redux";
 import {makeCredentialsDataRequestAction, useCredentialsError} from "../redux/reducers/credentials_data";
@@ -65,7 +65,7 @@ export default function () {
         );
     }
 
-    if (credentials_error === AppError.Type.FATAL) {
+    if (credentials_error === AppErrorType.FATAL) {
         return <FatalError/>
     }
 
@@ -93,7 +93,7 @@ export default function () {
                         autoFocus
                         onChange={e => setUsername(e.target.value)}
                         disabled={isConnecting}
-                        error={credentials_error === AppError.Type.ACCESS_DENIED}
+                        error={credentials_error === AppErrorType.ACCESS_DENIED}
                     />
                     <TextField
                         variant="outlined"
@@ -107,7 +107,7 @@ export default function () {
                         autoComplete="current-password"
                         onChange={e => setPassword(e.target.value)}
                         disabled={isConnecting}
-                        error={credentials_error === AppError.Type.ACCESS_DENIED}
+                        error={credentials_error === AppErrorType.ACCESS_DENIED}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary"/>}

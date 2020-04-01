@@ -5,7 +5,7 @@ Przed użyciem każdego obiketu należy sprawdzić czy jest o zgodny z oczekiwan
 
 ## Przykład funkcji
 
-```js
+```typescript
 // Importujemy bibliotekę YUP 
 import * as yup from "yup";
 
@@ -15,12 +15,7 @@ const requestBody = yup.object({
     secret_key: yup.string().required()
 });
 
-/**
- *
- * @param data
- * @return {Promise<AuthData>}
- */
-export default function (data) {
+export default function (data: any): Promise<SessionAuthData> {
     return requestBody.validate(data);
 }
 ```

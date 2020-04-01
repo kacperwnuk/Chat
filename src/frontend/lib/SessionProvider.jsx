@@ -1,6 +1,6 @@
 import React from "react";
 import {useDispatch} from "react-redux";
-import Session, {SessionState} from "./Session";
+import Session from "./Session";
 import {useBackendData} from "../redux/reducers/backend_data";
 import {useCredentials} from "../redux/reducers/credentials_data";
 import useIsLogged from "../hooks/useIsLogged";
@@ -16,20 +16,18 @@ export default function SessionProvider({children}) {
     const credential_data = useCredentials();
 
     const [session, setSession] = React.useState(null);
-    const [session_state, setSessionState] = React.useState(null);
+    const [session_ready, setSessionReady] = React.useState(null);
 
 
     if (is_logged && !(session instanceof Session)) {
-        let newSession = new Session(backend_data, credential_data.auth_data, dispatch);
+        let newSession = new Session(backend_data, credential_data.auth_data);
         setSession(newSession);
     }
 
     if (session instanceof Session)
-        session._setState = setSessionState;
+        session.setReady = setSessionReady;
 
-
-
-    return <SessionContext.Provider value={session_state === SessionState.Connected ? session : null}>
+    return <SessionContext.Provider value={session_ready ? session : null}>
         {children}
     </SessionContext.Provider>
 }
