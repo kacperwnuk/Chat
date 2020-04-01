@@ -22,7 +22,6 @@ export default function () {
 
                     <Grid item xs={3}>
                         <ContactList/>
-                        <ContactList/>
                     </Grid>
 
                     <Grid item xs={9}>

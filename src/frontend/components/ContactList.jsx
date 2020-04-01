@@ -1,10 +1,14 @@
 import React from "react";
+import {useContactList} from "../redux/reducers/contact_list";
+import ContactRow from "./ContactRow";
 
 export default function ContactList() {
-    const contactList = [];
+    const contact_list = useContactList();
 
-    if (contactList === null)
-        return <div>Ładowanie</div>
+    if (contact_list === null)
+        return <div>Ładowanie</div>;
 
-    return <div>Kontakty</div>
+    return <div>
+        {contact_list.map(id => <ContactRow key={id} userID={id}/>)}
+    </div>
 }

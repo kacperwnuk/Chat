@@ -1,6 +1,6 @@
 import socket_io from "socket.io";
 import resolveError from "../lib/resolveError";
-import {SessionMessagingSchemaByClient} from "../../share/SessionMessagingSchema";
+import {SessionMessagingSchemaByClient} from "../../share/MessagingSchema";
 
 export function socketOnMiddleware<Key extends keyof SessionMessagingSchemaByClient>(
     socket: socket_io.Socket,

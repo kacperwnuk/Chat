@@ -13,7 +13,7 @@ export interface DatabaseConParams {
 }
 
 interface QueryResult<T = any> {
-    rows: any[],
+    rows: T[],
     fields: {
         name: string
         format: string
@@ -34,7 +34,7 @@ export default class DatabaseCon {
         this.pool = new pg.Pool(this.dbs[0]);
     }
 
-    query(query: string, params: any[] = []): Promise<QueryResult> {
+    query<T = any>(query: string, params: any[] = []): Promise<QueryResult<T>> {
         return this.pool.query(query, params);
     }
 }

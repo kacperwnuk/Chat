@@ -1,0 +1,41 @@
+import React from "react";
+import {useDispatch} from "react-redux";
+import Session from "./Session";
+import {useBackendData} from "../redux/reducers/backend_data";
+import {useCredentials} from "../redux/reducers/credentials_data";
+import {makeAction} from "../redux/actions";
+import wait from "../../share/wait";
+
+export default function SessionProvider(props: React.PropsWithChildren<{}>) {
+    console.log("SessionProvider");
+
+    const dispatch = useDispatch();
+    const backend_data = useBackendData();
+    const credential_data = useCredentials();
+
+    const [session, setSession] = React.useState<Session | null>(null);
+    const [session_ready, setSessionReady] = React.useState<boolean>(false);
+
+    React.useEffect(() => {
+        wait(10).then(() => {
+            if (credential_data) {
+                let newSession = new Session(backend_data, credential_data.auth_data);
+                setSession(newSession);
+            } else {
+                setSession(null)
+            }
+        });
+
+    }, [credential_data]);
+
+    if (session instanceof Session) {
+        session.setReady = setSessionReady;
+    }
+
+    React.useEffect(() => {
+        dispatch(makeAction("SESSION_SET", session_ready ? session : null));
+    }, [session_ready]);
+
+    return React.createElement(React.Fragment, null, props.children);
+}
+

@@ -1,5 +1,5 @@
-import React from 'react'
-import {Provider} from 'react-redux'
+import React from "react"
+import {Provider} from "react-redux"
 import {createStore, applyMiddleware} from "redux"
 import createSagaMiddleware from 'redux-saga'
 
@@ -13,7 +13,5 @@ const store = createStore(myApp, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(mySaga);
 
 export default function ({children}) {
-    return <Provider store={store}>
-        {children}
-    </Provider>
+    return <Provider store={store}>{children}</Provider>;
 }

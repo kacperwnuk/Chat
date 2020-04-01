@@ -1,22 +1,23 @@
-import DatabaseT from "../../share/DatabaseT";
-import {Dictionary, SessionAuthData} from "../../share/types";
-import AppError from "../lib/AppError";
+import type DatabaseT from "../../share/DatabaseT";
+import type {Dictionary, SessionAuthData} from "../../share/types";
+import type AppError from "../lib/AppError";
+import type Session from "../lib/Session";
 
 declare namespace AppData {
 
     interface State {
         credentials_data?: LoadingObject<CredentialsData>
         backend_data: BackendData
-        // session_state: SessionState | null
+        session?: Session | null
         contact_list?: ContactList
         message_dictionary?: Dictionary<DatabaseT.Message>
-        user_dictionary?: Dictionary<DatabaseT.User>
+        user_data_dictionary?: Dictionary<DatabaseT.User>
         unread_messages?: Dictionary<DatabaseT.Message>
     }
 
     interface CredentialsData {
-        user: DatabaseT.User | null
-        auth_data: SessionAuthData | null
+        user: DatabaseT.User
+        auth_data: SessionAuthData
     }
 
     interface BackendData {

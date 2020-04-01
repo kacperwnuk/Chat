@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 import type AppData from "../redux/AppData";
-import type {SessionMessagingSchemaByClient} from "../../share/SessionMessagingSchema";
+import type {SessionMessagingSchemaByClient} from "../../share/MessagingSchema";
 import type {MessagePrototypeData, SessionAuthData} from "../../share/types";
 
 export default class Session {
@@ -54,6 +54,8 @@ export default class Session {
         name: Key,
         ...args: Parameters<SessionMessagingSchemaByClient[Key]>
     ): Promise<ReturnType<SessionMessagingSchemaByClient[Key]>> {
+
+
         return new Promise((resolve, reject) => {
             this.socket.emit(name, ...args, (ret: { error?: any, data?: any }) => {
 

@@ -7,6 +7,7 @@ import isMessagePrototypeData from "../../share/data-checker/isMessagePrototypeD
 import sendMessage from "../data/sendMessage";
 import getUserContacts from "../data/getUserContacts";
 import {MessagePrototypeData} from "../../share/types";
+import getUserData from "../data/getUserData";
 
 export default function (socket: socket_io.Socket) {
     const myLogger = logger.child({
@@ -59,6 +60,11 @@ export default function (socket: socket_io.Socket) {
         socketOnMiddleware(socket, "getMyContacts", async () => {
 
             return await getUserContacts(user_id);
+        });
+
+        socketOnMiddleware(socket, "getUserData", async (user_id: string) => {
+
+            return await getUserData(user_id);
         });
     }
 }

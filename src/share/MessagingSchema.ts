@@ -1,5 +1,10 @@
 import type DatabaseT from "./DatabaseT";
-import type {MessagePrototypeData, SessionAuthData} from "./types";
+import type {BasicLoginData, MessagePrototypeData, SessionAuthData} from "./types";
+import type AppData from "../frontend/redux/AppData";
+
+export interface AuthMessagingSchema {
+    "auth": (login_data: BasicLoginData) => AppData.CredentialsData
+}
 
 export interface SessionMessagingSchemaByClient {
     "authSession": (session: SessionAuthData) => boolean
@@ -8,7 +13,7 @@ export interface SessionMessagingSchemaByClient {
     "sendMessage": (message: MessagePrototypeData) => DatabaseT.Message
 
     "getMyContacts": () => string[]
-    "getUserData": (user_id: string) => DatabaseT.Message
+    "getUserData": (user_id: string) => DatabaseT.User
     "makeNewContact": (user_id: string) => void
 }
 
