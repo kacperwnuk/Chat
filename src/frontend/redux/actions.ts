@@ -15,6 +15,8 @@ export interface Actions {
 
     USER_DATA_REQUEST: string
     USER_DATA_SET: DatabaseT.User
+
+    CURRENT_CONVERSATION_ID_SET: string
 }
 
 export interface Action<T extends keyof Actions = any> {

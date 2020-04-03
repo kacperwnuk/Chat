@@ -13,6 +13,8 @@ declare namespace AppData {
         message_dictionary?: Dictionary<DatabaseT.Message>
         user_data_dictionary?: Dictionary<DatabaseT.User>
         unread_messages?: Dictionary<DatabaseT.Message>
+        conversation_list?: Dictionary<Conversation>
+        current_conversation_id?: string
     }
 
     interface CredentialsData {
@@ -27,6 +29,14 @@ declare namespace AppData {
     }
 
     type ContactList = string[]
+
+    interface Conversation {
+        type: "user"
+        id: string
+        messages_map: Map<string, DatabaseT.Message>
+        messages_chronological: Map<string, DatabaseT.Message>
+        has_unread: boolean
+    }
 }
 
 export type LoadingObject<T> = { error?: AppError, data?: T };

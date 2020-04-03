@@ -2,8 +2,11 @@ import React from "react";
 import PropTypes from 'prop-types';
 import UserAvatar from "./UserAvatar";
 import {useUserData} from "../redux/reducers/user_data";
+import {useDispatch} from "react-redux";
+import {makeCurrentConversationIdChangeAction} from "../redux/reducers/current_conversationt";
 
 export default function ContactRow({userID}) {
+    const dispatch = useDispatch();
     const user_data = useUserData(userID);
 
     if (user_data === null)
@@ -17,7 +20,11 @@ export default function ContactRow({userID}) {
         user_data.name_suffix,
     ].filter(str => str).join(" ");
 
-    return <div>
+    function handleClick() {
+        dispatch(makeCurrentConversationIdChangeAction())
+    }
+
+    return <div onClick={handleClick}>
         <UserAvatar/>
         <div>{display_name}</div>
         <div>{userID}</div>
