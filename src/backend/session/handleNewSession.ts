@@ -49,10 +49,9 @@ export default function (socket: socket_io.Socket) {
             msg_proto = await isMessagePrototypeData(msg_proto);
 
             return await sendMessage({
-                from: user_id,
+                from_user_id:user_id,
+                conversation_id: msg_proto.conversation_id,
                 session_id: session_id,
-                to_type: msg_proto.to_type,
-                to_id: msg_proto.to_id,
                 content: msg_proto.content
             });
         });

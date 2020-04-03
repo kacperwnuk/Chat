@@ -5,6 +5,7 @@ import App from "./App";
 import AppDataProvider from "./redux/AppDataProvider";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import SessionProvider from "./lib/SessionProvider";
+import NotificationContainer from "./components/NotificationContainer";
 
 const app = document.createElement("div");
 app.id = "app";
@@ -15,6 +16,7 @@ ReactDOM.render(
         <SessionProvider>
             <CssBaseline/>
             <App/>
+            <NotificationContainer/>
         </SessionProvider>
     </AppDataProvider>,
     app);

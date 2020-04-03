@@ -2,6 +2,7 @@ import type DatabaseT from "../../share/DatabaseT";
 import type {Dictionary, SessionAuthData} from "../../share/types";
 import type AppError from "../lib/AppError";
 import type Session from "../lib/Session";
+import {NotificationLevel} from "../../share/logger";
 
 declare namespace AppData {
 
@@ -10,11 +11,17 @@ declare namespace AppData {
         backend_data: BackendData
         session?: Session | null
         contact_list?: ContactList
-        message_dictionary?: Dictionary<DatabaseT.Message>
+
+        // identyfikatorem jest konwersacja i ma tabele z wiadomościami ułożonymi chronologicznie
+        message_dictionary?: Dictionary<DatabaseT.Message[]>
+
         user_data_dictionary?: Dictionary<DatabaseT.User>
         unread_messages?: Dictionary<DatabaseT.Message>
         conversation_list?: Dictionary<Conversation>
         current_conversation_id?: string
+
+        next_notification_id?: number
+        notification_dictionary?: Dictionary<Notification>
     }
 
     interface CredentialsData {
@@ -36,6 +43,12 @@ declare namespace AppData {
         messages_map: Map<string, DatabaseT.Message>
         messages_chronological: Map<string, DatabaseT.Message>
         has_unread: boolean
+    }
+
+    interface Notification {
+        content: string
+        level: NotificationLevel
+        data?: any
     }
 }
 

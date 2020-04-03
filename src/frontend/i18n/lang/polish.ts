@@ -17,5 +17,8 @@ export default {
         prefix: "Prawa autorskie ",
         name: "Zespół E",
         suffix: "."
+    },
+    error_msg: {
+        message_send_fail: "Błąd wysyłania wiadomości"
     }
 } as Lang;

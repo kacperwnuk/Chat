@@ -55,7 +55,6 @@ export default class Session {
         ...args: Parameters<SessionMessagingSchemaByClient[Key]>
     ): Promise<ReturnType<SessionMessagingSchemaByClient[Key]>> {
 
-
         return new Promise((resolve, reject) => {
             this.socket.emit(name, ...args, (ret: { error?: any, data?: any }) => {
 
@@ -68,11 +67,4 @@ export default class Session {
         })
     }
 
-    sendMessage(msg: MessagePrototypeData) {
-        return this.message("sendMessage", msg);
-    }
-
-    getMyContacts() {
-        return this.message("getMyContacts");
-    }
 }

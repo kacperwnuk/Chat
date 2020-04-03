@@ -28,13 +28,15 @@ declare namespace DatabaseT {
         args: any,
     }
 
-    interface Message {
+    interface MessageKey {
+        from_user_id: string
+        conversation_id: string
+        message_id: string
+    }
+
+    interface Message extends MessageKey {
         input_type: string
         version: string
-        from: string
-        message_id: string
-        to_type: string
-        to_id: string
         content: MessageContent
         session_id: string
         read: boolean

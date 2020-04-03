@@ -9,6 +9,6 @@ export default function ContactList() {
         return <div>Ładowanie</div>;
 
     return <div>
-        {contact_list.map(id => <ContactRow key={id} userID={id}/>)}
+        {contact_list.map(id => <ContactRow key={id} userId={id}/>)}
     </div>
 }

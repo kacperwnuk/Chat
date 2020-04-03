@@ -115,7 +115,7 @@ Tabela przechowuje historyczne wiadomości.
  - `id:uuid`
  - `from:uuid`
  - `to_type:text`
- - `to_id:uuid`
+ - `conversation_id:uuid`
  - `content:json`
 
 ## Serwery

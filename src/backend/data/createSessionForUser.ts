@@ -3,7 +3,7 @@ import About from "../lib/About";
 import getMyAddress from "../lib/getMyAddress";
 import {databaseMain} from "../lib/server";
 import ServerError from "../lib/ServerError";
-import DatabaseT from "../../share/DatabaseT";
+import type DatabaseT from "../../share/DatabaseT";
 
 export default async function (user_id: string): Promise<DatabaseT.Session> {
 

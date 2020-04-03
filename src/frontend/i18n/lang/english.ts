@@ -17,5 +17,8 @@ export default {
         prefix: "Copyright ",
         name: "Zespół E",
         suffix: "."
+    },
+    error_msg: {
+        message_send_fail: "Error during message send"
     }
 } as Lang;

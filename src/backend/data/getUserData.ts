@@ -1,4 +1,4 @@
-import DatabaseT from "../../share/DatabaseT";
+import type DatabaseT from "../../share/DatabaseT";
 import {databaseUser} from "../lib/server";
 import ServerError from "../lib/ServerError";
 

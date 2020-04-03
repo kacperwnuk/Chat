@@ -13,7 +13,6 @@ export interface SessionAuthData {
 export type MessageContent = string;
 
 export interface MessagePrototypeData {
-    to_type: string,
-    to_id: string,
+    conversation_id: string,
     content: MessageContent
 }

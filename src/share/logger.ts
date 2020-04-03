@@ -33,4 +33,11 @@ if (process.env.NODE_ENV !== 'production') {
     }));
 }
 
+export enum NotificationLevel {
+    Info = "info",
+    Error = "error",
+    Warn = "warn",
+    Success = "success"
+}
+
 export default logger;

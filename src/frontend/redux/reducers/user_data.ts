@@ -1,9 +1,9 @@
+import type DatabaseT from "../../../share/DatabaseT";
+import type AppData from "../AppData";
 import {Action, makeAction} from "../actions";
-import AppData from "../AppData";
 import {call, put, select} from "redux-saga/effects";
 import Session from "../../lib/Session";
 import {sessionSelector, useIsSessionReady} from "./session";
-import DatabaseT from "../../../share/DatabaseT";
 import {useDispatch, useSelector} from "react-redux";
 
 export function userDataSelector(state: AppData.State, user_id: string): DatabaseT.User | null {
@@ -34,20 +34,17 @@ export function commitUserData(state: AppData.State, user_data: DatabaseT.User):
 }
 
 export function* fetchUserDataSaga(action: Action<"USER_DATA_REQUEST">) {
-    try {
-        const session: Session | null = yield select(sessionSelector);
+    const session: Session | null = yield select(sessionSelector);
 
-        if (!session) {
-            return;
-        }
-
-        const user_data = yield call(
-            () => session.message("getUserData", action.data)
-        );
-
-        yield put(
-            makeAction("USER_DATA_SET", user_data)
-        );
-    } catch (error) {
+    if (!session) {
+        return;
     }
+
+    const user_data = yield call(
+        () => session.message("getUserData", action.data)
+    );
+
+    yield put(
+        makeAction("USER_DATA_SET", user_data)
+    );
 }

@@ -15,5 +15,8 @@ export default interface Lang {
         prefix: string
         name: string
         suffix: string
+    },
+    error_msg: {
+        message_send_fail: string
     }
 }

@@ -1,8 +1,8 @@
-import type {BasicLoginData} from "../../share/types";
+import type {BasicLoginData, MessagePrototypeData} from "../../share/types";
 import type AppData from "./AppData";
 import type {LoadingObject} from "./AppData";
 import type Session from "../lib/Session";
-import DatabaseT from "../../share/DatabaseT";
+import type DatabaseT from "../../share/DatabaseT";
 
 export interface Actions {
     CREDENTIALS_DATA_REQUEST: BasicLoginData
@@ -17,6 +17,13 @@ export interface Actions {
     USER_DATA_SET: DatabaseT.User
 
     CURRENT_CONVERSATION_ID_SET: string
+
+    MESSAGE_SEND_REQUEST: MessagePrototypeData
+    MESSAGE_LIST_REQUEST: {}
+    MESSAGE_ADD2DIC: DatabaseT.Message
+
+    NOTIFICATION_ADD: Partial<AppData.Notification>
+    NOTIFICATION_REMOVE: string
 }
 
 export interface Action<T extends keyof Actions = any> {

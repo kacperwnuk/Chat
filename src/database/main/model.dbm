@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.2" last-position="0,95" last-zoom="1" max-obj-count="6"
+<dbmodel pgmodeler-ver="0.9.2" last-position="0,191" last-zoom="1" max-obj-count="6"
 	 default-schema="public" default-owner="postgres">
 <role name="backend-server"
       inherit="true"
@@ -117,33 +117,33 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="1020" y="480"/>
-	<column name="input_time">
+	<column name="input_time" not-null="true" default-value="current_timestamp">
 		<type name="timestamp with time zone" length="0" with-timezone="true"/>
 	</column>
 	<column name="version">
 		<type name="text" length="0"/>
 	</column>
-	<column name="from" not-null="true">
+	<column name="from_user_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="conversation_id" not-null="true">
 		<type name="uuid" length="0"/>
 	</column>
 	<column name="message_id" not-null="true">
 		<type name="uuid" length="0"/>
 	</column>
-	<column name="to_type">
-		<type name="text" length="0"/>
-	</column>
-	<column name="to_id">
-		<type name="uuid" length="0"/>
-	</column>
 	<column name="content">
 		<type name="json" length="0"/>
 	</column>
+	<column name="read" default-value="false">
+		<type name="boolean" length="0"/>
+	</column>
 	<constraint name="messages_pk" type="pk-constr" table="public.messages">
-		<columns names="from,message_id" ref-type="src-columns"/>
+		<columns names="from_user_id,message_id,conversation_id" ref-type="src-columns"/>
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="session_id" index="7"/>
+		<object name="session_id" index="6"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">

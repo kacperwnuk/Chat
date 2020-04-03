@@ -1,6 +1,6 @@
 import {databaseUser} from "../lib/server";
 import ServerError from "../lib/ServerError";
-import DatabaseT from "../../share/DatabaseT";
+import type DatabaseT from "../../share/DatabaseT";
 
 /**
  * Sprawdza czy podana kombinacja username/password jest poprawka, a następnie zwraca obiekt użytkownika lub wyjątek
