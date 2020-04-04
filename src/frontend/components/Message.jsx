@@ -4,6 +4,8 @@ import {useMessagesByConversationId} from "../redux/reducers/messages";
 import {useUserData} from "../redux/reducers/user_data";
 import UserAvatar from "./UserAvatar";
 import {Paper} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import getUserDisplayName from "../../share/data-malipulation/getUserDisplayName";
 
 /**
  *
@@ -16,9 +18,12 @@ export default function Message({message}) {
     return <div>
         <Paper>
             <UserAvatar userId={message.from_user_id}/>
-            <div>
+            <Typography variant="caption">
+                {getUserDisplayName(user_data)}
+            </Typography>
+            <Typography variant="body1">
                 {message.content}
-            </div>
+            </Typography>
         </Paper>
     </div>
 }

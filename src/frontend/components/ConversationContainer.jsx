@@ -18,7 +18,6 @@ export default function () {
 
 
     return <div>
-        <div>Rozmowy</div>
         {conversation_id_list.map(conversation_id => {
             return <Conversation
                 display={conversation_id === current_conversation_id}

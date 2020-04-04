@@ -33,7 +33,9 @@ export default function (props) {
 
     return <div>
 
-        <AppBar position="relative">
+        <Toolbar/>
+
+        <AppBar position="fixed">
             <Toolbar>
 
                 <ChatIcon className={classes.iconLeft}/>

@@ -5,10 +5,28 @@ import Button from "@material-ui/core/Button";
 import {useDispatch} from "react-redux";
 import {makeSendMessageAction} from "../redux/reducers/messages";
 import {useSession} from "../redux/reducers/session";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import IconButton from "@material-ui/core/IconButton";
+import SendIcon from '@material-ui/icons/Send';
+
+const useStyle = makeStyles(theme => ({
+    root: {
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "nowrap"
+    },
+    text_input: {
+        flex: 1
+    },
+    send_button: {
+        marginLeft: theme.spacing(1)
+    }
+}));
 
 export default function MessageComposer({
                                             conversationId: conversation_id
                                         }) {
+    const classes = useStyle();
 
     const dispatch = useDispatch();
     const session = useSession();
@@ -19,6 +37,8 @@ export default function MessageComposer({
     }
 
     function handleSend() {
+        if (message.length === 0) return;
+
         dispatch(
             makeSendMessageAction({
                 conversation_id,
@@ -27,19 +47,25 @@ export default function MessageComposer({
         )
     }
 
-    return <div>
-        <TextField
-            disabled={session === null}
-            multiline
-            value={message}
-            onChange={handleChange}
-        />
-        <Button
-            onClick={handleSend}
-            disabled={session === null}
-        >
-            Wyślij
-        </Button>
+    return <div className={classes.root}>
+        <div className={classes.text_input}>
+            <TextField
+                fullWidth
+                disabled={session === null}
+                multiline
+                value={message}
+                onChange={handleChange}
+                variant="outlined"
+            />
+        </div>
+        <div>
+            <IconButton
+                className={classes.send_button}
+                color="primary"
+                onClick={handleSend}>
+                <SendIcon/>
+            </IconButton>
+        </div>
     </div>
 }
 

@@ -10,7 +10,7 @@ export default function MessageList({
 
     const messages = useMessagesByConversationId(conversation_id);
 
-    return <div ref={(ref) => console.log("ref", ref)}>
+    return <div>
         {messages.map(message => {
             return <Message
                 key={message.from_user_id + message.message_id}
