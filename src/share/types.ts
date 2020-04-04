@@ -1,11 +1,8 @@
-import {SessionMessagingSchemaByServer} from "./MessagingSchema";
+/**
+ * Zbiór różnych typów
+ */
 
 export type Dictionary<T> = { [key: string]: T }
-
-export interface BasicLoginData {
-    username: string
-    password: string
-}
 
 export interface SessionAuthData {
     session_id: string

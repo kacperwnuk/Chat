@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import type {BasicLoginData} from "../types";
+import {BasicLoginData} from "../MessagingSchema";
 
 const requestBody = yup.object({
     username: yup.string().required(),

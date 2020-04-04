@@ -83,15 +83,15 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 -- object: public.messages | type: TABLE --
 -- DROP TABLE IF EXISTS public.messages CASCADE;
 CREATE TABLE public.messages (
-	input_time timestamp with time zone,
+	input_time timestamp with time zone NOT NULL DEFAULT current_timestamp,
 	version text,
-	"from" uuid NOT NULL,
+	from_user_id uuid NOT NULL,
+	conversation_id uuid NOT NULL,
 	message_id uuid NOT NULL,
-	to_type text,
-	to_id uuid,
 	content json,
 	session_id uuid,
-	CONSTRAINT messages_pk PRIMARY KEY ("from",message_id)
+	read boolean DEFAULT false,
+	CONSTRAINT messages_pk PRIMARY KEY (from_user_id,message_id,conversation_id)
 
 );
 -- ddl-end --
@@ -168,25 +168,25 @@ CREATE TABLE public.user_contacts (
 -- ALTER TABLE public.user_contacts OWNER TO postgres;
 -- ddl-end --
 
--- object: grant_c0c7f582a3 | type: PERMISSION --
+-- object: grant_fc3257dbe6 | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.messages
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_f6b64f3440 | type: PERMISSION --
+-- object: grant_2150bb91de | type: PERMISSION --
 GRANT SELECT,INSERT
    ON TABLE public.sessions
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_5c72c67b79 | type: PERMISSION --
+-- object: grant_18419b0233 | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.session_events
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_f4278f8c86 | type: PERMISSION --
+-- object: grant_dd72af1ee0 | type: PERMISSION --
 GRANT SELECT,INSERT
    ON TABLE public.server_journal
    TO "backend-server";

@@ -141,40 +141,12 @@ Serwerów CDN, może być kilka.
 Jest to serwer odpowiadający za logowanie i tworzenie sesji dla użytkowników.
 Użytkownik łączy się z serwerem przekazuje mu poświadczenia, czyli nazwę metody autoryzacji `authMethod.name` i parametry `authMethod.options`.
 Jeżeli serwer potwierdził autentyczność użytkownika, tworzy tworzy sesje na serwerze sesji, wysyła id i klucz sesji do użytkownika.
-
-#### Komunikacja z serwerem
-
-Komunikacja polega na pojedyńczych zapytaniach REST
-
-|HTTP Method|Zapytanie|Argumenty|Opis|Wartość zwracana|
-|---|---|---|---|---|
-|GET|`/version`||pobranie wersji serwera|
-|POST|`/login`||pobranie|
-|GET|`/profile`||pobranie mojego profilu|
-|PATCH|`/profile`||zmiana mojego profilu|
+Komunikacja polega na pojedynczych zapytaniach REST.
+Komunikacja z logowania sesji jest opisana w pliku `./src/share/MessagingSchema.ts`
 
 ### Serwer sesji
 
-Serwer ten odpowiada za komunikacje z użytkownikiem, przyjmowaniem nowych wiadomośći i odpowiadanie na zapytania użytkownika.
-Użytkownik łączy się z serwerm i podaje klucz sesji
-
-
-#### Komunikacja z serwerem
-
-Komunikacja odbywa się za pomocą ciągłego połączenia, SocketIO, ale zapytania REST teź są obsługiwane.
-
-REST:
-
-|HTTP Method|Zapytanie|Argumenty|Opis|Wartość zwracana|
-|---|---|---|---|---|
-|GET|`/version`||pobranie wersji serwera|
-
-SocketIO
-
-|Zapytanie|Argumenty|Opis|Wartość zwracana|
-|---|---|---|---|---|
-|`auth`||przesłanie klucza sesji||
-|`contacts-get`||pobranie listy kontaktów||
-|`message-send`||wysłanie wiadomości||
-|`message-get`||pobranie wiadomości||
+Serwer ten odpowiada za komunikacje z użytkownikiem, przyjmowaniem nowych wiadomości i odpowiadanie na zapytania użytkownika.
+Użytkownik łączy się z serwerem i podaje klucz sesji.
+Komunikacja z serwerem sesji jest opisana w pliku `./src/share/MessagingSchema.ts` 
 

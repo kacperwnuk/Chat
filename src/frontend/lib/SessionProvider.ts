@@ -1,13 +1,13 @@
 import React from "react";
 import {useDispatch} from "react-redux";
-import Session from "./Session";
 import {useBackendData} from "../redux/reducers/backend_data";
 import {useCredentials} from "../redux/reducers/credentials_data";
 import {makeAction} from "../redux/actions";
+import Session from "./Session";
 import wait from "../../share/wait";
 
 export default function SessionProvider(props: React.PropsWithChildren<{}>) {
-    console.log("SessionProvider");
+
 
     const dispatch = useDispatch();
     const backend_data = useBackendData();

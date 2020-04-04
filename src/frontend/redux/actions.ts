@@ -1,8 +1,9 @@
-import type {BasicLoginData, MessagePrototypeData} from "../../share/types";
+import type {MessagePrototypeData} from "../../share/types";
 import type AppData from "./AppData";
 import type {LoadingObject} from "./AppData";
 import type Session from "../lib/Session";
 import type DatabaseT from "../../share/DatabaseT";
+import {BasicLoginData} from "../../share/MessagingSchema";
 
 export interface Actions {
     CREDENTIALS_DATA_REQUEST: BasicLoginData

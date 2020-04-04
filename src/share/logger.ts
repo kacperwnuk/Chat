@@ -1,3 +1,6 @@
+/**
+ * logger, którego będziemy używać do debugowania i innych rzeczy
+ */
 import winston from "winston";
 
 const logger = winston.createLogger({
