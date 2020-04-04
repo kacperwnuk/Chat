@@ -4,6 +4,7 @@ import {v4 as uuid} from 'uuid';
 import ServerError from "../lib/ServerError";
 import type DatabaseT from "../../share/DatabaseT";
 import {MessagePrototypeData} from "../../share/types";
+import informSessionsAboutMessage from "../lib/informSessionsAboutMessage";
 
 export default async function (msg: {
     from_user_id: string,
@@ -21,7 +22,6 @@ export default async function (msg: {
             values ($1::text, $2::uuid, $3::uuid, $4::uuid, $5::uuid, $6::json);
         `, [About.version, msg.session_id, msg.from_user_id, message_id, msg.conversation_id, JSON.stringify(msg.content)]);
     } catch (e) {
-        console.log(e);
         throw new ServerError(ServerError.Type.INTERNAL_SERVER_ERROR);
     }
 
@@ -35,5 +35,10 @@ export default async function (msg: {
         throw new ServerError(ServerError.Type.INTERNAL_SERVER_ERROR);
     }
 
-    return response.rows[0];
+    let message = response.rows[0];
+
+    // informowanie innych sesji niech będzie asynchroniczne
+    informSessionsAboutMessage(message);
+
+    return message;
 }

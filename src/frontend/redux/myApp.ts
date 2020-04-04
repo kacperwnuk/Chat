@@ -9,6 +9,29 @@ import {commitMessageAdd} from "./reducers/messages";
 import {commitNotificationAdd, commitNotificationRemove} from "./reducers/notifications";
 
 const initial_state: AppData.State = {
+    // credentials_data: {
+    //     data: {
+    //         "user": {
+    //             "user_id": "2e655285-63c3-4ca5-b27d-0c74e7a40b87",
+    //             "username": "a.jedrzejowski",
+    //             "email": "email1@example.com",
+    //             "gender": "male",
+    //             "law_type": "pl",
+    //             "name_family": "Jędrzejowski",
+    //             "name_given": "Adam",
+    //             "name_middle": null,
+    //             "name_prefix": null,
+    //             "name_suffix": null,
+    //             "address": "ul. Wyzwolenia 68",
+    //             "address_data": {},
+    //             "deleted": false
+    //         },
+    //         "auth_data": {
+    //             "session_id": "538ec861-f3dc-40a7-a9f5-cd2d3e868629",
+    //             "secret_key": "126158c3-a0ac-4378-acbf-d441d20fa211"
+    //         }
+    //     }
+    // },
     backend_data: {
         cdn_url: "localhost:8080",
         auth_url: "localhost:8082",

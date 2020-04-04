@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    dupa: {
+        huj: console.log(theme)
+    }
 }));
 
 export default function () {
@@ -52,7 +55,7 @@ export default function () {
     const [password, setPassword] = React.useState("");
 
 
-    function authUser(/**UIEvent*/event) {
+    function authUser(event) {
         event.preventDefault();
 
         setIsConnection(true);

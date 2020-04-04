@@ -7,6 +7,7 @@ import {call, put, select} from "redux-saga/effects";
 import {sessionSelector} from "./session";
 import {NotificationLevel} from "../../../share/logger";
 import {useSelector} from "react-redux";
+import {credentialsSelector} from "./credentials_data";
 
 export function messagesByConversationIdSelector(state: AppData.State, conversation_id: string) {
     return state.message_dictionary?.[conversation_id] ?? [];
@@ -17,9 +18,15 @@ export function useMessagesByConversationId(conversation_id: string) {
 }
 
 export function commitMessageAdd(state: AppData.State, new_message: DatabaseT.Message): AppData.State {
+    let logged_user_id = credentialsSelector(state)?.user?.user_id ?? null;
     let message_dictionary = state.message_dictionary ?? {};
 
-    let message_list = message_dictionary[new_message.conversation_id] ?? [];
+    let conversation_id = new_message.conversation_id;
+    if (conversation_id === logged_user_id) {
+        conversation_id = new_message.from_user_id;
+    }
+
+    let message_list = message_dictionary[conversation_id] ?? [];
 
     //TODO zmienić dodawanie tak aby było posortowane
     message_list = [...message_list, new_message];
@@ -28,7 +35,7 @@ export function commitMessageAdd(state: AppData.State, new_message: DatabaseT.Me
         ...state,
         message_dictionary: {
             ...message_dictionary,
-            [new_message.conversation_id]: message_list
+            [conversation_id]: message_list
         }
     };
 }
@@ -43,7 +50,7 @@ export function* fetchMessagesSaga(action: Action<"MESSAGE_SEND_REQUEST">) {
         }
 
         const message = yield call(
-            () => session.message("sendMessage", action.data)
+            () => session.emit("sendMessage", action.data)
         );
 
         yield put(makeAction("MESSAGE_ADD2DIC", message));

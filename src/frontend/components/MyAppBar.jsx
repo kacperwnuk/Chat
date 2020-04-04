@@ -14,6 +14,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from '@material-ui/icons/Inbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
+import {useCredentials} from "../redux/reducers/credentials_data";
+import UserDisplay from "./UserDisplay";
 
 const useStyles = makeStyles((theme) => ({
     iconLeft: {
@@ -25,11 +27,15 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
-}));
+}), {
+    name: "MyAppBar"
+});
 
-export default function (props) {
+export default function MyAppBar(props) {
     const classes = useStyles();
     const translate = useTranslate();
+    const credentials = useCredentials();
+
 
     return <div>
 
@@ -46,6 +52,10 @@ export default function (props) {
 
                 <div className={classes.iconRight}>
                     <SessionStatusIcon/>
+                </div>
+
+                <div>
+                    <UserDisplay user={credentials.user}/>
                 </div>
 
                 <div className={classes.iconRight}>

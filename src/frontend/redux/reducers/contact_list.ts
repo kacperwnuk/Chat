@@ -30,7 +30,7 @@ export function* fetchContactListSaga(action: Action<"CONTACT_LIST_REQUEST">) {
         }
 
         const contact_list = yield call(
-            () => session.message("getMyContacts")
+            () => session.emit("getMyContacts")
         );
 
         console.log("saga contact");

@@ -1,6 +1,10 @@
 import socket_io from "socket.io";
 import resolveError from "../lib/resolveError";
-import {SessionMessagingSchemaByClient} from "../../share/MessagingSchema";
+import {
+    SessionMessagingSchemaByClient,
+    SessionMessagingSchemaByServer,
+    SocketMiddlewareReturn
+} from "../../share/MessagingSchema";
 
 export function socketOnMiddleware<Key extends keyof SessionMessagingSchemaByClient>(
     socket: socket_io.Socket,
@@ -30,7 +34,7 @@ export function socketOnceMiddleware<Key extends keyof SessionMessagingSchemaByC
     ) => Promise<ReturnType<SessionMessagingSchemaByClient[Key]>> | ReturnType<SessionMessagingSchemaByClient[Key]>
 ) {
     socket.once(name, async (...args) => {
-        let cb = args.pop();
+        let cb: (arg: SocketMiddlewareReturn) => void = args.pop();
 
         try {
             // @ts-ignore
@@ -40,4 +44,20 @@ export function socketOnceMiddleware<Key extends keyof SessionMessagingSchemaByC
             cb({error: resolveError(error)});
         }
     })
+}
+
+export function socketEmitMiddleware<Key extends keyof SessionMessagingSchemaByServer>(
+    socket: socket_io.Socket,
+    name: Key,
+    ...params: Parameters<SessionMessagingSchemaByServer[Key]>
+) {
+    return new Promise<ReturnType<SessionMessagingSchemaByServer[Key]>>((resolve, reject) => {
+        socket.emit(name, ...params, (ret: SocketMiddlewareReturn) => {
+            if (ret.hasOwnProperty("error")) {
+                reject(ret.error);
+            } else {
+                resolve(ret.data);
+            }
+        })
+    });
 }

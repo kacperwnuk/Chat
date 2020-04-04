@@ -6,11 +6,11 @@ declare namespace DatabaseT {
         user_id: string
         law_type: string
         username: string
-        name_family: string
-        name_given: string
-        name_middle: string
-        name_prefix: string
-        name_suffix: string
+        name_family: string | null
+        name_given: string | null
+        name_middle: string | null
+        name_prefix: string | null
+        name_suffix: string | null
         address: string
         address_data: any
         deleted: boolean

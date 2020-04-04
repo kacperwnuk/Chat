@@ -2,13 +2,14 @@ import React from "react";
 import PropTypes from 'prop-types';
 import Avatar from "@material-ui/core/Avatar";
 
-export default function UserAvatar({userId, ...props}) {
+export default function UserAvatar({user, userId, ...props}) {
     // if (!userId)
-    userId = "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp";
+    let url = "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp";
 
-    return <Avatar src={userId} {...props}/>
+    return <Avatar src={url} {...props}/>
 }
 
 UserAvatar.propTypes = {
+    user: PropTypes.object,
     userId: PropTypes.string
 };

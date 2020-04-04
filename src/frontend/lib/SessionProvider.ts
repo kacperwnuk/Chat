@@ -17,8 +17,9 @@ export default function SessionProvider(props: React.PropsWithChildren<{}>) {
     const [session_ready, setSessionReady] = React.useState<boolean>(false);
 
     React.useEffect(() => {
+        let canceled = false;
         wait(10).then(() => {
-            if (credential_data) {
+            if (credential_data && !canceled) {
                 let newSession = new Session(backend_data, credential_data.auth_data);
                 setSession(newSession);
             } else {
@@ -26,10 +27,14 @@ export default function SessionProvider(props: React.PropsWithChildren<{}>) {
             }
         });
 
+        return () => {
+            canceled = true
+        };
     }, [credential_data]);
 
     if (session instanceof Session) {
         session.setReady = setSessionReady;
+        session.dispatch = dispatch;
     }
 
     React.useEffect(() => {

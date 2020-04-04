@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {useUserData} from "../redux/reducers/user_data";
 import {Paper} from "@material-ui/core";
-import getUserDisplayName from "../../share/data-malipulation/getUserDisplayName";
 import UserAvatar from "./UserAvatar";
 import MessageComposer from "./MessageComposer";
 import MessageList from "./MessageList";
@@ -10,14 +9,14 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import useWindowSize from "../hooks/useWindowSize";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import UserDisplay from "./UserDisplay";
 
 
 const useStyle = makeStyles(theme => ({
     root: {
         display: "flex",
     },
-    header: {
-    },
+    header: {},
     composer: {
         position: "fixed",
         boxSizing: "border-box",
@@ -55,7 +54,7 @@ export default function Conversation({
         <Toolbar component={Paper} className={classes.header}>
             <UserAvatar userId={user_data.user_id} className={classes.user_avatar}/>
             <Typography variant="h6" className={classes.title}>
-                {getUserDisplayName(user_data)}
+                <UserDisplay user={user_data}/>
             </Typography>
         </Toolbar>
         <MessageList conversationId={conversationId}/>

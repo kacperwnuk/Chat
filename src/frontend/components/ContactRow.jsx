@@ -4,25 +4,43 @@ import UserAvatar from "./UserAvatar";
 import {useUserData} from "../redux/reducers/user_data";
 import {useDispatch} from "react-redux";
 import {makeCurrentConversationIdChangeAction} from "../redux/reducers/current_conversationt";
-import getUserDisplayName from "../../share/data-malipulation/getUserDisplayName";
+import UserDisplay from "./UserDisplay";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Typography from "@material-ui/core/Typography";
+
+const useStyle = makeStyles(theme => ({
+    root: {
+        display: "flex",
+        flexDirection: "row",
+        padding: theme.spacing(0.5),
+        alignItems: "center"
+    },
+    title: {},
+    subtitle: {},
+    avatar: {
+        marginRight: theme.spacing(1)
+    },
+}), {name: "ContactRow"});
 
 export default function ContactRow({userId}) {
+    const classes = useStyle();
     const dispatch = useDispatch();
     const user_data = useUserData(userId);
-
-    if (user_data === null)
-        return <>Ładownaie</>;
-
-    let display_name = getUserDisplayName(user_data);
 
     function handleClick() {
         dispatch(makeCurrentConversationIdChangeAction(userId))
     }
 
-    return <div onClick={handleClick}>
-        <UserAvatar userId={user_data.user_id}/>
-        <div>{display_name}</div>
-        <div>{userId}</div>
+    return <div onClick={handleClick} className={classes.root}>
+        <UserAvatar user={user_data} className={classes.avatar}/>
+        <div>
+            <Typography variant="body1" className={classes.title}>
+                <UserDisplay user={user_data}/>
+            </Typography>
+            <Typography variant="caption" className={classes.subtitle}>
+                Pod tytuł
+            </Typography>
+        </div>
     </div>
 }
 

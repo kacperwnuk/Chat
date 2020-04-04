@@ -7,7 +7,7 @@ import type DatabaseT from "../../share/DatabaseT";
  */
 export default async function (username: string, password: string): Promise<DatabaseT.User> {
     let result = await databaseUser.query(`
-        select *
+        select users.*
         from users
              join basic_auth on users.user_id = basic_auth.user_id
         where username=$1::text and password=$2::text;

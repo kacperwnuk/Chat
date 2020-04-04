@@ -8,14 +8,13 @@ import type {LoadingObject} from "../AppData";
 import fetchAuth from "../../lib/fetchAuth";
 
 
-function credentialsSelector(store: AppData.State): AppData.CredentialsData | null {
+export function credentialsSelector(store: AppData.State): AppData.CredentialsData | null {
     return store.credentials_data?.data ?? null;
 }
 
-function credentialsErrorSelector(store: AppData.State): AppError | null {
+export function credentialsErrorSelector(store: AppData.State): AppError | null {
     return store.credentials_data?.error ?? null;
 }
-
 
 export function commitCredentials(state: AppData.State, data: LoadingObject<AppData.CredentialsData>): AppData.State {
     return {
@@ -31,7 +30,6 @@ export function useCredentials() {
 export function useCredentialsError() {
     return useSelector(credentialsErrorSelector);
 }
-
 
 export function* fetchCredentialsDataSaga(action: Action<"CREDENTIALS_DATA_REQUEST">) {
     try {

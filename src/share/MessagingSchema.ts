@@ -21,3 +21,8 @@ export interface SessionMessagingSchemaByServer {
     "newMessage": (message: DatabaseT.Message) => void
     "newContact": (user_id: string) => void
 }
+
+export interface SocketMiddlewareReturn<T = any> {
+    error?: any,
+    data?: T
+}

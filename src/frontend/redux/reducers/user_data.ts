@@ -41,7 +41,7 @@ export function* fetchUserDataSaga(action: Action<"USER_DATA_REQUEST">) {
     }
 
     const user_data = yield call(
-        () => session.message("getUserData", action.data)
+        () => session.emit("getUserData", action.data)
     );
 
     yield put(

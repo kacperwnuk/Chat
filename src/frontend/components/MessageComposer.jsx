@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import {useDispatch} from "react-redux";
 import {makeSendMessageAction} from "../redux/reducers/messages";
 import {useSession} from "../redux/reducers/session";
@@ -32,8 +31,16 @@ export default function MessageComposer({
     const session = useSession();
     const [message, setMessage] = React.useState("");
 
-    function handleChange(event) {
+    function handleChange(event, value) {
         setMessage(event.target.value);
+    }
+
+    function handleKeyPress(event) {
+        if (event.shiftKey === false && event.which === 13) {
+            event.preventDefault();
+            event.stopPropagation();
+            handleSend();
+        }
     }
 
     function handleSend() {
@@ -44,12 +51,15 @@ export default function MessageComposer({
                 conversation_id,
                 content: message
             })
-        )
+        );
+
+        setMessage("")
     }
 
     return <div className={classes.root}>
         <div className={classes.text_input}>
             <TextField
+                onKeyPress={handleKeyPress}
                 fullWidth
                 disabled={session === null}
                 multiline
