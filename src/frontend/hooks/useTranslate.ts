@@ -8,7 +8,7 @@ function translate(lang: Lang, id: string) {
 }
 
 export default function () {
-    const language: Lang = React.useContext(LanguageContext);
+    const language: Lang = React.useContext(LanguageContext).language;
 
     return (id: string) => translate(language, id);
 }

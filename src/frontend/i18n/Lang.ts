@@ -1,4 +1,7 @@
 export default interface Lang {
+    language_button: string,
+    lang_name: string,
+    lang_name_english: string,
     app: {
         name: string
     },

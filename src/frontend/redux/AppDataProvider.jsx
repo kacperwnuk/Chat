@@ -9,7 +9,10 @@ import mySaga from "./mySaga"
 
 const sagaMiddleware = createSagaMiddleware();
 
-const createStoreWithMiddleware = applyMiddleware(sagaMiddleware, logger)(createStore);
+const createStoreWithMiddleware = applyMiddleware(
+    sagaMiddleware,
+    // logger
+)(createStore);
 const store = createStoreWithMiddleware(myApp);
 
 sagaMiddleware.run(mySaga);

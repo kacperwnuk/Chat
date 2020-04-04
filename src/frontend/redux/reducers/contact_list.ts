@@ -33,7 +33,6 @@ export function* fetchContactListSaga(action: Action<"CONTACT_LIST_REQUEST">) {
             () => session.emit("getMyContacts")
         );
 
-        console.log("saga contact");
 
         yield put(
             makeAction("CONTACT_LIST_SET", contact_list)

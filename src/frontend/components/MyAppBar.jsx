@@ -16,6 +16,7 @@ import InboxIcon from '@material-ui/icons/Inbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import {useCredentials} from "../redux/reducers/credentials_data";
 import UserDisplay from "./UserDisplay";
+import LanguageButton from "./LanguageButton";
 
 const useStyles = makeStyles((theme) => ({
     iconLeft: {
@@ -53,6 +54,8 @@ export default function MyAppBar(props) {
                 <div className={classes.iconRight}>
                     <SessionStatusIcon/>
                 </div>
+
+                <LanguageButton/>
 
                 <div>
                     <UserDisplay user={credentials.user}/>

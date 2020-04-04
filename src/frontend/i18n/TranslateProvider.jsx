@@ -1,11 +1,18 @@
 import * as React from "react";
-import lang from "./lang";
+import Languages from "./lang";
+import noop from "../../share/noop";
 
-export const LanguageContext = React.createContext(lang.polish);
+export const LanguageContext = React.createContext({
+    language: Languages.default,
+    setLanguage: noop
+});
 
 export default function TranslateProvider({children}) {
+    console.log("TranslateProvider");
 
-    return <LanguageContext.Provider value={lang.polish}>
+    const [language, setLanguage] = React.useState(Languages.default);
+
+    return <LanguageContext.Provider value={{language, setLanguage}}>
         {children}
     </LanguageContext.Provider>
 }

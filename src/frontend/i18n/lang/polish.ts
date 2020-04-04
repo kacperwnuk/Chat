@@ -1,6 +1,9 @@
 import type Lang from "../Lang";
 
 export default {
+    language_button: "POLSKI",
+    lang_name: "Polski",
+    lang_name_english: "Polish",
     app: {
         name: "RSO/Chat"
     },
