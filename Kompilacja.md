@@ -28,10 +28,10 @@ Każda baza danych jest folderem z następującą strukturą:
 
 Zarządzanie bazą danych:
 
- - `create.sh` - tworzenie dockera
- - `start.sh` -  uruchamianie dockera
- - `stop.sh` - zatrzymanie dockera
- - `remove.sh` - usuwanie dockera
+ - `create.sh` - tworzenie docker'a
+ - `start.sh` -  uruchamianie docker'a
+ - `stop.sh` - zatrzymanie docker'a
+ - `remove.sh` - usuwanie docker'a
  
 Każdy skrypt bierze jeden argument nazwy bazy danych.
  
@@ -44,7 +44,13 @@ Przykłady użycia:
 ./src/database/remove.sh main
 ```
 
-## Budowanie
+UWAGA!!!
+
+Po utworzeniu kontenerów z bazą danych pliki `init.sql` nie wykonują się.
+Nie wiemy dlaczego.
+Więc należy je wykonać ręcznie.
+
+## Serwisy
 
 Aby zbudować projekt jednorazowo:
 ```
@@ -72,3 +78,37 @@ npm run-script dev-server-cdn
 npm run-script dev-server-main
 ```
 Co będzie resetowało serwer po kompilacji.
+
+## Przygotowanie środowiska deweloperskiego
+
+```bash
+
+# zainstaluj moduły npm
+npm i
+
+# utwórz bazy danych
+./src/database/create.sh main
+./src/database/create.sh user
+
+# wystartuj bazy danych
+./src/database/start.sh main
+./src/database/start.sh user
+
+# wykonaj skrypty init.sql na bazach danych
+dbs=('main' 'user')
+for db in "${dbs[@]}"
+do
+    source ./src/database/$db/.env
+    PGPASSWORD=$ADMIN_PASSWORD
+    psql -h "localhost:${DB_PORT}" -U postgres -d "${BACKEND_DATABASE}" -a -f ./src/database/$db/init.sql
+done
+
+# uruchom automatyczne budowanie
+npm run-script dev-bulid
+
+# uruchom serwisy
+npm run-script dev-server-auth
+npm run-script dev-server-cdn
+npm run-script dev-server-main
+
+```
