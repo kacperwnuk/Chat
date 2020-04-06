@@ -1,5 +1,7 @@
 import ServerError from "./ServerError";
 import {ValidationError} from "yup";
+import pg from "pg";
+import logger from "../../share/logger";
 
 /**
  * Każdy błąd musi być przerobiony i odesłany do klienta
@@ -8,6 +10,7 @@ export default function (error: any): {
     msg: string,
     type: number
 } {
+
     if (error instanceof ServerError) {
         return {
             type: error.type,
@@ -21,6 +24,8 @@ export default function (error: any): {
             msg: error.message
         }
     }
+
+    logger.error("Nieznany błąd aplikacji", {error})
 
     return {
         type: ServerError.Type.INTERNAL_SERVER_ERROR,
