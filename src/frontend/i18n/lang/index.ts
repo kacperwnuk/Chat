@@ -1,8 +1,12 @@
 import type {Dictionary} from "../../../share/types";
 import type Lang from "../Lang";
 
-export default {
-    default: require("./english").default,
-    polish: require("./polish").default,
-    // english: require("./english").default
-} as Dictionary<Lang>
+import english from "./english";
+import polish from "./english";
+
+const Languages: Dictionary<Lang> = {
+    default: english,
+    polish
+};
+
+export default Languages;

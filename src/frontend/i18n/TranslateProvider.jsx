@@ -7,6 +7,8 @@ export const LanguageContext = React.createContext({
     setLanguage: noop
 });
 
+console.log("HERE");
+
 export default function TranslateProvider({children}) {
 
     const [language, setLanguage] = React.useState(Languages.default);
