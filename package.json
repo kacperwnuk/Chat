@@ -3,8 +3,7 @@
     "version": "0.0.1",
     "description": "Projekt na przedmiot RSO - Chat",
     "scripts": {
-        "build-backend": "babel src -d dist --ignore src/frontend",
-        "build-frontend": "webpack --mode production",
+        "build": "webpack --mode production",
         "server-cdn": "node dist/backend/cdn.js",
         "server-auth": "node dist/backend/auth.js",
         "server-main": "node dist/backend/main.js",
@@ -46,6 +45,7 @@
         "nodemon": "^2.0.2",
         "prop-types": "^15.7.2",
         "react": "^16.13.1",
+        "react-cookie": "^4.0.3",
         "react-dom": "^16.13.1",
         "react-redux": "^7.2.0",
         "redux": "^4.0.5",

@@ -8,7 +8,6 @@ export const LanguageContext = React.createContext({
 });
 
 export default function TranslateProvider({children}) {
-    console.log("TranslateProvider");
 
     const [language, setLanguage] = React.useState(Languages.default);
 
