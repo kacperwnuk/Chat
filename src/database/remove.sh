@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+
+#
+# Usuwanie danego obrazu i jego kontenerów
+#
+
 set -e
 cd "$(dirname $0)"
 dbpath=$(./_resolve.sh $1)

@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+
+#
+# Modele bazy danych tworzymy w [pgModeler](https://pgmodeler.io/)
+# Ten skrypt eksportuje pliki *.dbm do plików *.sql i tworzy obrazy *.png modeli
+#
+
 set -e
 
 function exportDBM() {

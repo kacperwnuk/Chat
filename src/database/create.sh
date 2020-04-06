@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+
+#
+# Utworzenie danego obrazu z kontenerem
+#
+
 set -e
 cd "$(dirname $0)"
 dbpath=$(./_resolve.sh $1)
