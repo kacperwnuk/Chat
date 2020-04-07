@@ -6,7 +6,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TranslateIcon from '@material-ui/icons/Translate';
-import Languages from "../i18n/lang";
+import Languages from "../i18n/lang/index";
 import {LanguageContext} from "../i18n/TranslateProvider";
 import useTranslate from "../hooks/useTranslate";
 
