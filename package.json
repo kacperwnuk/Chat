@@ -7,7 +7,7 @@
         "server-cdn": "node dist/backend/cdn.js",
         "server-auth": "node dist/backend/auth.js",
         "server-main": "node dist/backend/main.js",
-        "dev-bulid": "webpack --mode development --watch",
+        "dev-build": "webpack --mode development --watch",
         "dev-server-cdn": "nodemon dist/backend/cdn.js",
         "dev-server-auth": "nodemon dist/backend/auth.js",
         "dev-server-session": "nodemon dist/backend/session.js"
