@@ -10,9 +10,9 @@ interface ExitDictionary {
 }
 
 export const EXIT_TYPE = {
-    NO_ENV_FILE: {
-        code: 0,
-        msg: 'Nie podano pliku konfiguracyjnego'
+    ENV_FILE: {
+        code: 1,
+        msg: 'Brak lub uszkodzony plik konfiguracyjny.'
     }
 };
 

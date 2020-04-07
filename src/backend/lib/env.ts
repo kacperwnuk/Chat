@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import {DatabaseConParams} from "./DatabaseCon";
+import {exit, EXIT_TYPE} from "./exit";
 
 interface ENV {
     database: {
@@ -10,7 +11,18 @@ interface ENV {
 }
 
 const env_path = path.join(process.cwd(), ".env.json");
-const env: ENV = JSON.parse(fs.readFileSync(env_path).toString());
+let env: ENV;
+
+try {
+    env = JSON.parse(fs.readFileSync(env_path).toString());
+} catch (e) {
+    exit(EXIT_TYPE.ENV_FILE);
+
+    // ta linia się i tak nie wykona, ale inaczej ts krzyczy, że coś się mu nie podoba
+    process.exit();
+}
+
+
 export default env;
 
 const argv = [...process.argv];

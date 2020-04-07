@@ -85,7 +85,6 @@ export default class Session {
         })
     }
 
-
     setReady(state: boolean) {
 
     }

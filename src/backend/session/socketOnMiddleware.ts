@@ -19,9 +19,9 @@ export function socketOnMiddleware<Key extends keyof SessionMessagingSchemaByCli
         try {
             // @ts-ignore
             let data = await func(...args);
-            cb({data})
+            return cb({data})
         } catch (error) {
-            cb({error: resolveError(error)});
+            return cb({error: resolveError(error)});
         }
     })
 }
@@ -39,9 +39,9 @@ export function socketOnceMiddleware<Key extends keyof SessionMessagingSchemaByC
         try {
             // @ts-ignore
             let data = await func(...args);
-            cb({data})
+            return cb({data})
         } catch (error) {
-            cb({error: resolveError(error)});
+            return cb({error: resolveError(error)});
         }
     })
 }

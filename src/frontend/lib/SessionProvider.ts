@@ -8,7 +8,6 @@ import wait from "../../share/wait";
 
 export default function SessionProvider(props: React.PropsWithChildren<{}>) {
 
-
     const dispatch = useDispatch();
     const backend_data = useBackendData();
     const credential_data = useCredentials();

@@ -3,6 +3,8 @@
  */
 
 import pg from "pg";
+import logger from "../../share/logger";
+import ServerError from "./ServerError";
 
 export interface DatabaseConParams {
     user: string
@@ -32,9 +34,24 @@ export default class DatabaseCon {
         this.dbs = params;
 
         this.pool = new pg.Pool(this.dbs[0]);
+
+        this.pool.on("error", (error) => {
+            logger.error("Krytyczny błąd bazy danych", {error})
+        })
     }
 
-    query<T = any>(query: string, params: any[] = []): Promise<QueryResult<T>> {
-        return this.pool.query(query, params);
+    async query<T = any>(query: string, params: any[] = []): Promise<QueryResult<T>> {
+        try {
+            return await this.pool.query(query, params);
+        } catch (error) {
+
+            if (error.code === "ECONNREFUSED") {
+                logger.error("Błąd połączenia z bazą danych", {error});
+
+                throw new ServerError(ServerError.Type.INTERNAL_SERVER_ERROR);
+            }
+
+            throw error;
+        }
     }
 }

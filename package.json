@@ -7,7 +7,7 @@
         "server-cdn": "node dist/backend/cdn.js",
         "server-auth": "node dist/backend/auth.js",
         "server-main": "node dist/backend/main.js",
-        "dev-bulid": "webpack --mode development --watch",
+        "dev-build": "webpack --mode development --watch",
         "dev-server-cdn": "nodemon dist/backend/cdn.js",
         "dev-server-auth": "nodemon dist/backend/auth.js",
         "dev-server-session": "nodemon dist/backend/session.js"
@@ -60,6 +60,7 @@
     },
     "dependencies": {
         "body-parser": "^1.19.0",
+        "colors": "^1.4.0",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
