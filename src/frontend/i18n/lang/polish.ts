@@ -22,6 +22,7 @@ export default {
         suffix: "."
     },
     error_msg: {
+        credentials_fail: "Błędny użytkownik/hasło",
         message_send_fail: "Błąd wysyłania wiadomości"
     }
 } as Lang;

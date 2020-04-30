@@ -69,6 +69,10 @@ export default function () {
         return <FatalError/>
     }
 
+    if (credentials_error && isConnecting) {
+        setIsConnection(false);
+    }
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline/>

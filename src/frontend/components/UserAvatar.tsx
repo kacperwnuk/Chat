@@ -7,11 +7,13 @@ type UserAvatarProps = {
     userId?: string | null
 } & React.HTMLAttributes<HTMLDivElement>
 
-export default function UserAvatar(props: UserAvatarProps) {
+export default function UserAvatar({
+                                       userId,
+                                       user,
+                                       ...props
+                                   }: UserAvatarProps) {
     let url = "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp";
 
-    delete props.user;
-    delete props.userId;
 
     return <Avatar src={url} {...props}/>
 }

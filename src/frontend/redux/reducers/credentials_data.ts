@@ -6,6 +6,7 @@ import {select, call, put} from "redux-saga/effects";
 import type AppData from "../AppData";
 import type {LoadingObject} from "../AppData";
 import fetchAuth from "../../lib/fetchAuth";
+import {NotificationLevel} from "../../../share/logger";
 
 
 export function credentialsSelector(store: AppData.State): AppData.CredentialsData | null {
@@ -48,6 +49,13 @@ export function* fetchCredentialsDataSaga(action: Action<"CREDENTIALS_DATA_REQUE
     } catch (error) {
         yield put(
             makeAction("CREDENTIALS_DATA_SET", {error})
+        );
+
+        yield put(
+            makeAction("NOTIFICATION_ADD", {
+                content: "error_msg.credentials_fail",
+                level: NotificationLevel.Error
+            })
         );
     }
 }
