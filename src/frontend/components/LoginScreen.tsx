@@ -37,9 +37,6 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
-    },
-    dupa: {
-        huj: console.log(theme)
     }
 }));
 
@@ -55,7 +52,7 @@ export default function () {
     const [password, setPassword] = React.useState("");
 
 
-    function authUser(event) {
+    function authUser(event: React.MouseEvent) {
         event.preventDefault();
 
         setIsConnection(true);
@@ -68,7 +65,7 @@ export default function () {
         );
     }
 
-    if (credentials_error === AppErrorType.FATAL) {
+    if (credentials_error?.type === AppErrorType.FATAL) {
         return <FatalError/>
     }
 
@@ -96,7 +93,7 @@ export default function () {
                         autoFocus
                         onChange={e => setUsername(e.target.value)}
                         disabled={isConnecting}
-                        error={credentials_error === AppErrorType.ACCESS_DENIED}
+                        error={credentials_error?.type === AppErrorType.ACCESS_DENIED}
                     />
                     <TextField
                         variant="outlined"
@@ -110,7 +107,7 @@ export default function () {
                         autoComplete="current-password"
                         onChange={e => setPassword(e.target.value)}
                         disabled={isConnecting}
-                        error={credentials_error === AppErrorType.ACCESS_DENIED}
+                        error={credentials_error?.type === AppErrorType.ACCESS_DENIED}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary"/>}

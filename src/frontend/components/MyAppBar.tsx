@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -17,6 +17,7 @@ import DraftsIcon from '@material-ui/icons/Drafts';
 import {useCredentials} from "../redux/reducers/credentials_data";
 import UserDisplay from "./UserDisplay";
 import LanguageButton from "./LanguageButton";
+import AppError, {AppErrorType} from "../lib/AppError";
 
 const useStyles = makeStyles((theme) => ({
     iconLeft: {
@@ -32,11 +33,14 @@ const useStyles = makeStyles((theme) => ({
     name: "MyAppBar"
 });
 
-export default function MyAppBar(props) {
+export default function MyAppBar() {
     const classes = useStyles();
     const translate = useTranslate();
     const credentials = useCredentials();
 
+    if (!credentials) {
+        throw new AppError(AppErrorType.FATAL, "no credentials")
+    }
 
     return <div>
 
@@ -72,10 +76,12 @@ export default function MyAppBar(props) {
 
 function AvatarMenu() {
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState<any>(null);
 
-    function handleClick(event) {
-        setAnchorEl(event.currentTarget);
+    function handleClick(event: React.MouseEvent) {
+        if (event.currentTarget) {
+            setAnchorEl(event.currentTarget);
+        }
     }
 
     function handleClose() {

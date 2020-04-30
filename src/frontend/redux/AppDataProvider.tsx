@@ -19,11 +19,11 @@ const store = createStoreWithMiddleware(myApp);
 
 sagaMiddleware.run(mySaga);
 
-export default function ({children}) {
+export default function (props: { children: React.ReactNode }) {
     // console.log("useCookies", useCookies);
 
     const [cookies, setCookies, removeCookies] = useCookies();
     // console.log(cookies, setCookies, removeCookies)
 
-    return <Provider store={store}>{children}</Provider>;
+    return <Provider store={store}>{props.children}</Provider>;
 }

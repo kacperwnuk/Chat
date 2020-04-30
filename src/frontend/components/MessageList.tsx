@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {useMessagesByConversationId} from "../redux/reducers/messages";
 import Message from "./Message";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -11,13 +10,12 @@ const useStyle = makeStyles(theme => ({
     }
 }), {name: "MessageList"});
 
-export default function MessageList({
-                                        conversationId: conversation_id,
-                                        ...props
-                                    }) {
+export default function MessageList(props: {
+    conversationId: string,
+}) {
 
     const classes = useStyle();
-    const messages = useMessagesByConversationId(conversation_id);
+    const messages = useMessagesByConversationId(props.conversationId);
 
     return <div>
         {messages.map((message, i) => {
@@ -30,6 +28,3 @@ export default function MessageList({
 }
 
 
-MessageList.propTypes = {
-    conversationId: PropTypes.string.isRequired
-};

@@ -3,8 +3,9 @@
  */
 
 import pg from "pg";
-import logger from "../../share/logger";
+import {makeLogger} from "../../share/logger";
 import ServerError from "./ServerError";
+import winston from "winston";
 
 export interface DatabaseConParams {
     user: string
@@ -26,17 +27,25 @@ export default class DatabaseCon {
     /**
      * Tablica z bazami danych, pierwsza to główna, a reszta zapasowa
      */
-    readonly dbs: DatabaseConParams[];
-    private pool: pg.Pool;
+    private readonly dbs: DatabaseConParams[];
+    private readonly pool: pg.Pool;
+    private readonly logger: winston.Logger;
 
     constructor(params: DatabaseConParams[]) {
-
         this.dbs = params;
 
-        this.pool = new pg.Pool(this.dbs[0]);
+        let db_cfg = this.dbs[0];
+
+        this.logger = makeLogger(DatabaseCon.name, `${db_cfg.user}@${db_cfg.database}(${db_cfg.host}:${db_cfg.port})`);
+
+        this.pool = new pg.Pool(db_cfg);
+
+        this.pool.on("connect", () => {
+            this.logger.info("połączono")
+        });
 
         this.pool.on("error", (error) => {
-            logger.error("Krytyczny błąd bazy danych", {error})
+            this.logger.error("Krytyczny błąd bazy danych", {error})
         })
     }
 
@@ -46,7 +55,7 @@ export default class DatabaseCon {
         } catch (error) {
 
             if (error.code === "ECONNREFUSED") {
-                logger.error("Błąd połączenia z bazą danych", {error});
+                this.logger.error("Błąd połączenia z bazą danych", {error});
 
                 throw new ServerError(ServerError.Type.INTERNAL_SERVER_ERROR);
             }

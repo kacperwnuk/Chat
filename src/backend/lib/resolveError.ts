@@ -1,6 +1,5 @@
 import ServerError from "./ServerError";
 import {ValidationError} from "yup";
-import pg from "pg";
 import logger from "../../share/logger";
 
 /**

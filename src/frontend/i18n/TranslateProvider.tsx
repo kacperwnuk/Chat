@@ -1,14 +1,23 @@
 import * as React from "react";
 import Languages from "./lang/index";
 import noop from "../../share/noop";
-export const LanguageContext = React.createContext({
+import Lang from "./Lang";
+
+export const LanguageContext = React.createContext<{
+    language: Lang,
+    setLanguage: (lang: Lang) => void
+}>({
     language: Languages.default,
     setLanguage: noop
 });
-console.log("HERE");
-export default function TranslateProvider({children}) {
+
+export default function TranslateProvider(props: {
+    children: React.ReactNode
+}) {
+
     const [language, setLanguage] = React.useState(Languages.default);
+
     return <LanguageContext.Provider value={{language, setLanguage}}>
-        {children}
+        {props.children}
     </LanguageContext.Provider>
 }

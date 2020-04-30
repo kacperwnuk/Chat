@@ -66,8 +66,14 @@ if (process.env.NODE_ENV !== 'production') {
 export enum NotificationLevel {
     Info = "info",
     Error = "error",
-    Warn = "warn",
+    Warn = "warning",
     Success = "success"
 }
 
 export default logger;
+
+export function makeLogger(...label: string[]) {
+    return logger.child({
+        label:label.join("] [")
+    });
+}

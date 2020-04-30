@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from 'prop-types';
 import UserAvatar from "./UserAvatar";
 import {useUserData} from "../redux/reducers/user_data";
 import {useDispatch} from "react-redux";
@@ -7,6 +6,7 @@ import {makeCurrentConversationIdChangeAction} from "../redux/reducers/current_c
 import UserDisplay from "./UserDisplay";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
+
 
 const useStyle = makeStyles(theme => ({
     root: {
@@ -22,13 +22,16 @@ const useStyle = makeStyles(theme => ({
     },
 }), {name: "ContactRow"});
 
-export default function ContactRow({userId}) {
+
+export default function ContactRow(props: {
+    userId: string
+}) {
     const classes = useStyle();
     const dispatch = useDispatch();
-    const user_data = useUserData(userId);
+    const user_data = useUserData(props.userId);
 
     function handleClick() {
-        dispatch(makeCurrentConversationIdChangeAction(userId))
+        dispatch(makeCurrentConversationIdChangeAction(props.userId))
     }
 
     return <div onClick={handleClick} className={classes.root}>
@@ -44,6 +47,3 @@ export default function ContactRow({userId}) {
     </div>
 }
 
-ContactRow.propTypes = {
-    userId: PropTypes.string.isRequired
-};

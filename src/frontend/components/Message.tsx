@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {useUserData} from "../redux/reducers/user_data";
 import UserAvatar from "./UserAvatar";
 import {Paper} from "@material-ui/core";
@@ -8,6 +7,8 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import UserDisplay from "./UserDisplay";
 import mergeClassNames from "../lib/mergeClassNames";
 import {useCredentials} from "../redux/reducers/credentials_data";
+import type DatabaseT from "../../share/DatabaseT";
+import AppError, {AppErrorType} from "../lib/AppError";
 
 const useStyle = makeStyles(theme => ({
     root: {
@@ -49,28 +50,31 @@ const useStyle = makeStyles(theme => ({
     }
 }), {name: "Message"});
 
-/**
- *
- * @param {DatabaseT.Message} message
- */
-export default function Message({message}) {
+
+export default function Message(props: {
+    message: DatabaseT.Message
+}) {
     const classes = useStyle();
-    const user_data = useUserData(message.from_user_id);
+    const user_data = useUserData(props.message.from_user_id);
     const credentials = useCredentials();
 
-    const is_from_logged_user = credentials.user.user_id === message.from_user_id;
+    if (!credentials) {
+        throw new AppError(AppErrorType.FATAL, "no credentials");
+    }
+
+    const is_from_logged_user = credentials.user.user_id === props.message.from_user_id;
 
     if (is_from_logged_user) {
 
         return <div className={mergeClassNames(classes.root, classes.root_right)}>
             <Paper className={mergeClassNames(classes.body, classes.body_right)}>
-                <UserAvatar userId={message.from_user_id}
+                <UserAvatar userId={props.message.from_user_id}
                             className={mergeClassNames(classes.avatar, classes.avatar_right)}/>
                 <Typography variant="caption">
                     <UserDisplay user={user_data}/>
                 </Typography>
                 <Typography variant="body1">
-                    {message.content}
+                    {props.message.content}
                 </Typography>
             </Paper>
         </div>
@@ -79,13 +83,13 @@ export default function Message({message}) {
 
         return <div className={mergeClassNames(classes.root, classes.root_left)}>
             <Paper className={mergeClassNames(classes.body, classes.body_left)}>
-                <UserAvatar userId={message.from_user_id}
+                <UserAvatar userId={props.message.from_user_id}
                             className={mergeClassNames(classes.avatar, classes.avatar_left)}/>
                 <Typography variant="caption">
                     <UserDisplay user={user_data}/>
                 </Typography>
                 <Typography variant="body1">
-                    {message.content}
+                    {props.message.content}
                 </Typography>
             </Paper>
         </div>
@@ -93,7 +97,3 @@ export default function Message({message}) {
     }
 }
 
-
-Message.propTypes = {
-    message: PropTypes.object.isRequired
-};

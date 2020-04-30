@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useState} from "react";
 import Button from "@material-ui/core/Button";
 import Popover from "@material-ui/core/Popover";
 import List from "@material-ui/core/List";
@@ -9,15 +9,18 @@ import TranslateIcon from '@material-ui/icons/Translate';
 import Languages from "../i18n/lang/index";
 import {LanguageContext} from "../i18n/TranslateProvider";
 import useTranslate from "../hooks/useTranslate";
+import noop from "../../share/noop";
+import Lang from "../i18n/Lang";
 
-
-export default function LanguageButton({...props}) {
+export default function LanguageButton() {
 
     const translate = useTranslate();
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState<any>(null);
 
-    function handleClick(event) {
-        setAnchorEl(event.currentTarget);
+    function handleClick(event: MouseEvent) {
+        if (event.currentTarget) {
+            setAnchorEl(event.currentTarget);
+        }
     }
 
     function handleClose() {
@@ -29,10 +32,9 @@ export default function LanguageButton({...props}) {
     return <>
         <Button
             color="inherit"
-            onClick={handleClick}
+            onClick={event => setAnchorEl(event.currentTarget)}
             startIcon={<TranslateIcon/>}
             endIcon={<ExpandMoreIcon/>}
-            {...props}
         >
             {translate("language_button")}
         </Button>
@@ -63,24 +65,27 @@ export default function LanguageButton({...props}) {
     </>
 }
 
-function LanguageItem({language, onClick}) {
-    if (!onClick) onClick = noop;
-
+function LanguageItem(props: {
+    language: Lang,
+    onClick: () => void
+}) {
+    if (!props.onClick) {
+        props.onClick = noop;
+    }
 
     const {
         language: current_language,
         setLanguage
-    } = React.useContext(LanguageContext);
-
+    } = useContext(LanguageContext);
 
     return <ListItem
         button
-        selected={current_language == language}
+        selected={current_language == props.language}
         onClick={() => {
-            setLanguage(language);
-            onClick();
+            setLanguage(props.language);
+            props.onClick();
         }}
     >
-        <ListItemText primary={language.lang_name}/>
+        <ListItemText primary={props.language.lang_name}/>
     </ListItem>
 }

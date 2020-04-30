@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import {useCurrentConversationId} from "../redux/reducers/current_conversationt";
 import Conversation from "./Conversation";
 
-export default function () {
+export default function ConversationContainer() {
 
     const current_conversation_id = useCurrentConversationId();
-    const [conversation_id_list, setConversationList] = React.useState([]);
+    const [conversation_id_list, setConversationList] = useState<string[]>([]);
 
     if (current_conversation_id && !conversation_id_list.includes(current_conversation_id)) {
         setConversationList([...conversation_id_list, current_conversation_id])

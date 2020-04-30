@@ -16,15 +16,19 @@ export default function NotificationContainer() {
     </>
 }
 
-function Notification({notificationId: notification_id}) {
-    const notification = useNotification(notification_id);
+function Notification(props: { notificationId: string }) {
+    const notification = useNotification(props.notificationId);
     const translate = useTranslate();
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(true);
 
-    function handleClick(event, reason) {
+    function handleClick() {
         setOpen(false);
-        dispatch(makeAction("NOTIFICATION_REMOVE", notification_id))
+        dispatch(makeAction("NOTIFICATION_REMOVE", props.notificationId))
+    }
+
+    if (!notification) {
+        return null;
     }
 
     return <Snackbar

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 import {useDispatch} from "react-redux";
 import {makeSendMessageAction} from "../redux/reducers/messages";
@@ -22,21 +21,21 @@ const useStyle = makeStyles(theme => ({
     }
 }));
 
-export default function MessageComposer({
-                                            conversationId: conversation_id
-                                        }) {
+export default function MessageComposer(props: {
+    conversationId: string
+}) {
     const classes = useStyle();
 
     const dispatch = useDispatch();
     const session = useSession();
     const [message, setMessage] = React.useState("");
 
-    function handleChange(event, value) {
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         setMessage(event.target.value);
     }
 
-    function handleKeyPress(event) {
-        if (event.shiftKey === false && event.which === 13) {
+    function handleKeyPress(event: React.KeyboardEvent) {
+        if (!event.shiftKey && event.which === 13) {
             event.preventDefault();
             event.stopPropagation();
             handleSend();
@@ -48,7 +47,7 @@ export default function MessageComposer({
 
         dispatch(
             makeSendMessageAction({
-                conversation_id,
+                conversation_id: props.conversationId,
                 content: message
             })
         );
@@ -79,7 +78,4 @@ export default function MessageComposer({
     </div>
 }
 
-MessageComposer.propTypes = {
-    conversationId: PropTypes.string.isRequired
-};
 

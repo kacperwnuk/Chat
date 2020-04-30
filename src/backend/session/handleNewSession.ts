@@ -1,7 +1,6 @@
 import socket_io from "socket.io";
 import isAuthData from "../../share/data-checker/isAuthData";
 import getSession from "../data/getSession";
-import logger from "../../share/logger";
 import {socketEmitMiddleware, socketOnceMiddleware, socketOnMiddleware} from "./socketOnMiddleware";
 import isMessagePrototypeData from "../../share/data-checker/isMessagePrototypeData";
 import sendMessage from "../data/sendMessage";
@@ -11,11 +10,10 @@ import getUserData from "../data/getUserData";
 import {addSubscription, removeSubscription} from "../lib/informSessionsAboutMessage";
 import DatabaseT from "../../share/DatabaseT";
 import isUUID from "../../share/data-checker/isUUID";
+import {makeLogger} from "../../share/logger";
 
 export default function (socket: socket_io.Socket) {
-    const session_logger = logger.child({
-        label: `Session] [${socket.id}`
-    });
+    const session_logger = makeLogger('Session', socket.id);
 
     session_logger.verbose("connected");
 

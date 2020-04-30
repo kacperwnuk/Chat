@@ -31,7 +31,7 @@ const serverConfig = {
 const clientConfig = {
     target: "web",
     entry: {
-        main: "./src/frontend/index.jsx"
+        main: "./src/frontend/index.tsx"
     },
     output: {
         filename: "[name].js",
@@ -39,13 +39,16 @@ const clientConfig = {
     },
     module: {
         rules: [{
-            test: /\.(ts|jsx)$/,
+            test: /\.(ts|tsx)$/,
             use: "ts-loader",
             exclude: /node_modules/,
         }]
     },
     resolve: {
-        extensions: [".ts", ".js", ".jsx", ".json"],
+        extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
+    },
+    node: {
+        fs: "empty"
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -59,4 +62,4 @@ const clientConfig = {
     ]
 };
 
-module.exports = [serverConfig, clientConfig];
+module.exports = [clientConfig, serverConfig];
