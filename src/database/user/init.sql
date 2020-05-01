@@ -5,11 +5,11 @@
 -- Model Author: ---
 
 -- object: "backend-server" | type: ROLE --
--- DROP ROLE IF EXISTS "backend-server";
+DROP ROLE IF EXISTS "backend-server";
 CREATE ROLE "backend-server" WITH 
 	INHERIT
 	LOGIN
-	ENCRYPTED PASSWORD '********';
+	ENCRYPTED PASSWORD '2bd234780531a2df81e9be3256bd6f48';
 -- ddl-end --
 
 

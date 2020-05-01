@@ -35,7 +35,7 @@ const initial_state: AppData.State = {
     backend_data: {
         cdn_url: "localhost:8080",
         auth_url: "localhost:8082",
-        session_url: "localhost:8081"
+        session_url: "localhost:4000"
     }
 };
 

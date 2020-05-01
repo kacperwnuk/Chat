@@ -1,16 +1,17 @@
 import fs from "fs";
 import path from "path";
-import {DatabaseConParams} from "./DatabaseCon";
+import {DatabaseConParams, RedisDatabaseConParams} from "./DatabaseCon";
 import {exit, EXIT_TYPE} from "./exit";
 
 interface ENV {
     database: {
         main: DatabaseConParams[]
         user: DatabaseConParams[]
+        redis: RedisDatabaseConParams[]
     }
 }
 
-const env_path = path.join(process.cwd(), ".env.json");
+const env_path = path.join(process.cwd(), ".env_docker.json");
 let env: ENV;
 
 try {

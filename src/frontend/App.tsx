@@ -5,7 +5,7 @@ import MainLayout from "./components/MainLayout";
 
 export default function App() {
 
-    let isLogged = useIsLogged();
+    const isLogged = useIsLogged();
 
     if (!isLogged) {
         return <LoginScreen/>

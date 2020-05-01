@@ -18,3 +18,4 @@ Podzielimy kod na następująco:
      - `redux` - sklep redux, czyli zarządzanie danymi w aplikacji
    - `share` - kod który można użyć w backend'zie i frontend'zie
      - `data-cheker` - funkcje sprawdzające poprawność danych
+     

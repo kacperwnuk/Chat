@@ -20,6 +20,7 @@ export default interface Lang {
         suffix: string
     },
     error_msg: {
+        credentials_fail: string
         message_send_fail: string
     }
 }

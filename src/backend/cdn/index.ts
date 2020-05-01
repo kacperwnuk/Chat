@@ -11,7 +11,7 @@ makeServer({
 }).then(async (port) => {
 
     let my_ips = await getMyAddress();
-
+    console.log("cdn");
     console.log([
         "Uruchomiono:",
         ...my_ips.map(ip => `\thttp://${ip}:${port}`)
