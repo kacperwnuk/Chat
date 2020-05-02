@@ -11,7 +11,7 @@ interface ENV {
     }
 }
 
-const env_path = path.join(process.cwd(), ".env_docker.json");
+const env_path = path.join(process.cwd(), ".env.json");
 let env: ENV;
 
 try {
