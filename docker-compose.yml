@@ -34,12 +34,6 @@ services:
       dockerfile: ./src/backend/auth/Dockerfile
     links:
       - user-db
-    environment:
-      - PGPASSWORD=2bd234780531a2df81e9be3256bd6f48
-      - PGUSER=postgres
-      - PGDATABASE=rso-user
-      - PGHOST=user-db
-      - PGPORT=6001
     depends_on:
       - user-db
     ports:
@@ -51,18 +45,10 @@ services:
       dockerfile: ./src/backend/session/Dockerfile
     links:
       - main-db
-    environment:
-      - PGPASSWORD=03c3eabc0fbe1cdbd9f46a82acd5fe46
-      - PGUSER=postgres
-      - PGDATABASE=rso-main
-      - PGHOST=main-db
-      - PGPORT=6000
     depends_on:
       - main-db
-    expose:
-      - "8081"
-#    ports:
-#      - "8081:8081"
+    ports:
+      - "8081:8081"
 
   nginx:
     image: nginx:latest

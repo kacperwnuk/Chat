@@ -32,6 +32,7 @@ export interface SessionMessagingSchemaByServer {
     "newContact": (user_id: string) => void
 }
 
+
 /**
  * Wszystkie komunikaty muszą być zwracać taki obiekt, który odpowiada za informowanie o błędach
  */

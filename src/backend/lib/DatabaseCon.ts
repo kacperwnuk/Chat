@@ -15,11 +15,6 @@ export interface DatabaseConParams {
     port: number
 }
 
-export interface RedisDatabaseConParams {
-    host: string,
-    port: number
-}
-
 interface QueryResult<T = any> {
     rows: T[],
     fields: {
