@@ -24,7 +24,7 @@ export default function (error: any): {
         }
     }
 
-    logger.error("Nieznany błąd aplikacji", {error})
+    logger.error("Nieznany błąd aplikacji", {error});
 
     return {
         type: ServerError.Type.INTERNAL_SERVER_ERROR,

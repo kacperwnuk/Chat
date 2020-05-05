@@ -12,5 +12,6 @@ ENV POSTGRES_PASSWORD tajne_haslo
 COPY .env /docker-entrypoint-initdb.d
 COPY init.sh /docker-entrypoint-initdb.d/_00.sh
 COPY init.sql /docker-entrypoint-initdb.d/_01.sql
+COPY data.sql /docker-entrypoint-initdb.d/_02.sql
 
 EXPOSE 5432

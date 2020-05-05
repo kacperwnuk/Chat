@@ -13,7 +13,6 @@ export default function (app: express.Application) {
 
             let user = await authUser(username, password);
             let session = await createSessionForUser(user.user_id);
-
             let response = {
                 user,
                 auth_data: {
@@ -21,7 +20,6 @@ export default function (app: express.Application) {
                     secret_key: session.secret_key
                 }
             };
-
             res.send(response);
         }));
 }

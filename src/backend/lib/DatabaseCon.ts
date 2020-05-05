@@ -15,6 +15,11 @@ export interface DatabaseConParams {
     port: number
 }
 
+export interface RedisDatabaseConParams {
+    host: string,
+    port: number
+}
+
 interface QueryResult<T = any> {
     rows: T[],
     fields: {
@@ -32,6 +37,7 @@ export default class DatabaseCon {
     private readonly logger: winston.Logger;
 
     constructor(params: DatabaseConParams[]) {
+
         this.dbs = params;
 
         let db_cfg = this.dbs[0];

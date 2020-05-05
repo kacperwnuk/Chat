@@ -1,0 +1,77 @@
+version: "3.3"
+services:
+
+  main-db:
+    build:
+      context: ./src/database/main
+      dockerfile: ./Dockerfile
+    ports:
+      - "6000:6000"
+    expose:
+      - "6000"
+    command: -p 6000
+
+  user-db:
+    build:
+      context: ./src/database/user
+      dockerfile: ./Dockerfile
+    ports:
+      - "6001:6001"
+    expose:
+      - "6001"
+    command: -p 6001
+
+  cdn_server:
+    build:
+      context: .
+      dockerfile: ./src/backend/cdn/Dockerfile
+    ports:
+      - "8080:8080"
+
+  auth_server:
+    build:
+      context: .
+      dockerfile: ./src/backend/auth/Dockerfile
+    links:
+      - user-db
+    environment:
+      - PGPASSWORD=2bd234780531a2df81e9be3256bd6f48
+      - PGUSER=postgres
+      - PGDATABASE=rso-user
+      - PGHOST=user-db
+      - PGPORT=6001
+    depends_on:
+      - user-db
+    ports:
+      - "8082:8082"
+
+  session_server:
+    build:
+      context: .
+      dockerfile: ./src/backend/session/Dockerfile
+    links:
+      - main-db
+    environment:
+      - PGPASSWORD=03c3eabc0fbe1cdbd9f46a82acd5fe46
+      - PGUSER=postgres
+      - PGDATABASE=rso-main
+      - PGHOST=main-db
+      - PGPORT=6000
+    depends_on:
+      - main-db
+    expose:
+      - "8081"
+#    ports:
+#      - "8081:8081"
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - session_server
+    ports:
+      - "4000:4000"
+
+  redis_server:
+    image: 'redis'

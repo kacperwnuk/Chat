@@ -1,7 +1,9 @@
 import DatabaseT from "../../share/DatabaseT";
+import {publisher} from "../session";
+import {channelName} from "./redisBuilder";
 
 type Callback = (message: DatabaseT.Message) => void;
-const subscriptions: {
+export const subscriptions: {
     [user_id: string]: Callback[]
 } = {};
 
@@ -20,5 +22,7 @@ export function removeSubscription(user_id: string, callback: Callback) {
 }
 
 export default async function (message: DatabaseT.Message) {
-    subscriptions[message.conversation_id].forEach(cb => cb(message));
+
+    publisher.publish(channelName, JSON.stringify(message));
+    // subscriptions[message.conversation_id].forEach(cb => cb(message));
 }

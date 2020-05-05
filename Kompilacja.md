@@ -94,7 +94,7 @@ npm i
 ./src/database/start.sh main
 ./src/database/start.sh user
 
-# wykonaj skrypty init.sql na bazach danych
+# wykonaj skrypty init.sql na bazach danych (zanim wykonasz skrypt sprawdz czy przypadkiem nie jest wszystko poprawnie)
 dbs=('main' 'user')
 for db in "${dbs[@]}"
 do
@@ -110,5 +110,26 @@ npm run-script dev-bulid
 npm run-script dev-server-auth
 npm run-script dev-server-cdn
 npm run-script dev-server-main
+
+
+# stawianie skonteneryzowanej wersji
+trzeba miec zainstalowany docker-compose
+z poziomu rso-project
+
+Ponizsza komenda stworzy wszystkie potrzebne obrazy dla baz, serwerow oraz load balancera
+aby moc korzystac z wersji skonteneryzowanej nalezy w pliku /lib/env.ts 
+podmienic nazwe pliku .env.json na .env_docker.json
+zmiany wymaga rowniez port w session_url w pliku /frontend/redux/myApp.ts na 4000
+
+docker-compose up
+
+po wprowadzeniu zmian w plikach aby postawic kontenery jeszcze raz najlepiej wywolac skrypt
+
+./docker-compose-restart.sh
+
+zamyka on wczesniejsze wersje i umozliwia usuniecie zbednych obrazow oraz uruchamia nowe wersje
+
+zatrzymanie dzialania kontenerow
+docker-compose down
 
 ```
