@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.2" last-position="32,0" last-zoom="1" max-obj-count="4"
+	 default-schema="public" default-owner="postgres">
+<role name="backend-server"
+      inherit="true"
+      login="true"
+      encrypted="true"
+      password="********">
+</role>
+
+<database name="rso-user" encoding="UTF8" lc-collate="en_US.utf8" lc-ctype="en_US.utf8" is-template="false" allow-conns="true">
+	<role name="postgres"/>
+	<tablespace name="pg_default"/>
+</database>
+
+<schema name="public" layer="0" rect-visible="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="users" layer="0" collapse-mode="2" max-obj-count="15">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="480" y="220"/>
+	<column name="user_id" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="username">
+		<type name="text" length="0"/>
+	</column>
+	<column name="email">
+		<type name="text" length="0"/>
+	</column>
+	<column name="gender">
+		<type name="text" length="0"/>
+	</column>
+	<column name="law_type">
+		<type name="text" length="0"/>
+	</column>
+	<column name="name_family">
+		<type name="text" length="0"/>
+	</column>
+	<column name="name_given">
+		<type name="text" length="0"/>
+	</column>
+	<column name="name_middle">
+		<type name="text" length="0"/>
+	</column>
+	<column name="name_prefix">
+		<type name="text" length="0"/>
+	</column>
+	<column name="name_suffix">
+		<type name="text" length="0"/>
+	</column>
+	<column name="address">
+		<type name="text" length="0"/>
+	</column>
+	<column name="address_data">
+		<type name="json" length="0"/>
+	</column>
+	<column name="deleted">
+		<type name="boolean" length="0"/>
+	</column>
+	<constraint name="users_pk" type="pk-constr" table="public.users">
+		<columns names="user_id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="gender_check" type="ck-constr" table="public.users">
+			<expression><![CDATA[gender in ('male',  'female',  'other')]]></expression>
+	</constraint>
+	<constraint name="email_uq" type="uq-constr" table="public.users">
+		<columns names="email" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="user_uq" type="uq-constr" table="public.users">
+		<columns names="username" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="basic_auth" layer="0" collapse-mode="2" max-obj-count="3">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="980" y="260"/>
+	<column name="password">
+		<type name="text" length="0"/>
+	</column>
+
+	<customidxs object-type="column">
+		<object name="user_id" index="0"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="basic_auth_pk" index="0"/>
+		<object name="basic_auth_uq" index="2"/>
+		<object name="users_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="basic_auth_has_one_users" type="rel11" layer="0"
+	 src-col-pattern="{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#461c62"
+	 src-table="public.users"
+	 dst-table="public.basic_auth"
+	 src-required="false" dst-required="false">
+	<special-pk-cols indexes="0"/>
+</relationship>
+
+<permission>
+	<object name="public.users" type="table"/>
+	<roles names="&quot;backend-server&quot;"/>
+	<privileges select="true" delete="true" insert="true" update="true"/>
+</permission>
+<permission>
+	<object name="public.basic_auth" type="table"/>
+	<roles names="&quot;backend-server&quot;"/>
+	<privileges select="true" delete="true" insert="true" update="true"/>
+</permission>
+</dbmodel>
