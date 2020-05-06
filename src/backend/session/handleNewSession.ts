@@ -7,10 +7,11 @@ import sendMessage from "../data/sendMessage";
 import getUserContacts from "../data/getUserContacts";
 import {MessagePrototypeData, SessionAuthData} from "../../share/types";
 import getUserData from "../data/getUserData";
-import {addSubscription, removeSubscription} from "../lib/informSessionsAboutMessage";
 import DatabaseT from "../../share/DatabaseT";
 import isUUID from "../../share/data-checker/isUUID";
 import {makeLogger} from "../../share/logger";
+import noop from "../../share/noop";
+import {redisBroker} from "../lib/server";
 
 export default function (socket: socket_io.Socket) {
     const session_logger = makeLogger('Session', socket.id);
@@ -18,9 +19,10 @@ export default function (socket: socket_io.Socket) {
     session_logger.verbose("connected");
 
     let user_id = "", session_id = "";
+    let unsubscribeBroker = noop;
 
     socket.on("disconnect", async () => {
-        removeSubscription(user_id, onNewMessage);
+        unsubscribeBroker();
         session_logger.verbose("disconnected");
     });
 
@@ -50,7 +52,8 @@ export default function (socket: socket_io.Socket) {
 
     function initMessagingWithAuthSocket(socket: socket_io.Socket) {
 
-        addSubscription(user_id, onNewMessage);
+        const subscription = redisBroker.subscribeForNewMessages(user_id, onNewMessage)
+        unsubscribeBroker = () => subscription.unsubscribe();
 
         socketOnMiddleware(socket, "sendMessage", async (msg_proto: MessagePrototypeData) => {
             msg_proto = await isMessagePrototypeData(msg_proto);

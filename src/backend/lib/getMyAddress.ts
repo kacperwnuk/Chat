@@ -10,6 +10,6 @@ let my_ips = Object.keys(ifaces)
         return iface.address;
     });
 
-export default async function (): Promise<string[]> {
+export default async function getMyAddress(): Promise<string[]> {
     return my_ips;
 }
