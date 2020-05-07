@@ -12,7 +12,11 @@ interface ENV {
     }
 }
 
-const env_path = path.join(process.cwd(), ".env.json");
+const env_path = path.join(process.cwd(),
+    process.env.NODE_ENV === "production" ?
+        ".env_production.json" :
+        ".env_development.json");
+
 let env: ENV;
 
 try {

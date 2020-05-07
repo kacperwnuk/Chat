@@ -110,26 +110,31 @@ npm run-script dev-bulid
 npm run-script dev-server-auth
 npm run-script dev-server-cdn
 npm run-script dev-server-main
+```
 
+# Stawianie skonteneryzowanej wersji
 
-# stawianie skonteneryzowanej wersji
-trzeba miec zainstalowany docker-compose
-z poziomu rso-project
+Wymagane pakiety:
+```
+docker
+docker-compose
+```
 
-Ponizsza komenda stworzy wszystkie potrzebne obrazy dla baz, serwerow oraz load balancera
-aby moc korzystac z wersji skonteneryzowanej nalezy w pliku /lib/env.ts 
-podmienic nazwe pliku .env.json na .env_docker.json
-zmiany wymaga rowniez port w session_url w pliku /frontend/redux/myApp.ts na 4000
+Ponizsza komenda stworzy wszystkie potrzebne obrazy dla baz, serwerow oraz load balancera.
 
+```bash
 docker-compose up
+```
 
-po wprowadzeniu zmian w plikach aby postawic kontenery jeszcze raz najlepiej wywolac skrypt
+Po wprowadzeniu zmian w plikach, aby postawić kontenery jeszcze raz, najlepiej wywołać skrypt.
 
+```bash
 ./docker-compose-restart.sh
+```
 
-zamyka on wczesniejsze wersje i umozliwia usuniecie zbednych obrazow oraz uruchamia nowe wersje
+Zamyka on wcześniejsze wersje i umożliwia usuniecie zbednych obrazow oraz uruchamia nowe wersję
 
-zatrzymanie dzialania kontenerow
+Zatrzymanie działania kontenerów.
+```bash
 docker-compose down
-
 ```

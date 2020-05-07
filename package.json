@@ -6,7 +6,7 @@
         "build": "webpack --mode production",
         "server-cdn": "node dist/backend/cdn.js",
         "server-auth": "node dist/backend/auth.js",
-        "server-main": "node dist/backend/main.js",
+        "server-session": "node dist/backend/session.js",
         "dev-build": "webpack --mode development --watch",
         "dev-server-cdn": "nodemon dist/backend/cdn.js",
         "dev-server-auth": "nodemon dist/backend/auth.js",
