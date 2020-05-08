@@ -7,8 +7,7 @@ import bodyParser from "body-parser";
 import DatabaseCon from "./DatabaseCon";
 import env from "./env";
 import BrokerCon from "./BrokerCon";
-
-const package_json = require("../../../package");
+import {makeLogger} from "../../share/logger";
 
 export let server: http.Server;
 export let app: express.Express;
@@ -18,9 +17,13 @@ export let databaseUser: DatabaseCon;
 export let databaseMain: DatabaseCon;
 export let redisBroker: BrokerCon;
 
+
 export async function makeServer(args: {
     port: number
 }): Promise<number> {
+    const makeServerLogger = makeLogger("makeServer");
+
+    makeServerLogger.info("start")
 
     // łączenia z bazą
     databaseUser = new DatabaseCon(env.database.user);
@@ -52,6 +55,8 @@ export async function makeServer(args: {
     });
 
     server.listen(args.port);
+
+    makeServerLogger.info("end")
 
     return args.port;
 }

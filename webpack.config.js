@@ -1,7 +1,8 @@
 const path = require("path");
 
+const webpack = require("webpack");
+
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const nodeExternals = require("webpack-node-externals");
 
 const serverConfig = {
@@ -56,9 +57,7 @@ const clientConfig = {
             filename: "index.html",
             chunks: ["main"],
         }),
-        new MiniCssExtractPlugin({
-            filename: "[name].css",
-        }),
+        new webpack.EnvironmentPlugin(["NODE_ENV", "DEBUG"])
     ]
 };
 

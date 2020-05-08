@@ -8,48 +8,22 @@ import {commitCurrentConversationId} from "./reducers/current_conversationt";
 import {commitMessageAdd} from "./reducers/messages";
 import {commitNotificationAdd, commitNotificationRemove} from "./reducers/notifications";
 
-const initial_state: AppData.State = {
-    // credentials_data: {
-    //     data: {
-    //         "user": {
-    //             "user_id": "2e655285-63c3-4ca5-b27d-0c74e7a40b87",
-    //             "username": "a.jedrzejowski",
-    //             "email": "email1@example.com",
-    //             "gender": "male",
-    //             "law_type": "pl",
-    //             "name_family": "Jędrzejowski",
-    //             "name_given": "Adam",
-    //             "name_middle": null,
-    //             "name_prefix": null,
-    //             "name_suffix": null,
-    //             "address": "ul. Wyzwolenia 68",
-    //             "address_data": {},
-    //             "deleted": false
-    //         },
-    //         "auth_data": {
-    //             "session_id": "538ec861-f3dc-40a7-a9f5-cd2d3e868629",
-    //             "secret_key": "126158c3-a0ac-4378-acbf-d441d20fa211"
-    //         }
-    //     }
-    // },
-    backend_data: {
-        cdn_url: "localhost:8080",
-        auth_url: "localhost:8082",
-        session_url: "localhost:8001"
-    }
-};
+const backend_data_default =
+    process.env.NODE_ENV === "production" ?
+        {   // Produkcja
+            cdn_url: "localhost:8080",
+            session_url: "localhost:4000",
+            auth_url: "localhost:8082",
+        } :
+        {   // Deweloperka
+            cdn_url: "localhost:8080",
+            session_url: "localhost:8081",
+            auth_url: "localhost:8082",
+        };
 
-// type Commits = {
-//     [key in keyof Actions]: (state: AppData.State, data: Actions[key]) => AppData.State
-// }
-//
-// let commits: Partial<Commits> = {
-//     "CREDENTIALS_DATA_SET": commitCredentials,
-//     "SESSION_SET": commitSession,
-//     "CONTACT_LIST_SET": commitContactList,
-//     "USER_DATA_SET": commitUserData,
-//     "CURRENT_CONVERSATION_ID_SET": commitCurrentConversationId
-// };
+const initial_state: AppData.State = {
+    backend_data: backend_data_default
+};
 
 export default function myApp(state: AppData.State = initial_state, action: Action): AppData.State {
 

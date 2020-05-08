@@ -3,7 +3,7 @@
  */
 import winston from "winston";
 import colors from "colors/safe";
-import {EOL} from "ts-loader/dist/constants";
+import {EOL} from "os";
 
 let i = -1;
 
@@ -22,46 +22,46 @@ const logger = winston.createLogger({
     transports: []
 });
 
-if (process.env.NODE_ENV !== 'production') {
-    logger.add(new winston.transports.Console({
-        format: winston.format.printf(info => {
+// if (process.env.NODE_ENV !== 'production')
+logger.add(new winston.transports.Console({
+    format: winston.format.printf(info => {
 
-            let time = colors.gray(`[${new Date().toISOString()}]`);
-            let msg = "";
+        let time = colors.gray(`[${new Date().toISOString()}]`);
+        let msg = "";
 
-            if (info.label) {
-                msg += `[${info.label}] `;
-            }
+        if (info.label) {
+            msg += `[${info.label}] `;
+        }
 
-            if (info.level) {
-                msg += `[${info.level}] `;
-            }
+        if (info.level) {
+            msg += `[${info.level}] `;
+        }
 
-            if (info.message) {
-                msg += `${info.message}`;
-            }
+        if (info.message) {
+            msg += `${info.message}`;
+        }
 
-            // Kolorowanie
-            if (info.level === "error") {
-                msg = colors.red(msg);
-            } else if (info.level === "info") {
-                msg = colors.blue(msg);
-            } else if (info.level === "data") {
-                msg = colors.white(msg);
-            }
+        // Kolorowanie
+        if (info.level === "error") {
+            msg = colors.red(msg);
+        } else if (info.level === "info") {
+            msg = colors.blue(msg);
+        } else if (info.level === "data") {
+            msg = colors.white(msg);
+        }
 
-            if (info.level === "error" && info.error && info.error.stack) {
-                msg += `${EOL}${info.error.stack}`;
-            }
+        if (info.level === "error" && info.error && info.error.stack) {
+            msg += `${EOL}${info.error.stack}`;
+        }
 
-            if (info.level === "data" && Array.isArray(info.data)) {
-                msg += `${EOL}${info.data.join(" ")}`;
-            }
+        if (info.level === "data" && Array.isArray(info.data)) {
+            msg += `${EOL}${info.data.join(" ")}`;
+        }
 
-            return `${time} ${msg}`;
-        })
-    }));
-}
+        return `${time} ${msg}`;
+    })
+}));
+
 
 export enum NotificationLevel {
     Info = "info",
@@ -74,6 +74,6 @@ export default logger;
 
 export function makeLogger(...label: string[]) {
     return logger.child({
-        label:label.join("] [")
+        label: label.join("] [")
     });
 }

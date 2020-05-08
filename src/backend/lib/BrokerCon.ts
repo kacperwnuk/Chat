@@ -1,6 +1,8 @@
 import Redis, {RedisClient} from "redis";
 import DatabaseT from "../../share/DatabaseT";
 import isMessage from "../../share/data-checker/isMessage";
+import {makeLogger} from "../../share/logger";
+import type winston from "winston";
 
 export interface BrokerSubscription {
     unsubscribe: () => void
@@ -14,10 +16,10 @@ export interface BrokerConParams {
 export default class BrokerCon {
     private dbs: BrokerConParams[];
     private redis_publisher?: RedisClient;
-
+    private logger: winston.Logger;
 
     constructor(params: BrokerConParams[]) {
-
+        this.logger = makeLogger("BrokerCon")
         this.dbs = params;
     }
 
@@ -43,10 +45,15 @@ export default class BrokerCon {
         const client = this.createClient();
         client.subscribe(`user:${user_id}`)
 
-        const redis_callback = async (message_json: string) => {
-            const message = await isMessage(JSON.parse(message_json));
+        const redis_callback = async (channel: string, message_json: string) => {
+            try {
+                const message = await isMessage(JSON.parse(message_json));
 
-            callback(message);
+                callback(message);
+            } catch (error) {
+                console.log(message_json);
+                this.logger.error("błąd połączenia z redisem", {error})
+            }
         }
 
         client.on("message", redis_callback);
@@ -60,6 +67,9 @@ export default class BrokerCon {
     }
 
     publishNewMessage(message: DatabaseT.Message): void {
-        this.publish(`user:${message.conversation_id}`, message);
+        this.publish(
+            `user:${message.conversation_id}`,
+            JSON.stringify(message)
+        );
     }
 }
