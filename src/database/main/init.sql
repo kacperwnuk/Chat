@@ -8,11 +8,11 @@ SET check_function_bodies = false;
 -- ddl-end --
 
 -- object: "backend-server" | type: ROLE --
--- DROP ROLE IF EXISTS "backend-server";
+DROP ROLE IF EXISTS "backend-server";
 CREATE ROLE "backend-server" WITH 
 	INHERIT
 	LOGIN
-	ENCRYPTED PASSWORD '********';
+	ENCRYPTED PASSWORD 'a6a09838afff6c0c9046904dd3fc2f86';
 -- ddl-end --
 
 

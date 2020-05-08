@@ -5,11 +5,11 @@
 -- Model Author: ---
 
 -- object: "backend-server" | type: ROLE --
--- DROP ROLE IF EXISTS "backend-server";
+DROP ROLE IF EXISTS "backend-server";
 CREATE ROLE "backend-server" WITH 
 	INHERIT
 	LOGIN
-	ENCRYPTED PASSWORD '********';
+	ENCRYPTED PASSWORD '2bd234780531a2df81e9be3256bd6f48';
 -- ddl-end --
 
 
@@ -76,13 +76,13 @@ ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE public.basic_auth ADD CONSTRAINT basic_auth_uq UNIQUE (user_id);
 -- ddl-end --
 
--- object: grant_5592b42723 | type: PERMISSION --
+-- object: grant_e8c6ac8865 | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.users
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_eb125d56f3 | type: PERMISSION --
+-- object: grant_fb19988dea | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.basic_auth
    TO "backend-server";
