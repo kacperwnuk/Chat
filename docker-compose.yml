@@ -27,6 +27,8 @@ services:
       dockerfile: ./src/backend/cdn/Dockerfile
     ports:
       - "8080:8080"
+    expose:
+      - "8080"
 
   auth_server:
     build:
@@ -38,6 +40,8 @@ services:
       - user-db
     ports:
       - "8082:8082"
+    expose:
+      - "8082"
 
   session_server:
     build:
@@ -47,8 +51,8 @@ services:
       - main-db
     depends_on:
       - main-db
-    ports:
-      - "8081:8081"
+    expose:
+      - "8081"
 
   nginx:
     image: nginx:latest
@@ -60,4 +64,6 @@ services:
       - "4000:4000"
 
   redis_server:
-    image: 'redis'
+    image: "redis"
+    ports:
+      - "6379:6379"

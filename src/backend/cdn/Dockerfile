@@ -1,12 +1,18 @@
 FROM node:14-alpine
 
 WORKDIR /app
-COPY package.json /app
+COPY package*.json /app/
+COPY src /app/src
+COPY .env*.json /app/
+COPY webpack.config.js tsconfig.json /app/
 
 RUN npm install
 
-COPY . /app
+ENV NODE_ENV production
+RUN npm run build
 
-EXPOSE 8080
+# czyszczenie
+RUN npm prune
+RUN rm -rf src webpack.config.js tsconfig.json
 
-CMD ["node", "dist/backend/cdn.js"]
+CMD ["npm", "run", "server-cdn"]
