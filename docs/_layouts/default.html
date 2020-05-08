@@ -56,7 +56,7 @@
                     {% for page in site.pages %}
                         {% if page.platform != "" %}
                         <li>
-                            <a href=".{{ page.url | relative_url }}">{{ page.title }}</a>
+                            <a href="{{ page.url | remove_first:'/' }}">{{ page.title }}</a>
                         </li>
                         {% endif %}
                     {% endfor %}
