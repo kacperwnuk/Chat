@@ -2,3 +2,4 @@ exclude:
   - architecture.drawio
 port: 8099
 baseurl: ""
+theme: ""
