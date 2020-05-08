@@ -54,7 +54,7 @@
                 <h1>Nawigacja</h1>
                 <ul>
                     {% for page in site.pages %}
-                        {% if page.title != "" %}
+                        {% if page.platform != "" %}
                         <li>
                             <a href="{{ page.url | remove_first:'/' }}">{{ page.title }}</a>
                         </li>
