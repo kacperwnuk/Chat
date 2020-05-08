@@ -1,3 +1,7 @@
+---
+layout: default
+title: "Podział kodu"
+---
 Podział kodu
 ============
 

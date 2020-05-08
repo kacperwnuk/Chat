@@ -10,7 +10,8 @@
         "dev-build": "webpack --mode development --watch",
         "dev-server-cdn": "nodemon dist/backend/cdn.js",
         "dev-server-auth": "nodemon dist/backend/auth.js",
-        "dev-server-session": "nodemon dist/backend/session.js"
+        "dev-server-session": "nodemon dist/backend/session.js",
+        "docs": "cd docs && $(ruby -e 'puts Gem.user_dir')/bin/jekyll server . --watch --port 8099"
     },
     "repository": {
         "url": "git+https://github.com/kacperwnuk/Chat.git"

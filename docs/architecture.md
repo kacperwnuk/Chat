@@ -1,5 +1,7 @@
-RSO Projekt Architektura
-========================
+---
+layout: default
+title: "Architektura"
+---
 
 ## Opis ogólny
 
@@ -9,6 +11,8 @@ Użytkownik będzie mógł się zalogować na swój profil za pomocą kilku meto
 Na początku łączy się z serwerem logowania, przesyła mu poświadczenia, a ten zwraca mu adres serwera sesji z którym ma się połączyć.
 Dzięki temu będzie możliwość wielokrotnego łączenia się na to samo konto, np. z różnych urządzeń.
 Crash jednego serwera nie wpłynie na działanie pozostałych, już uruchomionych.
+
+![Architektura](assets/architecture.png)
 
 ## Definicje
 
