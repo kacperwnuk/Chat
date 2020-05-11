@@ -1,14 +1,20 @@
-RSO Projekt Architektura
-========================
+---
+layout: default
+title: "Architektura"
+---
 
 ## Opis ogólny
 
-Chat składający się z dwóch serwerów: logowania i sesji.
-Użytkownik będzie mógł się zalogować na swój profil za pomocą kilku metod logowania.
 
-Na początku łączy się z serwerem logowania, przesyła mu poświadczenia, a ten zwraca mu adres serwera sesji z którym ma się połączyć.
+Chat składający się z trzech serwerów: logowania, sesji i cdn.
+Architektura będzie umożliwiała użytkownikowi zalogowanie się na swój profil za pomocą kilku metod logowania.
+
+Na początku łączy się z serwerem cdn, aby pobrać frontend, następnie do serwera logowania, przesyła poświadczenia, a ten zwraca mu adres serwera sesji z którym ma się połączyć.
 Dzięki temu będzie możliwość wielokrotnego łączenia się na to samo konto, np. z różnych urządzeń.
 Crash jednego serwera nie wpłynie na działanie pozostałych, już uruchomionych.
+
+
+![Architektura](assets/architecture.png)
 
 ## Definicje
 
@@ -58,6 +64,9 @@ Parametry wiadomości:
 
 Ta baza podlega pod RODO/GIODO/SRODO.
 
+![Schemat bazy danych](assets/db-user-model.png)
+ 
+
 #### Tabela ludzi:
 
 Tabela zawiera podstawowe informacje o użytkowniku.
@@ -79,13 +88,10 @@ Wszystkie, za wyjątkiem `id` i `deleted` mogą być null, co będzie oznaczało
 
 Dla każdego logowania będzie dostępna osobna tabela, jeżeli taka będzie potrzebna.
 
-Ale na nasze potrzeby zaimplementujemy coś takiego:
-
- - `id:uuid` - id użytkownika
- - `password:text` - hasło użytkownika
-  
   
 ### Baza wiadomości i wszystkiego innego:
+
+![Schemat bazy danych](assets/db-main-model.png)
 
 #### Tabela sesji
 
@@ -150,3 +156,22 @@ Serwer ten odpowiada za komunikacje z użytkownikiem, przyjmowaniem nowych wiado
 Użytkownik łączy się z serwerem i podaje klucz sesji.
 Komunikacja z serwerem sesji jest opisana w pliku `./src/share/MessagingSchema.ts` 
 
+
+## Diagramy sekwencji
+
+### Nawiązanie sesji
+
+![Diagram sekwencji](assets/chart-process1.png)
+
+### Wysłanie wiadomości.
+
+![Diagram sekwencji](assets/chart-process2.png)
+ 
+## Technologie
+ 
+Do stworzenia części backendowej użyto NodeJS, a do frontendowej użyto biblioteki `React.js`.
+Implementując kod w TypeScipt oraz Tsx (frontend).
+Jako baza danych została wybrana PostgreSQL.
+W celu sprawnego stworzenia szkieletu aplikacji webowej wybrano framework `Express.js`.
+Do zoptymalizowania budowania i zarządzania zależnościami wykorzystano Webpack.
+Do konteneryzacji projektu wykorzystano Dockera.

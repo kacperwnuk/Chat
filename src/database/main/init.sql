@@ -168,25 +168,25 @@ CREATE TABLE public.user_contacts (
 -- ALTER TABLE public.user_contacts OWNER TO postgres;
 -- ddl-end --
 
--- object: grant_fc3257dbe6 | type: PERMISSION --
+-- object: grant_4636335612 | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.messages
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_2150bb91de | type: PERMISSION --
+-- object: grant_5945bb2664 | type: PERMISSION --
 GRANT SELECT,INSERT
    ON TABLE public.sessions
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_18419b0233 | type: PERMISSION --
+-- object: grant_b1283f8863 | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.session_events
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_dd72af1ee0 | type: PERMISSION --
+-- object: grant_62433e71ed | type: PERMISSION --
 GRANT SELECT,INSERT
    ON TABLE public.server_journal
    TO "backend-server";

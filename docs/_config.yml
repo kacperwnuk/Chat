@@ -1,0 +1,5 @@
+exclude:
+  - architecture.drawio
+port: 8099
+#baseurl: "/Chat"
+baseurl: "/rso-project"

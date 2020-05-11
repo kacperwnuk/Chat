@@ -1,5 +1,7 @@
-Styl kodu
-=========
+---
+layout: default
+title: "Styl kodu"
+---
 
 Proponuje kod opisany w tym [dokumencie](https://github.com/airbnb/javascript).
 Ale za odstępem 4.
