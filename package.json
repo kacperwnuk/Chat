@@ -66,6 +66,7 @@
         "colors": "^1.4.0",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
+        "emoji-picker-react": "3.1.1-rc.1",
         "express": "^4.17.1",
         "http-status-codes": "^1.4.0",
         "lodash": "^4.17.15",

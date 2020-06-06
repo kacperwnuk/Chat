@@ -6,6 +6,8 @@ import {useSession} from "../redux/reducers/session";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import IconButton from "@material-ui/core/IconButton";
 import SendIcon from '@material-ui/icons/Send';
+import MoodIcon from '@material-ui/icons/Mood';
+import Picker from "emoji-picker-react";
 
 const useStyle = makeStyles(theme => ({
     root: {
@@ -29,12 +31,16 @@ export default function MessageComposer(props: {
     const dispatch = useDispatch();
     const session = useSession();
     const [message, setMessage] = React.useState("");
+    const [emojiPikerShown, setEmojiPikerShown] = React.useState(true);
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        console.log("wiadomosc, textInputChange", event.target.value, message);
         setMessage(event.target.value);
     }
 
     function handleKeyPress(event: React.KeyboardEvent) {
+        console.log("wiadomosc, ketPressed:  ", message, "daas1d");
+        printMess();
         if (!event.shiftKey && event.which === 13) {
             event.preventDefault();
             event.stopPropagation();
@@ -55,6 +61,20 @@ export default function MessageComposer(props: {
         setMessage("")
     }
 
+    function emojiShowClicked(){
+        setEmojiPikerShown(!emojiPikerShown);
+    }
+
+    function printMess(){
+        console.log(message);
+    }
+
+    function onEmojiClick(event: any, emojiObject: any){
+        console.log('wiadomosc, onClick: ', message);
+        printMess();
+        //setMessage(message.concat(emojiObject.emoji));
+    }
+
     return <div className={classes.root}>
         <div className={classes.text_input}>
             <TextField
@@ -67,6 +87,16 @@ export default function MessageComposer(props: {
                 variant="outlined"
             />
         </div>
+
+        <div hidden={emojiPikerShown}>
+            <Picker onEmojiClick={onEmojiClick}/>
+
+        </div>
+        <IconButton
+            color="primary"
+            onClick={emojiShowClicked}>
+            <MoodIcon/>
+        </IconButton>
         <div>
             <IconButton
                 className={classes.send_button}
