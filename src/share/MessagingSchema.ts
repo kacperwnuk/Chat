@@ -22,6 +22,7 @@ export interface SessionMessagingSchemaByClient {
     "getMyContacts": () => string[]
     "getUserData": (user_id: string) => DatabaseT.User
     "makeNewContact": (user_id: string) => void
+    "getHistoricalData": (conversation_id: string, offset: number) => DatabaseT.Message[]
 }
 
 /**
@@ -44,4 +45,9 @@ export interface SocketMiddlewareReturn<T = any> {
 export interface BasicLoginData {
     username: string
     password: string
+}
+
+export interface HistoricalMessagesData {
+    conversation_id: string
+    offset: number
 }

@@ -60,8 +60,65 @@ export function* fetchMessagesSaga(action: Action<"MESSAGE_SEND_REQUEST">) {
     }
 }
 
+export function commitHistoricalMessages(state: AppData.State, messages: DatabaseT.Message[]): AppData.State {
+    let logged_user_id = credentialsSelector(state)?.user?.user_id ?? null;
+
+    let message_dictionary = state.message_dictionary ?? {};
+
+    if(messages.length != 0){
+        let conversation_id = messages[0].conversation_id;
+
+        if (conversation_id === logged_user_id) {
+            conversation_id = messages[0].from_user_id;
+        }
+
+        let message_list = message_dictionary[conversation_id] ?? [];
+
+        message_list = [...messages.reverse(), ...message_list];
+
+        return {
+            ...state,
+            message_dictionary: {
+                ...message_dictionary,
+                [conversation_id]: message_list
+            }
+        };
+    }
+
+    return {
+        ...state,
+    };
+
+}
+
+export function* fetchHistoricalMessagesSaga(action: Action<"HISTORICAL_DATA_REQUEST">) {
+    try {
+        const session: Session | null = yield select(sessionSelector);
+
+        if (!session) {
+            yield put(makeMessageSendFailAction("session is null"));
+            return;
+        }
+
+        const messages = yield call(
+            () => session.emit("getHistoricalData", action.data.conversation_id, action.data.offset)
+        );
+
+        yield put(makeAction("HISTORICAL_DATA_SET", messages));
+    } catch (e) {
+        console.log(e);
+        yield put(makeMessageSendFailAction(e));
+    }
+}
+
+
+
 export function makeSendMessageAction(message_prototype: MessagePrototypeData) {
     return makeAction("MESSAGE_SEND_REQUEST", message_prototype)
+}
+
+export function makeGetHistoricalDataAction(conversation_id: string, offset: number){
+    return makeAction("HISTORICAL_DATA_REQUEST", {conversation_id, offset});
 }
 
 export function makeRequestMessageAction() {

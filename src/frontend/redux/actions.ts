@@ -3,7 +3,7 @@ import type AppData from "./AppData";
 import type {LoadingObject} from "./AppData";
 import type Session from "../lib/Session";
 import type DatabaseT from "../../share/DatabaseT";
-import {BasicLoginData} from "../../share/MessagingSchema";
+import {BasicLoginData, HistoricalMessagesData} from "../../share/MessagingSchema";
 
 export interface Actions {
     CREDENTIALS_DATA_REQUEST: BasicLoginData
@@ -22,6 +22,9 @@ export interface Actions {
     MESSAGE_SEND_REQUEST: MessagePrototypeData
     MESSAGE_LIST_REQUEST: {}
     MESSAGE_ADD2DIC: DatabaseT.Message
+
+    HISTORICAL_DATA_REQUEST: HistoricalMessagesData
+    HISTORICAL_DATA_SET: DatabaseT.Message[]
 
     NOTIFICATION_ADD: Partial<AppData.Notification>
     NOTIFICATION_REMOVE: string
