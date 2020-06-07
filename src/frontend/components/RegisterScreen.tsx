@@ -85,7 +85,7 @@ export default function () {
                     <LockOutlinedIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    {translate("login_screen.sign_invite")}
+                    Rejestracja{translate("login_screen.sign_invite")}
                 </Typography>
                 <form className={classes.form} noValidate>
 
@@ -112,7 +112,6 @@ export default function () {
                         label={translate("register_screen.surname_label")}
                         name="surname"
                         autoComplete="surname"
-                        autoFocus
                         onChange={e => setSurname(e.target.value)}
                         disabled={isConnecting}
                         error={credentials_error?.type === AppErrorType.ACCESS_DENIED}
@@ -126,7 +125,6 @@ export default function () {
                         label={translate("register_screen.email_label")}
                         name="email"
                         autoComplete="email"
-                        autoFocus
                         onChange={e => setEmail(e.target.value)}
                         disabled={isConnecting}
                         error={credentials_error?.type === AppErrorType.ACCESS_DENIED}
@@ -140,7 +138,6 @@ export default function () {
                         label={translate("register_screen.username_label")}
                         name="username"
                         autoComplete="username"
-                        autoFocus
                         onChange={e => setUsername(e.target.value)}
                         disabled={isConnecting}
                         error={credentials_error?.type === AppErrorType.ACCESS_DENIED}

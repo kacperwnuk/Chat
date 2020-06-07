@@ -135,7 +135,7 @@ export default function () {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="#/register" variant="body2">
                                 {translate("login_screen.sign_up")}
                             </Link>
                         </Grid>
