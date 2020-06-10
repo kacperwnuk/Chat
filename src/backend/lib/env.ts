@@ -9,6 +9,9 @@ interface ENV {
         main: DatabaseConParams[]
         user: DatabaseConParams[]
         redis: BrokerConParams[]
+    },
+    adm: {
+        port: number,
     }
 }
 
