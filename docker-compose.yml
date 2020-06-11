@@ -5,6 +5,7 @@ services:
     build:
       context: ./src/database/main
       dockerfile: ./Dockerfile
+    image: master.rso:5000/main-db
     ports:
       - "6000:6000"
     expose:
@@ -15,25 +16,28 @@ services:
     build:
       context: ./src/database/user
       dockerfile: ./Dockerfile
+    image: master.rso:5000/user-db
     ports:
       - "6001:6001"
     expose:
       - "6001"
     command: -p 6001
 
-  cdn_server:
+  cdn:
     build:
       context: .
       dockerfile: ./src/backend/cdn/Dockerfile
+    image: master.rso:5000/cdn
     ports:
       - "8080:8080"
     expose:
       - "8080"
 
-  auth_server:
+  auth:
     build:
       context: .
       dockerfile: ./src/backend/auth/Dockerfile
+    image: master.rso:5000/auth
     links:
       - user-db
     depends_on:
@@ -43,10 +47,11 @@ services:
     expose:
       - "8082"
 
-  session_server:
+  session:
     build:
       context: .
       dockerfile: ./src/backend/session/Dockerfile
+    image: master.rso:5000/session
     links:
       - main-db
     depends_on:
@@ -59,7 +64,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - session_server
+      - session
     ports:
       - "4000:4000"
 

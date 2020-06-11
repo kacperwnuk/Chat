@@ -1,0 +1,69 @@
+{{- range $.Values.nodeServers }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $.Values.appName }}-{{ .name }}
+  labels:
+    app: {{ $.Values.appName }}
+    name: {{ $.Values.appName }}-{{ .name }}
+spec:
+  replicas: {{ .replicas }}
+  selector:
+    matchLabels:
+      name: {{ $.Values.appName }}-{{ .name }}
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        name: {{ $.Values.appName }}-{{ .name }}
+    spec:
+      containers:
+      - name: {{ $.Values.appName }}-{{ .name }}
+        image: master.rso:5000/{{ .imgName }}
+        imagePullPolicy: ""
+        ports:
+        - containerPort: {{ .imgPort }}
+      imagePullSecrets: 
+        - name: rso-docker-registry-login
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Values.appName }}-{{ .name }}
+  labels:
+    app: {{ $.Values.appName }}
+    name: {{ $.Values.appName }}-{{ .name }}
+spec: 
+  type: LoadBalancer
+  selector:
+    name: {{ $.Values.appName }}-{{ .name }}
+  ports:
+    - protocol: TCP
+      port: {{ .imgPort }}
+      targetPort: {{ .imgPort }}
+  externalIPs:
+  {{- range $.Values.workers }}
+  - {{ .ip }}
+  {{- end }}
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $.Values.appName }}-{{ .name }}
+  annotations:
+    app: {{ $.Values.appName }}
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+  - host: {{ .name }}.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ $.Values.appName }}-{{ .name }}
+          servicePort: {{ .imgPort }}
+---
+
+{{- end }}

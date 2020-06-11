@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $.Values.appName }}-redis
+  labels:
+    name: {{ $.Values.appName }}-redis
+spec:
+  replicas: {{ $.Values.redis.replicas }}
+  selector:
+    matchLabels:
+      name: {{ $.Values.appName }}-redis
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        name: {{ $.Values.appName }}-redis
+    spec:
+      containers:
+      - image: redis
+        name: {{ $.Values.appName }}-redis
+        ports:
+        - containerPort: 6379
+        resources: {}
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Values.appName }}-redis
+  labels:
+    name: {{ $.Values.appName }}-redis
+spec:
+  type: LoadBalancer
+  ports:
+  - port: {{ $.Values.redis.port }}
+    targetPort: 6379
+  selector:
+    name: {{ $.Values.appName }}-redis
+---

@@ -1,0 +1,37 @@
+
+appName: rso-chat
+appPrefix: rso
+
+dockerRegister:
+  url: master.rso:5000
+
+workers:
+- ip: 192.168.100.11
+- ip: 192.168.100.12
+- ip: 192.168.100.13
+
+nodeServers:
+- name: auth
+  imgName: auth
+  imgPort: 8082
+  replicas: 1
+- name: cdn
+  imgName: cdn
+  imgPort: 8080
+  replicas: 1
+- name: session
+  imgName: session
+  imgPort: 8081
+  replicas: 3
+
+psqlServers:
+- name: main
+  port: 6000
+  password: 03c3eabc0fbe1cdbd9f46a82acd5fe46
+- name: user
+  port: 6001
+  password: 2bd234780531a2df81e9be3256bd6f48
+
+redis: 
+  replicas: 1
+  port: 6379
