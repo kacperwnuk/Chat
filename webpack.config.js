@@ -10,7 +10,8 @@ const serverConfig = {
     entry: {
         auth: "./src/backend/auth",
         session: "./src/backend/session",
-        cdn: "./src/backend/cdn"
+        cdn: "./src/backend/cdn",
+        adm: "./src/backend/adm"
     },
     output: {
         filename: "[name].js",
