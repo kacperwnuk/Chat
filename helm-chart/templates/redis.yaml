@@ -16,11 +16,11 @@ spec:
         name: {{ $.Values.appName }}-redis
     spec:
       containers:
-      - image: redis
-        name: {{ $.Values.appName }}-redis
-        ports:
-        - containerPort: 6379
-        resources: {}
+        - image: redis
+          name: {{ $.Values.appName }}-redis
+          ports:
+            - containerPort: 6379
+          resources: {}
       restartPolicy: Always
 ---
 apiVersion: v1
@@ -32,8 +32,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: {{ $.Values.redis.port }}
-    targetPort: 6379
+    - port: {{ $.Values.redis.port }}
+      targetPort: 6379
   selector:
     name: {{ $.Values.appName }}-redis
 ---

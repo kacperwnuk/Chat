@@ -14,7 +14,7 @@ Pliki baz danych znajdują się w folderze `./src/database`.
 Każda baza danych jest folderem z następującą strukturą:
 
  - `dbname` - nazwa bazy danych
-   - `.env` - plik typu dotenv zawierający następujące zmienne:
+   - `.front_env` - plik typu dotenv zawierający następujące zmienne:
       - `IMAGE_NAME` - nazwa obrazu dockera
       - `CONTAINER_NAME` - nazwa konteneru dockera
       - `ADMIN_PASSWORD` - hałso administratora, użytkownik to `postgres`
@@ -100,7 +100,7 @@ npm i
 dbs=('main' 'user')
 for db in "${dbs[@]}"
 do
-    source ./src/database/$db/.env
+    source ./src/database/$db/.front_env
     PGPASSWORD=$ADMIN_PASSWORD
     psql -h "localhost:${DB_PORT}" -U postgres -d "${BACKEND_DATABASE}" -a -f ./src/database/$db/init.sql
 done

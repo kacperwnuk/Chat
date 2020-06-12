@@ -7,19 +7,13 @@ import {commitUserData} from "./reducers/user_data";
 import {commitCurrentConversationId} from "./reducers/current_conversationt";
 import {commitMessageAdd} from "./reducers/messages";
 import {commitNotificationAdd, commitNotificationRemove} from "./reducers/notifications";
+import front_env from "../lib/front_env";
 
-const backend_data_default =
-    process.env.NODE_ENV === "production" ?
-        {   // Produkcja
-            cdn_url: "localhost:8080",
-            session_url: "localhost:4000",
-            auth_url: "localhost:8082",
-        } :
-        {   // Deweloperka
-            cdn_url: "localhost:8080",
-            session_url: "localhost:8081",
-            auth_url: "localhost:8082",
-        };
+const backend_data_default = {
+    cdn_url: front_env.RSO_CDN,
+    session_url: front_env.RSO_SESSION,
+    auth_url: front_env.RSO_AUTH
+};
 
 const initial_state: AppData.State = {
     backend_data: backend_data_default

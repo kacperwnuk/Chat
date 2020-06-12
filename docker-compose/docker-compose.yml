@@ -1,22 +1,20 @@
 version: "3.3"
 services:
 
-  main-db:
-    build:
-      context: ./src/database/main
-      dockerfile: ./Dockerfile
-    image: master.rso:5000/main-db
+  psql-main:
+    image: postgres:12.2
     ports:
       - "6000:6000"
     expose:
       - "6000"
     command: -p 6000
 
-  user-db:
+  psql-user:
+    image: postgres:12.2
     build:
-      context: ./src/database/user
-      dockerfile: ./Dockerfile
-    image: master.rso:5000/user-db
+      context: ../src/database/user
+      dockerfile: ../src/database/user/Dockerfile
+    image: master.rso:5000/psql-user
     ports:
       - "6001:6001"
     expose:
@@ -25,9 +23,10 @@ services:
 
   cdn:
     build:
-      context: .
-      dockerfile: ./src/backend/cdn/Dockerfile
+      context: ..
+      dockerfile: ../src/backend/cdn/Dockerfile
     image: master.rso:5000/cdn
+    en
     ports:
       - "8080:8080"
     expose:
@@ -35,13 +34,13 @@ services:
 
   auth:
     build:
-      context: .
-      dockerfile: ./src/backend/auth/Dockerfile
+      context: ..
+      dockerfile: ../src/backend/auth/Dockerfile
     image: master.rso:5000/auth
     links:
-      - user-db
+      - psql-main
     depends_on:
-      - user-db
+      - psql-main
     ports:
       - "8082:8082"
     expose:
@@ -49,13 +48,13 @@ services:
 
   session:
     build:
-      context: .
-      dockerfile: ./src/backend/session/Dockerfile
+      context: ..
+      dockerfile: ../src/backend/session/Dockerfile
     image: master.rso:5000/session
     links:
-      - main-db
+      - psql-main
     depends_on:
-      - main-db
+      - psql-main
     expose:
       - "8081"
 
@@ -68,7 +67,7 @@ services:
     ports:
       - "4000:4000"
 
-  redis_server:
+  redis:
     image: "redis"
     ports:
       - "6379:6379"

@@ -6,7 +6,7 @@ cd "$(dirname $0)"
 dbname=$1
 
 resove(){
-    source "./$dbname/.env"
+    source "./$dbname/.front_env"
     printf $(realpath $dbname)
 }
 

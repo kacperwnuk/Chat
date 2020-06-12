@@ -1,37 +1,50 @@
-
 appName: rso-chat
 appPrefix: rso
 
 dockerRegister:
   url: master.rso:5000
+  secret: rso-docker-registry-login
 
 workers:
-- ip: 192.168.100.11
-- ip: 192.168.100.12
-- ip: 192.168.100.13
+  - ip: 192.168.100.11
+  - ip: 192.168.100.12
+  - ip: 192.168.100.13
+
+adminServer:
+  port: 6003
 
 nodeServers:
-- name: auth
-  imgName: auth
-  imgPort: 8082
-  replicas: 1
-- name: cdn
-  imgName: cdn
-  imgPort: 8080
-  replicas: 1
-- name: session
-  imgName: session
-  imgPort: 8081
-  replicas: 3
+  - type: auth
+    imgName: auth
+    imgPort: 8082
+    replicas: 1
+  - type: cdn
+    imgName: cdn
+    imgPort: 8080
+    replicas: 1
+  - type: session
+    imgName: session
+    imgPort: 8081
+    replicas: 3
 
 psqlServers:
-- name: main
-  port: 6000
-  password: 03c3eabc0fbe1cdbd9f46a82acd5fe46
-- name: user
-  port: 6001
-  password: 2bd234780531a2df81e9be3256bd6f48
+  - name: main
+    port: 6000
+    adminUser:
+      username: postgres
+      password: 03c3eabc0fbe1cdbd9f46a82acd5fe46
+    backendUser:
+      username: backend-server
+      password: a6a09838afff6c0c9046904dd3fc2f86
+  - name: user
+    port: 6001
+    adminUser:
+      username: postgres
+      password: 337fb5d4ff41d94dc389b3734e9dff20
+    backendUser:
+      username: backend-server
+      password: 2bd234780531a2df81e9be3256bd6f48
 
-redis: 
+redis:
   replicas: 1
   port: 6379

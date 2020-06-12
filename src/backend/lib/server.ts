@@ -5,7 +5,7 @@ import socket_io from "socket.io";
 import About from "./About";
 import bodyParser from "body-parser";
 import DatabaseCon from "./DatabaseCon";
-import env from "./env";
+import back_env from "./back_env";
 import BrokerCon from "./BrokerCon";
 import {makeLogger} from "../../share/logger";
 
@@ -26,9 +26,9 @@ export async function makeServer(args: {
     makeServerLogger.info("start")
 
     // łączenia z bazą
-    databaseUser = new DatabaseCon(env.database.user);
-    databaseMain = new DatabaseCon(env.database.main);
-    redisBroker = new BrokerCon(env.database.redis);
+    databaseUser = new DatabaseCon(back_env.RSO_DB_USER);
+    databaseMain = new DatabaseCon(back_env.RSO_DB_MAIN);
+    redisBroker = new BrokerCon(back_env.RSO_REDIS);
 
     app = express();
 

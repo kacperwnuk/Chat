@@ -58,7 +58,9 @@ const clientConfig = {
             filename: "index.html",
             chunks: ["main"],
         }),
-        new webpack.EnvironmentPlugin(["NODE_ENV", "DEBUG"])
+        new webpack.EnvironmentPlugin([
+            "RSO_ENV", "RSO_CDN", "RSO_SESSION", "RSO_AUTH"
+        ])
     ]
 };
 

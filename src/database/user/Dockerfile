@@ -6,8 +6,8 @@
 
 FROM postgres:12.2
 
-ENV POSTGRES_DB rso-user
-ENV POSTGRES_PASSWORD tajne_haslo
+Back_env POSTGRES_DB rso-user
+Back_env POSTGRES_PASSWORD tajne_haslo
 
 COPY .env /docker-entrypoint-initdb.d
 COPY init.sh /docker-entrypoint-initdb.d/_00.sh

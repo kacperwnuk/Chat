@@ -22,7 +22,7 @@ const logger = winston.createLogger({
     transports: []
 });
 
-// if (process.env.NODE_ENV !== 'production')
+// if (process.front_env.NODE_ENV !== 'production')
 logger.add(new winston.transports.Console({
     format: winston.format.printf(info => {
 

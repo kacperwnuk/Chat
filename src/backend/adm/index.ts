@@ -4,13 +4,10 @@ import ssh2 from "ssh2";
 import logger, {makeLogger} from "../../share/logger";
 import isAdmin from "./isAdmin";
 import About from "../lib/About";
-import env from "../lib/env";
+import back_env from "../lib/back_env";
 import commander from "./commander";
 
 About.instance_type = "adm";
-console.log(env);
-
-let i = 0;
 
 const ssh_server = new ssh2.Server({
     hostKeys: [
@@ -65,6 +62,6 @@ const ssh_server = new ssh2.Server({
     }).on('end', function () {
         client_logger.verbose('disconnected');
     });
-}).listen(env.adm.port, "127.0.0.1", function () {
+}).listen(back_env.RSO_ADM.port, "127.0.0.1", function () {
     logger.info(`listening on port ${ssh_server.address().port}`);
 });

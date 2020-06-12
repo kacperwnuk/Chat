@@ -3,46 +3,74 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ $.Values.appName }}-{{ .name }}
+  name: {{ $.Values.appName }}-{{ .type }}
   labels:
     app: {{ $.Values.appName }}
-    name: {{ $.Values.appName }}-{{ .name }}
+    name: {{ $.Values.appName }}-{{ .type }}
 spec:
   replicas: {{ .replicas }}
   selector:
     matchLabels:
-      name: {{ $.Values.appName }}-{{ .name }}
+      name: {{ $.Values.appName }}-{{ .type }}
   strategy: {}
   template:
     metadata:
       labels:
-        name: {{ $.Values.appName }}-{{ .name }}
+        name: {{ $.Values.appName }}-{{ .type }}
     spec:
       containers:
-      - name: {{ $.Values.appName }}-{{ .name }}
-        image: master.rso:5000/{{ .imgName }}
-        imagePullPolicy: ""
-        ports:
-        - containerPort: {{ .imgPort }}
-      imagePullSecrets: 
-        - name: rso-docker-registry-login
+          - name: {{ $.Values.appName }}-{{ .type }}
+            image: master.rso:5000/{{ .imgName }}
+            imagePullPolicy: ""
+            env:
+              - name: RSO_ENV
+                value: kubernetes
+              {{- with index $.Values.psqlServers 0 }}
+              - name: RSO_DB_MAIN
+                value: '[{
+                  "user": "{{ .backendUser.username }}"
+                  "host": "{{ $.Values.appName }}-psql-{{ .name }}"
+                  "password": "{{ .backendUser.password }}"
+                  "database": "{{ $.Values.appPrefix }}-{{ .name }}"
+                  "port": {{ $.Values.appPrefix }}-{{ .port }}
+                }]'
+              {{- end }}
+              {{- with index $.Values.psqlServers 1 }}
+              - name: RSO_DB_USER
+                value: '[{
+                  "user": "{{ .backendUser.username }}"
+                  "host": "{{ $.Values.appName }}-psql-{{ .name }}"
+                  "password": "{{ .backendUser.password }}"
+                  "database": "{{ $.Values.appPrefix }}-{{ .name }}"
+                  "port": {{ $.Values.appPrefix }}-{{ .port }}
+                }]'
+              {{- end }}
+              - name: RSO_REDIS
+                value: '[{
+                  "host": "{{ $.Values.appName }}-redis"
+                  "port": "{{ $.Values.redis.port }}"
+                }]'
+            ports:
+              - containerPort: {{ .imgPort }}
+      imagePullSecrets:
+        - name: {{ $.Values.dockerRegister.secret }}
       restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $.Values.appName }}-{{ .name }}
+  name: {{ $.Values.appName }}-{{ .type }}
   labels:
     app: {{ $.Values.appName }}
-    name: {{ $.Values.appName }}-{{ .name }}
-spec: 
+    name: {{ $.Values.appName }}-{{ .type }}
+spec:
   type: LoadBalancer
   selector:
-    name: {{ $.Values.appName }}-{{ .name }}
+    name: {{ $.Values.appName }}-{{ .type }}
   ports:
-    - protocol: TCP
-      port: {{ .imgPort }}
-      targetPort: {{ .imgPort }}
+      - protocol: TCP
+        port: {{ .imgPort }}
+        targetPort: {{ .imgPort }}
   externalIPs:
   {{- range $.Values.workers }}
   - {{ .ip }}
@@ -51,19 +79,19 @@ spec:
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $.Values.appName }}-{{ .name }}
+  name: {{ $.Values.appName }}-{{ .type }}
   annotations:
     app: {{ $.Values.appName }}
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
-  - host: {{ .name }}.local
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: {{ $.Values.appName }}-{{ .name }}
-          servicePort: {{ .imgPort }}
+    - host: {{ .type }}.local
+      http:
+        paths:
+            - path: /
+              backend:
+                serviceName: {{ $.Values.appName }}-{{ .type }}
+                servicePort: {{ .imgPort }}
 ---
 
 {{- end }}
