@@ -8,10 +8,7 @@ const nodeExternals = require("webpack-node-externals");
 const serverConfig = {
     target: "node",
     entry: {
-        auth: "./src/backend/auth",
-        session: "./src/backend/session",
-        cdn: "./src/backend/cdn",
-        adm: "./src/backend/adm"
+        index: "./src/backend/index.ts",
     },
     output: {
         filename: "[name].js",
@@ -33,7 +30,7 @@ const serverConfig = {
 const clientConfig = {
     target: "web",
     entry: {
-        main: "./src/frontend/index.tsx"
+        index: "./src/frontend/index.tsx"
     },
     output: {
         filename: "[name].js",

@@ -14,4 +14,4 @@ RUN npm run build
 RUN npm prune
 RUN rm -rf src webpack.config.js tsconfig.json
 
-CMD ["npm", "run", "server-adm"]
+CMD ["npm", "run", "server"]

@@ -4,15 +4,9 @@
     "description": "Projekt na przedmiot RSO - Chat",
     "scripts": {
         "build": "webpack --mode production",
-        "server-cdn": "node dist/backend/cdn.js",
-        "server-auth": "node dist/backend/auth.js",
-        "server-session": "node dist/backend/session.js",
-        "server-adm": "node dist/backend/adm.js",
+        "server": "node dist/backend/index.js",
         "dev-build": "webpack --mode development --watch",
-        "dev-server-cdn": "nodemon -r dotenv/config dist/backend/cdn.js dotenv_config_path=.env.development",
-        "dev-server-auth": "nodemon -r dotenv/config dist/backend/auth.js dotenv_config_path=.env.development",
-        "dev-server-session": "nodemon -r dotenv/config dist/backend/session.js dotenv_config_path=.env.development",
-        "dev-server-adm": "nodemon -r dotenv/config dist/backend/adm.js dotenv_config_path=.env.development"
+        "dev-server": "nodemon -r dotenv/config dist/backend/index.js dotenv_config_path=.env.development"
     },
     "repository": {
         "url": "git+https://github.com/kacperwnuk/Chat.git"

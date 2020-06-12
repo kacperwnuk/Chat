@@ -25,6 +25,8 @@ spec:
             env:
               - name: RSO_ENV
                 value: kubernetes
+              - name: RSO_SERVER
+                value: {{ .type }}
               {{- with index $.Values.psqlServers 0 }}
               - name: RSO_DB_MAIN
                 value: '[{
@@ -54,6 +56,12 @@ spec:
                 value: '[{
                    "port": {{ $.Values.adminServer.port }}
                  }]'
+              - name: RSO_FRONT_ENV
+                value: '{
+                  "RSO_CDN": ":8080",
+                  "RSO_SESSION": ":8081",
+                  "RSO_AUTH": ":8082"
+                  }'
             ports:
               - containerPort: {{ .imgPort }}
       imagePullSecrets:

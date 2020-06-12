@@ -1,12 +1,14 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="dev-server-session" type="js.build_tools.npm" singleton="false" nameIsGenerated="true">
+  <configuration default="false" name="dev-server-session" type="js.build_tools.npm" singleton="false">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="dev-server-session" />
+      <script value="dev-server" />
     </scripts>
     <node-interpreter value="project" />
-    <envs />
+    <envs>
+      <env name="RSO_SERVER" value="session" />
+    </envs>
     <method v="2" />
   </configuration>
 </component>

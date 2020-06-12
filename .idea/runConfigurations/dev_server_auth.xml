@@ -3,10 +3,12 @@
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="dev-server-auth" />
+      <script value="dev-server" />
     </scripts>
     <node-interpreter value="project" />
-    <envs />
+    <envs>
+      <env name="RSO_SERVER" value="auth" />
+    </envs>
     <method v="2" />
   </configuration>
 </component>

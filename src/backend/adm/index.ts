@@ -3,11 +3,8 @@ import {v4 as uuid} from "uuid";
 import ssh2 from "ssh2";
 import logger, {makeLogger} from "../../share/logger";
 import isAdmin from "./isAdmin";
-import About from "../lib/About";
 import back_env from "../lib/back_env";
 import commander from "./commander";
-
-About.instance_type = "adm";
 
 const ssh_server = new ssh2.Server({
     hostKeys: [
