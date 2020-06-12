@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
           - name: {{ $.Values.appName }}-{{ .type }}
-            image: master.rso:5000/{{ .imgName }}
+            image: "master.rso:5000/{{ .imgName }}:{{ $.Chart.Version }}"
             imagePullPolicy: ""
             env:
               - name: RSO_ENV
@@ -28,28 +28,32 @@ spec:
               {{- with index $.Values.psqlServers 0 }}
               - name: RSO_DB_MAIN
                 value: '[{
-                  "user": "{{ .backendUser.username }}"
-                  "host": "{{ $.Values.appName }}-psql-{{ .name }}"
-                  "password": "{{ .backendUser.password }}"
-                  "database": "{{ $.Values.appPrefix }}-{{ .name }}"
-                  "port": {{ $.Values.appPrefix }}-{{ .port }}
+                  "user": "{{ .backendUser.username }}",
+                  "host": "{{ $.Values.appName }}-psql-{{ .name }}",
+                  "password": "{{ .backendUser.password }}",
+                  "database": "{{ $.Values.appPrefix }}-{{ .name }}",
+                  "port": {{ .port }}
                 }]'
               {{- end }}
               {{- with index $.Values.psqlServers 1 }}
               - name: RSO_DB_USER
                 value: '[{
-                  "user": "{{ .backendUser.username }}"
-                  "host": "{{ $.Values.appName }}-psql-{{ .name }}"
-                  "password": "{{ .backendUser.password }}"
-                  "database": "{{ $.Values.appPrefix }}-{{ .name }}"
-                  "port": {{ $.Values.appPrefix }}-{{ .port }}
+                  "user": "{{ .backendUser.username }}",
+                  "host": "{{ $.Values.appName }}-psql-{{ .name }}",
+                  "password": "{{ .backendUser.password }}",
+                  "database": "{{ $.Values.appPrefix }}-{{ .name }}",
+                  "port": {{ .port }}
                 }]'
               {{- end }}
               - name: RSO_REDIS
                 value: '[{
-                  "host": "{{ $.Values.appName }}-redis"
-                  "port": "{{ $.Values.redis.port }}"
+                  "host": "{{ $.Values.appName }}-redis",
+                  "port": {{ $.Values.redis.port }}
                 }]'
+              - name: RSO_ADM
+                value: '[{
+                   "port": {{ $.Values.adminServer.port }}
+                 }]'
             ports:
               - containerPort: {{ .imgPort }}
       imagePullSecrets:

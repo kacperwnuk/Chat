@@ -56,11 +56,9 @@ const clientConfig = {
         new HtmlWebpackPlugin({
             title: "ChatRSO",
             filename: "index.html",
+            template: "index.html",
             chunks: ["main"],
-        }),
-        new webpack.EnvironmentPlugin([
-            "RSO_ENV", "RSO_CDN", "RSO_SESSION", "RSO_AUTH"
-        ])
+        })
     ]
 };
 

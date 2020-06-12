@@ -2,11 +2,14 @@
 
 docker_registry=master.rso:5000
 version=$(jq -r .version package.json)
+app_prefix=rso-chat
 
 function publish_image() {
     name=$1
     path=$2
-    docker build -f "$path" -t "rso-chat-$name:$version" .
+    docker build -f "$path" -t "$app_prefix-$name" .
+    docker tag "$app_prefix-$name" "$docker_registry/$name:$version"
+    docker push "$docker_registry/$name"
 }
 
 publish_image cdn ./src/backend/cdn/Dockerfile

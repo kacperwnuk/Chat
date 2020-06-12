@@ -9,7 +9,9 @@ export default async function <Key extends keyof AuthMessagingSchema>(
     ...params: Parameters<AuthMessagingSchema[Key]>
 ): Promise<ReturnType<AuthMessagingSchema[Key]>> {
 
-    let response = await fetch(`http://${backend_data.auth_url}/${key}`, {
+    const url = `${location.protocol}//${location.hostname}${backend_data.auth_url}/${key}`;
+
+    let response = await fetch(url, {
         method: "POST",
         headers: new Headers({
             Accept: "application/json",

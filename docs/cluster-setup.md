@@ -8,6 +8,42 @@ Tworzenie cluster'a
 
 ## libvirt
 
+Zainstaluj `libvirt` wraz z klientem graficznym `virt-manager`:
+
+|System|Komenda|
+|---|---|
+|Ubuntu|`apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager`|
+|ArchLinux|`pacman -S qemu libvirt virt-manager`|
+
+
+Utwórz sieć o nazwie `rso`, przykładowy XML sieci:
+```xml
+<network connections="4">
+  <name>rso</name>
+  <uuid>47c10b95-6fff-49b1-a045-c1cd3186edfb</uuid>
+  <forward mode="nat">
+    <nat>
+      <port start="1024" end="65535"/>
+    </nat>
+  </forward>
+  <bridge name="virbr1" stp="on" delay="0"/>
+  <mac address="52:54:00:d9:d8:7c"/>
+  <domain name="rso"/>
+  <ip address="192.168.100.1" netmask="255.255.255.0">
+    <dhcp>
+      <range start="192.168.100.128" end="192.168.100.254"/>
+      <host mac="52:54:00:75:bc:3b" name="master" ip="192.168.100.10"/>
+      <host mac="52:54:00:a8:aa:95" name="worker01" ip="192.168.100.11"/>
+      <host mac="52:54:00:ca:b5:fa" name="worker02" ip="192.168.100.12"/>
+      <host mac="52:54:00:d0:f3:8a" name="worker03" ip="192.168.100.13"/>
+    </dhcp>
+  </ip>
+</network>
+```
+
+Utwórz cztery maszyny `Ubuntu 20.04`.
+
+
 ## Maszyny Ubuntu 20.04
 
 ## Kubernetes
