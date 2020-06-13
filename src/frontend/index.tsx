@@ -9,23 +9,26 @@ import SessionProvider from "./lib/SessionProvider";
 import NotificationContainer from "./components/NotificationContainer";
 import TranslateProvider from "./i18n/TranslateProvider";
 import {CookiesProvider} from "react-cookie";
+import AppThemeProvider from "./components/AppThemeProvider";
 
 const app = document.createElement("div");
 app.id = "app";
 document.body.append(app);
 
 ReactDOM.render(
-    <Router>
-        <CookiesProvider>
-            <AppDataProvider>
-                <SessionProvider>
-                    <TranslateProvider>
-                        <CssBaseline/>
-                        <App/>
-                        <NotificationContainer/>
-                    </TranslateProvider>
-                </SessionProvider>
-            </AppDataProvider>
-        </CookiesProvider>
-    </Router>,
+    <AppThemeProvider>
+        <TranslateProvider>
+            <Router>
+                <CookiesProvider>
+                    <AppDataProvider>
+                        <SessionProvider>
+                            <CssBaseline/>
+                            <App/>
+                            <NotificationContainer/>
+                        </SessionProvider>
+                    </AppDataProvider>
+                </CookiesProvider>
+            </Router>
+        </TranslateProvider>
+    </AppThemeProvider>,
     app);
