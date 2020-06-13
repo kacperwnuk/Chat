@@ -6,7 +6,7 @@ import type {Action, Actions} from "./actions";
 import {fetchCredentialsDataSaga} from "./reducers/credentials_data";
 import {fetchContactListSaga} from "./reducers/contact_list";
 import {fetchUserDataSaga} from "./reducers/user_data";
-import {fetchMessagesSaga} from "./reducers/messages";
+import {fetchHistoricalMessagesSaga, fetchMessagesSaga} from "./reducers/messages";
 
 let takeLeading = <Key extends keyof Actions>(name: Key, f: (action: Action<Key>) => any) => takeLeadingSaga(name, f);
 let takeEvery = <Key extends keyof Actions>(name: Key, f: (action: Action<Key>) => any) => takeEverySaga(name, f);
@@ -14,6 +14,7 @@ let takeEvery = <Key extends keyof Actions>(name: Key, f: (action: Action<Key>) 
 export default function* mySaga() {
     yield takeLeading("CREDENTIALS_DATA_REQUEST", fetchCredentialsDataSaga);
     yield takeLeading("CONTACT_LIST_REQUEST", fetchContactListSaga);
+    yield takeLeading("HISTORICAL_DATA_REQUEST", fetchHistoricalMessagesSaga);
     yield takeEvery("USER_DATA_REQUEST", fetchUserDataSaga);
     yield takeEvery("MESSAGE_SEND_REQUEST", fetchMessagesSaga);
 }

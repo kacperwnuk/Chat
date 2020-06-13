@@ -12,6 +12,7 @@ import isUUID from "../../share/data-checker/isUUID";
 import {makeLogger} from "../../share/logger";
 import noop from "../../share/noop";
 import {redisBroker} from "../lib/server";
+import getHistoricalMessages from "../data/getHistoricalMessages";
 
 export default function (socket: socket_io.Socket) {
     const session_logger = makeLogger('Session', socket.id);
@@ -52,7 +53,7 @@ export default function (socket: socket_io.Socket) {
 
     function initMessagingWithAuthSocket(socket: socket_io.Socket) {
 
-        const subscription = redisBroker.subscribeForNewMessages(user_id, onNewMessage)
+        const subscription = redisBroker.subscribeForNewMessages(user_id, onNewMessage);
         unsubscribeBroker = () => subscription.unsubscribe();
 
         socketOnMiddleware(socket, "sendMessage", async (msg_proto: MessagePrototypeData) => {
@@ -79,6 +80,14 @@ export default function (socket: socket_io.Socket) {
             session_logger.data(`executing: getUserData("${user_id}")`);
 
             return await getUserData(user_id);
+        });
+
+        socketOnMiddleware(socket, 'getHistoricalData', async(conversation_id:string, offset:number) =>{
+            conversation_id = await isUUID(conversation_id);
+
+            session_logger.data(`executing: getHistoricalData("${conversation_id}")`);
+
+            return await getHistoricalMessages(conversation_id, offset);
         });
     }
 }

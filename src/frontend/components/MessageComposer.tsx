@@ -11,7 +11,8 @@ const useStyle = makeStyles(theme => ({
     root: {
         display: "flex",
         flexDirection: "row",
-        flexWrap: "nowrap"
+        flexWrap: "nowrap",
+        paddingTop: 10,
     },
     text_input: {
         flex: 1
