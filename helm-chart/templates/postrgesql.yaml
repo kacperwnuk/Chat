@@ -1,6 +1,6 @@
 # Dobry tutorial: https://severalnines.com/database-blog/using-kubernetes-deploy-postgresql
 
-  {{- range $.Values.psqlServers }}
+{{- range $.Values.psqlServers }}
 kind: PersistentVolume
 apiVersion: v1
 metadata:

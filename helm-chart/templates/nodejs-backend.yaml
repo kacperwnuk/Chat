@@ -54,10 +54,6 @@ spec:
                           "host": "{{ $.Values.appName }}-redis",
                           "port": {{ $.Values.redis.port }}
                         }]'
-              - name: RSO_ADM
-                value: '[{
-                          "port": {{ $.Values.adminServer.port }}
-                        }]'
               - name: RSO_FRONT_ENV
                 value: '{{ $.Values.frontendENV }}'
             ports:

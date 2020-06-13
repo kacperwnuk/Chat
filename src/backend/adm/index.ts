@@ -16,22 +16,22 @@ const ssh_server = new ssh2.Server({
 
     client.on("authentication", async (ctx) => {
 
-        switch (ctx.method) {
-            case "password": {
-
-                if (!(ctx.username === "admin" && ctx.password === "admin")) {
-                    logger.error(`rejected, wrong credentials`);
-                    return ctx.reject();
-                }
-
-                break;
-            }
-
-            default: {
-                logger.error(`rejected, unsupported method ${ctx.method}`);
-                return ctx.reject();
-            }
-        }
+        // switch (ctx.method) {
+        //     case "password": {
+        //
+        //         if (!(ctx.username === "admin" && ctx.password === "admin")) {
+        //             logger.error(`rejected, wrong credentials`);
+        //             return ctx.reject();
+        //         }
+        //
+        //         break;
+        //     }
+        //
+        //     default: {
+        //         logger.error(`rejected, unsupported method ${ctx.method}`);
+        //         return ctx.reject();
+        //     }
+        // }
 
         ctx.accept();
 

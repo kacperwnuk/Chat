@@ -1,13 +1,15 @@
-import yargs from "yargs";
 import ssh2 from "ssh2";
+// import cmd_add_user from "./cmd/add-user"
+import {Command} from "commander";
+import {parse as parseCmd} from "shell-quote";
 
-const parser = yargs
-    .command(require("./cmd/add-user"))
-    // .command(require("./cmd/add-users"))
-    .help();
+const program = new Command();
+
+// cmd_add_user(program);
+
 
 export default function (args: string, stream: ssh2.ServerChannel) {
 
-    let q = parser.parse(args)
-    console.log(q);
+    console.log(args);
+    console.log(parseCmd(args));
 }

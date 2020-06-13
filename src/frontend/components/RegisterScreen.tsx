@@ -78,9 +78,11 @@ export default function () {
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon/>
                 </Avatar>
+
                 <Typography component="h1" variant="h5">
                     {translate("register_screen.sign_invite")}
                 </Typography>
+
                 <form className={classes.form} noValidate>
 
                     <Field name="email" value={email} setter={setEmail} required/>

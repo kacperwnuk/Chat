@@ -5,7 +5,7 @@ import {RegistrationData} from "../../share/MessagingSchema";
 import getUserData from "./getUserData";
 
 export default async function (registration_data: RegistrationData): Promise<DatabaseT.User> {
-    let user_id = uuid();
+    const user_id = uuid();
 
     await databaseUser.query(`
  

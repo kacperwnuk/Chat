@@ -1,6 +1,6 @@
 {
     "name": "rso-chat",
-    "version": "0.0.50",
+    "version": "0.0.51",
     "description": "Projekt na przedmiot RSO - Chat",
     "scripts": {
         "build": "webpack --mode production",
@@ -35,11 +35,11 @@
         "@types/react-router-dom": "^5.1.5",
         "@types/redis": "^2.8.22",
         "@types/redux-logger": "^3.0.8",
+        "@types/shell-quote": "^1.6.2",
         "@types/socket.io": "^2.1.8",
         "@types/socket.io-client": "^1.4.33",
         "@types/ssh2": "^0.5.43",
         "@types/uuid": "^7.0.4",
-        "@types/yargs": "^15.0.5",
         "@types/yup": "^0.26.37",
         "html-webpack-plugin": "^4.3.0",
         "nodemon": "^2.0.4",
@@ -63,6 +63,7 @@
     "dependencies": {
         "body-parser": "^1.19.0",
         "colors": "^1.4.0",
+        "commander": "^5.1.0",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
@@ -70,11 +71,11 @@
         "lodash": "^4.17.15",
         "pg": "^8.2.1",
         "redis": "^3.0.2",
+        "shell-quote": "^1.7.2",
         "socket.io": "^2.3.0",
         "ssh2": "^0.8.9",
         "uuid": "^8.1.0",
         "winston": "^3.2.1",
-        "yargs": "^15.3.1",
         "yup": "^0.28.3"
     }
 }
