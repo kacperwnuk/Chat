@@ -16,6 +16,14 @@ export default {
         forgot_password: "Zapomniałeś hasła?",
         sign_up: "Zarejestruj się"
     },
+    register_screen: {
+        email_label: "Adres E-mail",
+        password_label: "Hasło",
+        password2_label: "Powtórz hasło",
+        name_label: "Imię",
+        surname_label: "Nazwisko",
+        username_label: "Nazwa użytkownika"
+    },
     copyright: {
         prefix: "Prawa autorskie ",
         name: "Zespół E",

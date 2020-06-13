@@ -48,8 +48,12 @@ export default function () {
     const credentials_error = useCredentialsError();
 
     const [isConnecting, setIsConnection] = React.useState(false);
+    const [name, setName] = React.useState("");
+    const [surname, setSurname] = React.useState("");
+    const [email, setEmail] = React.useState("");
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [password2, setPassword2] = React.useState("");
 
 
     function authUser(event: React.MouseEvent) {
@@ -81,7 +85,7 @@ export default function () {
                     <LockOutlinedIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    {translate("login_screen.sign_invite")}
+                    Rejestracja{translate("login_screen.sign_invite")}
                 </Typography>
                 <form className={classes.form} noValidate>
 
@@ -90,11 +94,50 @@ export default function () {
                         margin="normal"
                         required
                         fullWidth
+                        id="name"
+                        label={translate("register_screen.name_label")}
+                        name="name"
+                        autoComplete="name"
+                        autoFocus
+                        onChange={e => setName(e.target.value)}
+                        disabled={isConnecting}
+                        error={credentials_error?.type === AppErrorType.ACCESS_DENIED}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="surname"
+                        label={translate("register_screen.surname_label")}
+                        name="surname"
+                        autoComplete="surname"
+                        onChange={e => setSurname(e.target.value)}
+                        disabled={isConnecting}
+                        error={credentials_error?.type === AppErrorType.ACCESS_DENIED}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
                         id="email"
-                        label={translate("login_screen.email_label")}
+                        label={translate("register_screen.email_label")}
                         name="email"
                         autoComplete="email"
-                        autoFocus
+                        onChange={e => setEmail(e.target.value)}
+                        disabled={isConnecting}
+                        error={credentials_error?.type === AppErrorType.ACCESS_DENIED}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="username"
+                        label={translate("register_screen.username_label")}
+                        name="username"
+                        autoComplete="username"
                         onChange={e => setUsername(e.target.value)}
                         disabled={isConnecting}
                         error={credentials_error?.type === AppErrorType.ACCESS_DENIED}
@@ -105,11 +148,25 @@ export default function () {
                         required
                         fullWidth
                         name="password"
-                        label={translate("login_screen.password_label")}
+                        label={translate("register_screen.password_label")}
                         type="password"
                         id="password"
                         autoComplete="current-password"
                         onChange={e => setPassword(e.target.value)}
+                        disabled={isConnecting}
+                        error={credentials_error?.type === AppErrorType.ACCESS_DENIED}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password2"
+                        label={translate("register_screen.password2_label")}
+                        type="password2"
+                        id="password2"
+                        autoComplete="current-password"
+                        onChange={e => setPassword2(e.target.value)}
                         disabled={isConnecting}
                         error={credentials_error?.type === AppErrorType.ACCESS_DENIED}
                     />
@@ -135,7 +192,7 @@ export default function () {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#/register" variant="body2">
+                            <Link href="#" variant="body2">
                                 {translate("login_screen.sign_up")}
                             </Link>
                         </Grid>
