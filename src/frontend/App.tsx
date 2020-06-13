@@ -8,12 +8,15 @@ import useIsLogged from "./hooks/useIsLogged";
 export default function App() {
     const is_logged = useIsLogged();
 
-    console.log("App");
-
     return <Switch>
 
-        <Route path="/login" component={LoginScreen}/>
-        <Route path="/register" component={RegisterScreen}/>
+        <Route path="/login">
+            {is_logged ? <Redirect to="/"/> : <LoginScreen/>}
+        </Route>
+
+        <Route path="/register">
+            {is_logged ? <Redirect to="/"/> : <RegisterScreen/>}
+        </Route>
 
         <Route path="/">
             {is_logged ? <MainLayout/> : <Redirect to="/login"/>}

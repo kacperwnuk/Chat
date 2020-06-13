@@ -20,6 +20,7 @@ import FatalError from "./FatalError";
 import {useDispatch} from "react-redux";
 import {makeCredentialsDataRequestAction, useCredentialsError} from "../redux/reducers/credentials_data";
 import LanguageSwitch from "./LanguageSwitch";
+import AppLink from "./AppLink";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -130,16 +131,17 @@ export default function () {
                     >
                         {translate("login_screen.submit")}
                     </Button>
+
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
+                            <AppLink to="/forgot_password">
                                 {translate("login_screen.forgot_password")}
-                            </Link>
+                            </AppLink>
                         </Grid>
                         <Grid item>
-                            <Link href="#/register" variant="body2">
+                            <AppLink to="/register">
                                 {translate("login_screen.sign_up")}
-                            </Link>
+                            </AppLink>
                         </Grid>
                     </Grid>
                 </form>

@@ -3,9 +3,12 @@ import type AppData from "./AppData";
 import type {LoadingObject} from "./AppData";
 import type Session from "../lib/Session";
 import type DatabaseT from "../../share/DatabaseT";
-import type {BasicLoginData, HistoricalMessagesData} from "../../share/MessagingSchema";
+import type {BasicLoginData, HistoricalMessagesData, RegistrationData} from "../../share/MessagingSchema";
 
 export interface Actions {
+    REGISTRATION_REQUEST: RegistrationData
+    REGISTRATION_STATE_SET: AppData.RegistrationState
+
     CREDENTIALS_DATA_REQUEST: BasicLoginData
     CREDENTIALS_DATA_SET: LoadingObject<AppData.CredentialsData>
 

@@ -8,6 +8,7 @@ import {commitCurrentConversationId} from "./reducers/current_conversationt";
 import {commitHistoricalMessages, commitMessageAdd} from "./reducers/messages";
 import {commitNotificationAdd, commitNotificationRemove} from "./reducers/notifications";
 import front_env from "../lib/front_env";
+import {commitRegistrationState} from "./reducers/registration";
 
 const backend_data_default = {
     cdn_url: front_env.RSO_CDN,
@@ -43,6 +44,8 @@ export default function myApp(state: AppData.State = initial_state, action: Acti
             return commitNotificationAdd(state, action.data);
         case "NOTIFICATION_REMOVE":
             return commitNotificationRemove(state, action.data);
+        case "REGISTRATION_STATE_SET":
+            return commitRegistrationState(state, action.data);
 
         default:
             return state;

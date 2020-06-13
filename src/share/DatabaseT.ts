@@ -1,4 +1,4 @@
-import type {MessageContent} from "./types";
+import type {HumanGender, MessageContent} from "./types";
 
 declare namespace DatabaseT {
 
@@ -14,7 +14,7 @@ declare namespace DatabaseT {
         address: string
         address_data: any
         deleted: boolean
-        gender: "male" | "female" | "other"
+        gender: HumanGender
         email: string
     }
 

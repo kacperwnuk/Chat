@@ -21,12 +21,16 @@ export default {
         email_label: "Email Address",
         password_label: "Password",
         password2_label: "Repeat password",
+        username_label: "Username",
         name_family_label: "Surname",
         name_given_label: "Name",
         name_middle_label: "Middle name",
         name_prefix_label: "Prefix",
         name_suffix_label: "Suffix",
-        username_label: "Username"
+        address_label: "Address",
+        forgot_password: "Forgot password?",
+        submit: "Sign up",
+        sign_in: "Sign in"
     },
     copyright: {
         prefix: "Copyright ",

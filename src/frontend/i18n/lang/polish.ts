@@ -21,12 +21,16 @@ export default {
         email_label: "Adres E-mail",
         password_label: "Hasło",
         password2_label: "Powtórz hasło",
+        username_label: "Nazwa użytkownika",
         name_family_label: "Nazwisko",
         name_given_label: "Imię",
         name_middle_label: "Drugie imię",
         name_prefix_label: "Prefiks",
         name_suffix_label: "Suffiks",
-        username_label: "Nazwa użytkownika"
+        address_label: "Adres",
+        forgot_password: "Zapomniałeś hasła?",
+        submit: "Zarejestruj się",
+        sign_in: "Zaloguj się"
     },
     copyright: {
         prefix: "Prawa autorskie ",

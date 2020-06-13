@@ -1,17 +1,17 @@
 import type AppData from "../AppData";
-import {useSelector} from "react-redux";
 import areArraysSame from "../../../share/lib/areArraysSame";
+import useAppSelector from "../../hooks/useAppSelector";
 
 export function notificationSelector(state: AppData.State, notification_id: string): AppData.Notification | null {
     return state?.notification_dictionary?.[notification_id] ?? null;
 }
 
 export function useNotification(notification_id: string) {
-    return useSelector((state: AppData.State) => notificationSelector(state, notification_id));
+    return useAppSelector(state => notificationSelector(state, notification_id));
 }
 
 export function useAllNotificationsIds() {
-    return useSelector((state: AppData.State) => Object.keys(state.notification_dictionary ?? {}), areArraysSame);
+    return useAppSelector(state => Object.keys(state.notification_dictionary ?? {}), areArraysSame);
 }
 
 export function commitNotificationAdd(state: AppData.State, notification: AppData.Notification): AppData.State {

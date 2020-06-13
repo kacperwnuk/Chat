@@ -2,22 +2,18 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
 import Copyright from "./Copyright";
 import useTranslate from "../hooks/useTranslate";
-import {AppErrorType} from "../lib/AppError";
-import FatalError from "./FatalError";
-import {useDispatch} from "react-redux";
-import {makeCredentialsDataRequestAction, useCredentialsError} from "../redux/reducers/credentials_data";
 import LanguageSwitch from "./LanguageSwitch";
+import useAppDispatch from "../hooks/useAppDispatch";
+import {HumanGender} from "../../share/types";
+import AppLink from "./AppLink";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -43,10 +39,7 @@ export default function () {
     const classes = useStyles();
     const translate = useTranslate();
 
-    const dispatch = useDispatch();
-    const credentials_error = useCredentialsError();
-
-    const [isConnecting, setIsConnection] = React.useState(false);
+    const dispatch = useAppDispatch();
 
     const [email, setEmail] = React.useState("");
     const [username, setUsername] = React.useState("");
@@ -56,47 +49,26 @@ export default function () {
     const [name_middle, setNameMiddle] = React.useState("");
     const [name_prefix, setNamePrefix] = React.useState("");
     const [name_suffix, setNameSuffix] = React.useState("");
+    const [address, setAddress] = React.useState("");
+    const [gender, setGender] = React.useState<HumanGender>("other");
 
     const [password, setPassword] = React.useState("");
-    const [password2, setPassword2] = React.useState("");
 
-    function authUser(event: React.MouseEvent) {
+    function registerUser(event: React.MouseEvent) {
         event.preventDefault();
 
-        setIsConnection(true);
-
-        dispatch(
-            makeCredentialsDataRequestAction(
-                username,
-                password
-            )
-        );
-    }
-
-    if (credentials_error?.type === AppErrorType.FATAL) {
-        return <FatalError/>
-    }
-
-    if (credentials_error && isConnecting) {
-        setIsConnection(false);
-    }
-
-    function Field(props: {
-        name: string
-        value: string
-        setter: (new_val: string) => void
-    }) {
-        return <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            label={translate(`register_screen.${props.name}_label`)}
-            name={props.name}
-            onChange={e => props.setter(e.target.value)}
-            disabled={isConnecting}
-            error={credentials_error?.type === AppErrorType.ACCESS_DENIED}
-        />
+        dispatch("REGISTRATION_REQUEST", {
+            username,
+            password,
+            email,
+            name_family,
+            name_given,
+            name_middle,
+            name_prefix,
+            name_suffix,
+            gender,
+            address
+        });
     }
 
     return (
@@ -111,13 +83,30 @@ export default function () {
                 </Typography>
                 <form className={classes.form} noValidate>
 
-                    <Field name="email" value={email} setter={setEmail}/>
-                    <Field name="username" value={username} setter={setUsername}/>
+                    <Field name="email" value={email} setter={setEmail} required/>
+                    <Field name="username" value={username} setter={setUsername} required/>
+
+                    <Grid container spacing={3}>
+                        <Grid item xs>
+                            <Field name="name_given" value={name_given} setter={setNameGiven} required/>
+                        </Grid>
+                        <Grid item xs>
+                            <Field name="name_middle" value={name_middle} setter={setNameMiddle}/>
+                        </Grid>
+                    </Grid>
+
                     <Field name="name_family" value={name_family} setter={setNameFamily}/>
-                    <Field name="name_given" value={name_given} setter={setNameGiven}/>
-                    <Field name="name_middle" value={name_middle} setter={setNameMiddle}/>
-                    <Field name="name_prefix" value={name_prefix} setter={setNamePrefix}/>
-                    <Field name="name_suffix" value={name_suffix} setter={setNameSuffix}/>
+
+                    <Grid container spacing={3}>
+                        <Grid item xs>
+                            <Field name="name_prefix" value={name_prefix} setter={setNamePrefix}/>
+                        </Grid>
+                        <Grid item xs>
+                            <Field name="name_suffix" value={name_suffix} setter={setNameSuffix}/>
+                        </Grid>
+                    </Grid>
+
+                    <Field name="address" value={address} setter={setAddress} required/>
 
                     <TextField
                         variant="outlined"
@@ -129,47 +118,35 @@ export default function () {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        value={password}
                         onChange={e => setPassword(e.target.value)}
-                        disabled={isConnecting}
-                        error={credentials_error?.type === AppErrorType.ACCESS_DENIED}
                     />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password2"
-                        label={translate("register_screen.password2_label")}
-                        type="password2"
-                        id="password2"
-                        autoComplete="current-password"
-                        onChange={e => setPassword2(e.target.value)}
-                        disabled={isConnecting}
-                        error={credentials_error?.type === AppErrorType.ACCESS_DENIED}
-                    />
+
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={authUser}
-                        disabled={isConnecting}
+                        onClick={registerUser}
                     >
-                        {translate("login_screen.submit")}
+                        {translate("register_screen.submit")}
                     </Button>
+
+
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
-                                {translate("login_screen.forgot_password")}
-                            </Link>
+                            <AppLink to="/forgot_password">
+                                {translate("register_screen.forgot_password")}
+                            </AppLink>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
-                                {translate("login_screen.sign_up")}
-                            </Link>
+                            <AppLink to="/login">
+                                {translate("register_screen.sign_in")}
+                            </AppLink>
                         </Grid>
                     </Grid>
+
                 </form>
             </div>
 
@@ -186,3 +163,25 @@ export default function () {
         </Container>
     );
 }
+
+
+const Field = React.forwardRef((props: {
+    name: string
+    value: string
+    setter: (new_val: string) => void
+    required?: boolean
+}, ref: React.Ref<HTMLDivElement>) => {
+
+    const translate = useTranslate();
+
+    return <TextField
+        ref={ref}
+        variant="outlined" margin="normal"
+        required={props.required ?? false}
+        fullWidth
+        label={translate(`register_screen.${props.name}_label`)}
+        name={props.name}
+        onChange={e => props.setter(e.target.value)}
+        value={props.value}
+    />
+});

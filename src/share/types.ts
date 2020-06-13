@@ -1,6 +1,7 @@
 /**
  * Zbiór różnych typów
  */
+import DatabaseT from "./DatabaseT";
 
 export type Dictionary<T> = { [key: string]: T }
 
@@ -21,3 +22,5 @@ export type PromisifyFunction<Func extends (...params: any[]) => any> =
 
 export type RsoEnv = "development" | "docker-compose" | "kubernetes";
 export type RsoServerType = "cdn" | "auth" | "session" | "adm";
+
+export type HumanGender = "male" | "female" | "other";

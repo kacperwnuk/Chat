@@ -5,7 +5,7 @@ import {backendDataSelector} from "./backend_data";
 import {select, call, put} from "redux-saga/effects";
 import type AppData from "../AppData";
 import type {LoadingObject} from "../AppData";
-import fetchAuth from "../../lib/fetchAuth";
+import fetchAuthServer from "../../lib/fetchAuthServer";
 import {NotificationLevel} from "../../../share/logger";
 
 
@@ -37,7 +37,8 @@ export function* fetchCredentialsDataSaga(action: Action<"CREDENTIALS_DATA_REQUE
         const backend_data: AppData.BackendData = yield select(backendDataSelector);
 
         const credential_data: AppData.CredentialsData = yield call(
-            fetchAuth,
+            //@ts-ignore
+            fetchAuthServer,
             "auth",
             backend_data,
             action.data
@@ -46,6 +47,7 @@ export function* fetchCredentialsDataSaga(action: Action<"CREDENTIALS_DATA_REQUE
         yield put(
             makeAction("CREDENTIALS_DATA_SET", {data: credential_data})
         );
+
     } catch (error) {
         yield put(
             makeAction("CREDENTIALS_DATA_SET", {error})

@@ -2,12 +2,15 @@ import type DatabaseT from "../../share/DatabaseT";
 import type {Dictionary, SessionAuthData} from "../../share/types";
 import type AppError from "../lib/AppError";
 import type Session from "../lib/Session";
-import {NotificationLevel} from "../../share/logger";
+import type {NotificationLevel} from "../../share/logger";
 
 declare namespace AppData {
 
     interface State {
+        registration_state?: RegistrationState
+
         credentials_data?: LoadingObject<CredentialsData>
+
         backend_data: BackendData
         session?: Session | null
         contact_list?: ContactList
@@ -50,6 +53,8 @@ declare namespace AppData {
         level: NotificationLevel
         data?: any
     }
+
+    type RegistrationState = null | "loading" | "error"
 }
 
 export type LoadingObject<T> = { error?: AppError, data?: T };
