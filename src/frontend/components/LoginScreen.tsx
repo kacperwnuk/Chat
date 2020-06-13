@@ -19,6 +19,7 @@ import {AppErrorType} from "../lib/AppError";
 import FatalError from "./FatalError";
 import {useDispatch} from "react-redux";
 import {makeCredentialsDataRequestAction, useCredentialsError} from "../redux/reducers/credentials_data";
+import LanguageSwitch from "./LanguageSwitch";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -38,9 +39,10 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     }
-}));
+}), {name: "LoginScreen"});
 
 export default function () {
+    console.log("Login");
     const classes = useStyles();
     const translate = useTranslate();
 
@@ -142,9 +144,17 @@ export default function () {
                     </Grid>
                 </form>
             </div>
-            <Box mt={8}>
+
+            <Box mt={4}>
+                <Typography variant="body2" color="textSecondary" align="center">
+                    <LanguageSwitch type="text"/>
+                </Typography>
+            </Box>
+
+            <Box mt={4} mb={8}>
                 <Copyright/>
             </Box>
+
         </Container>
     );
 }

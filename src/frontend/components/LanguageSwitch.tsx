@@ -12,8 +12,9 @@ import useTranslate from "../hooks/useTranslate";
 import noop from "../../share/noop";
 import Lang from "../i18n/Lang";
 
-export default function LanguageButton() {
-
+export default function LanguageSwitch(props: {
+    type?: "button" | "text"
+}) {
     const translate = useTranslate();
     const [anchorEl, setAnchorEl] = useState<any>(null);
 
@@ -28,16 +29,40 @@ export default function LanguageButton() {
     }
 
     const open = Boolean(anchorEl);
+    let react_switch: React.ReactNode;
+
+    switch (props.type) {
+        case "text":
+
+            react_switch = <span
+                style={{
+                    cursor: "pointer"
+                }}
+                onClick={event => setAnchorEl(event.currentTarget)}
+            >
+                {translate("language_button")}
+            </span>
+
+            break;
+
+        case "button":
+        default:
+
+            react_switch = <Button
+                color="inherit"
+                onClick={event => setAnchorEl(event.currentTarget)}
+                startIcon={<TranslateIcon/>}
+                endIcon={<ExpandMoreIcon/>}
+            >
+                {translate("language_button")}
+            </Button>
+
+            break;
+    }
 
     return <>
-        <Button
-            color="inherit"
-            onClick={event => setAnchorEl(event.currentTarget)}
-            startIcon={<TranslateIcon/>}
-            endIcon={<ExpandMoreIcon/>}
-        >
-            {translate("language_button")}
-        </Button>
+
+        {react_switch}
 
         <Popover
             open={open}

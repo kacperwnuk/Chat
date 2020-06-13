@@ -17,11 +17,15 @@ export default {
         sign_up: "Zarejestruj się"
     },
     register_screen: {
+        sign_invite: "Rejestracja",
         email_label: "Adres E-mail",
         password_label: "Hasło",
         password2_label: "Powtórz hasło",
-        name_label: "Imię",
-        surname_label: "Nazwisko",
+        name_family_label: "Nazwisko",
+        name_given_label: "Imię",
+        name_middle_label: "Drugie imię",
+        name_prefix_label: "Prefiks",
+        name_suffix_label: "Suffiks",
         username_label: "Nazwa użytkownika"
     },
     copyright: {

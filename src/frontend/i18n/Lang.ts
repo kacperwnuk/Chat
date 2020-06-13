@@ -14,6 +14,18 @@ export default interface Lang {
         forgot_password: string
         sign_up: string
     },
+    register_screen: {
+        sign_invite: string
+        email_label: string,
+        username_label: string
+        name_family_label: string
+        name_given_label: string
+        name_middle_label: string
+        name_prefix_label: string
+        name_suffix_label: string
+        password_label: string
+        password2_label: string
+    },
     copyright: {
         prefix: string
         name: string

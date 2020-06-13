@@ -14,7 +14,7 @@ declare namespace DatabaseT {
         address: string
         address_data: any
         deleted: boolean
-        gender: string
+        gender: "male" | "female" | "other"
         email: string
     }
 

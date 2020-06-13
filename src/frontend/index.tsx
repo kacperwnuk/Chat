@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {Switch, Route, HashRouter as Router } from "react-router-dom"
+import {HashRouter as Router} from "react-router-dom"
 
 import App from "./App";
 import AppDataProvider from "./redux/AppDataProvider";
@@ -9,8 +9,6 @@ import SessionProvider from "./lib/SessionProvider";
 import NotificationContainer from "./components/NotificationContainer";
 import TranslateProvider from "./i18n/TranslateProvider";
 import {CookiesProvider} from "react-cookie";
-import RegisterScreen from "./components/RegisterScreen";
-import LoginScreen from "./components/LoginScreen";
 
 const app = document.createElement("div");
 app.id = "app";
@@ -23,10 +21,7 @@ ReactDOM.render(
                 <SessionProvider>
                     <TranslateProvider>
                         <CssBaseline/>
-                        <Switch>
-                            <Route path="/" exact  component={LoginScreen} />
-                            <Route path="/register" exact component={RegisterScreen} />
-                        </Switch>
+                        <App/>
                         <NotificationContainer/>
                     </TranslateProvider>
                 </SessionProvider>

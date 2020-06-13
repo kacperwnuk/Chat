@@ -1,15 +1,23 @@
 import React from "react";
+import {Redirect, Route, Switch} from "react-router-dom";
 import LoginScreen from "./components/LoginScreen";
-import useIsLogged from "./hooks/useIsLogged";
+import RegisterScreen from "./components/RegisterScreen";
 import MainLayout from "./components/MainLayout";
+import useIsLogged from "./hooks/useIsLogged";
 
 export default function App() {
+    const is_logged = useIsLogged();
 
-    const isLogged = useIsLogged();
+    console.log("App");
 
-    if (!isLogged) {
-        return <LoginScreen/>
-    }
+    return <Switch>
 
-    return <MainLayout/>
+        <Route path="/login" component={LoginScreen}/>
+        <Route path="/register" component={RegisterScreen}/>
+
+        <Route path="/">
+            {is_logged ? <MainLayout/> : <Redirect to="/login"/>}
+        </Route>
+
+    </Switch>
 }
