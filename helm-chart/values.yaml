@@ -21,17 +21,17 @@ frontendENV: '{
 
 nodeServers:
   - type: auth
-    imgName: auth
-    imgPort: 8082
+    port: 8082
     replicas: 1
   - type: cdn
-    imgName: cdn
-    imgPort: 8080
+    port: 8080
     replicas: 1
   - type: session
-    imgName: session
-    imgPort: 8081
+    port: 8081
     replicas: 3
+  - type: adm
+    port: 8083
+    replicas: 1
 
 psqlServers:
   - name: main

@@ -14,43 +14,18 @@ Pliki baz danych znajdują się w folderze `./src/database`.
 Każda baza danych jest folderem z następującą strukturą:
 
  - `dbname` - nazwa bazy danych
-   - `.front_env` - plik typu dotenv zawierający następujące zmienne:
-      - `IMAGE_NAME` - nazwa obrazu dockera
-      - `CONTAINER_NAME` - nazwa konteneru dockera
-      - `ADMIN_PASSWORD` - hałso administratora, użytkownik to `postgres`
-      - `BACKEND_DATABASE` - nazwa bazy danych
-      - `BACKEND_USERNAME` - nazwa użytkownika bazy danych
-      - `BACKEND_PASSWORD` - hasło użytkownika bazy danych
-      - `DB_PORT` - port bazy danych
-   - `Dockerfile`
-   - `init.sh`
    - `init.sql`
    - `model.dbm` - plik bazy programu PgModeler
-   - `model.png` - model bazy danych w formie obrazka
 
-Zarządzanie bazą danych:
-
- - `create.sh` - tworzenie docker'a
- - `start.sh` -  uruchamianie docker'a
- - `stop.sh` - zatrzymanie docker'a
- - `remove.sh` - usuwanie docker'a
- 
-Każdy skrypt bierze jeden argument nazwy bazy danych.
- 
-Przykłady użycia:
-
+Aby postawić bazy danych lokalnie, należy użyć `docker-compose`:
 ```bash
-./src/database/create.sh main
-./src/database/start.sh main
-./src/database/stop.sh main
-./src/database/remove.sh main
+docker-compose -f ./src/database/docker-compose.yml  --project-name rso-chat up
 ```
 
-UWAGA!!!
-
-Po utworzeniu kontenerów z bazą danych pliki `init.sql` nie wykonują się.
-Nie wiemy dlaczego.
-Więc należy je wykonać ręcznie.
+Inicjowanie baz danych z schematami odbywa się ręcznie za pomocą komendy:
+```bash
+./src/database/init-schemas.sh hostname
+```
 
 ## Serwisy
 

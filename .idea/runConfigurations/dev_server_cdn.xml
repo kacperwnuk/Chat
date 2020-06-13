@@ -8,6 +8,7 @@
     <node-interpreter value="project" />
     <envs>
       <env name="RSO_SERVER" value="cdn" />
+      <env name="RSO_PORT" value="8080" />
     </envs>
     <method v="2" />
   </configuration>

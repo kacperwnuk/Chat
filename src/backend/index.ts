@@ -1,5 +1,10 @@
 import back_env from "./lib/back_env";
 import {exit, EXIT_TYPE} from "./lib/exit";
+import logger from "../share/logger";
+
+const package_json = require("../../package.json");
+
+logger.verbose(`Staring server RSO_SERVER=${back_env.RSO_SERVER} version ${package_json.version}`);
 
 switch (back_env.RSO_SERVER) {
 

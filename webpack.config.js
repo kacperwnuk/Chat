@@ -53,8 +53,8 @@ const clientConfig = {
         new HtmlWebpackPlugin({
             title: "ChatRSO",
             filename: "index.html",
-            template: "index.html",
-            chunks: ["main"],
+            template: "src/frontend/index.ejs",
+            chunks: ["index"],
         })
     ]
 };

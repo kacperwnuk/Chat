@@ -10,7 +10,7 @@ set -e
 function exportDBM() {
     name=$1
 
-    root="$(dirname $0)/src/database/${name}/"
+    root="$(dirname $0)/${name}/"
     input="${root}/model.dbm"
 
     pgmodeler-cli --export-to-png --input "${input}" --output "docs/assets/db-${name}-model.png"

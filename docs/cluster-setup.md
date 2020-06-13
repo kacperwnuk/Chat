@@ -42,6 +42,23 @@ Utwórz sieć o nazwie `rso`, przykładowy XML sieci:
 ```
 
 Utwórz cztery maszyny `Ubuntu 20.04`.
+Zainstaluj je z serwerem OpenSSH.
+Po instalacji:
+```bash
+apt-get install -y docker.io
+systemctl enable docker
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
+apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+apt-get install -y kubeadm kubelet kubectl
+apt-mark hold kubeadm kubelet kubectl
+swapoff –a
+# usuń swapa z /etc/fstab
+```
+
+Jeżeli nie masz cierpliwości do wpisywania komend, przedstawiam małego haka:
+```bash
+sleep 2 && xdotool type 'CMD' 
+```
 
 
 ## Maszyny Ubuntu 20.04
@@ -115,20 +132,53 @@ kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboar
 
 ## Docker registry
 
-Plik `~/.docker/config.json`:
-```json
-{
-	"auths": {
-		"master.rso:5000": {
-			"auth": "d29ya2VyOmthcHVzdGE="
-		}
-	},
-	"HttpHeaders": {
-		"User-Agent": "Docker-Client/19.03.8 (linux)"
-	}
-}
+Na masterze utwórz następujące foldery.
+```bash
+mkdir -p "/docker-registry/data"
+mkdir -p "/docker-registry/auth"
+mkdir -p "/docker-registry/certs"
 ```
 
+Utwórz poświadczenia:
+```bash
+openssl req \
+    -newkey rsa:4096 -nodes -sha256 -keyout "/docker-registry/certs/domain.key" \
+    -x509 -days 365 -out "/docker-registry/certs/domain.crt"
+
+# dodawanie hasła
+htpasswd -Bbn worker kapusta > "/docker-registry/auth/htpasswd"
+```
+
+Zapisz do pliku `/docker-registry/docker-compose.yml` następujący tekst:
+```yaml
+version: "3.3"
+services:
+  registry:
+    restart: always
+    image: registry:2
+    ports:
+      - 5000:5000
+    environment:
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/domain.crt
+      REGISTRY_HTTP_TLS_KEY: /certs/domain.key
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+    volumes:
+      - /docker-registry/data:/var/lib/registry
+      - /docker-registry/certs:/certs
+      - /docker-registry/auth:/auth
+```
+
+Na każdym komputerze zaloguj się do repozytorium:
+```bash 
+echo '{
+  "insecure-registries" : ["master.rso:5000"]
+}' > "/etc/docker/daemon.json"
+docker login master.rso:5000
+```
+
+Utwórz sekret kubernetesa:
 ```
 kubectl create secret generic rso-docker-registry-login \
     --from-file=.dockerconfigjson=<path/to/.docker/config.json> \
@@ -137,7 +187,7 @@ kubectl create secret generic rso-docker-registry-login \
 
 ## Instalacja i aktualizacja
 
-## Rest klustra
+## Reset clustra
 ```bash
 kubeadm reset
 

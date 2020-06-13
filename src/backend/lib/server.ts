@@ -18,12 +18,10 @@ export let databaseMain: DatabaseCon;
 export let redisBroker: BrokerCon;
 
 
-export async function makeServer(args: {
-    port: number
-}): Promise<number> {
+export async function makeServer(): Promise<void> {
     const makeServerLogger = makeLogger("makeServer");
 
-    makeServerLogger.info("start")
+    makeServerLogger.info("starting ...")
 
     // łączenia z bazą
     databaseUser = new DatabaseCon(back_env.RSO_DB_USER);
@@ -33,7 +31,6 @@ export async function makeServer(args: {
     app = express();
 
     //https://stackoverflow.com/questions/5710358/how-to-retrieve-post-query-parameters
-
 
     // to support URL-encoded bodies
     app.use(bodyParser.urlencoded({
@@ -46,7 +43,6 @@ export async function makeServer(args: {
     // enable CORS
     app.use(cors());
 
-
     server = new http.Server(app);
     io = socket_io(server);
 
@@ -54,9 +50,7 @@ export async function makeServer(args: {
         res.json(About);
     });
 
-    server.listen(args.port);
+    server.listen(back_env.RSO_PORT);
 
-    makeServerLogger.info("end")
-
-    return args.port;
+    makeServerLogger.info("finished")
 }

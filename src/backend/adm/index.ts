@@ -2,26 +2,25 @@ import fs from "fs";
 import {v4 as uuid} from "uuid";
 import ssh2 from "ssh2";
 import logger, {makeLogger} from "../../share/logger";
-import isAdmin from "./isAdmin";
 import back_env from "../lib/back_env";
-import commander from "./commander";
+import cmdExec from "./cmdExec";
 
 const ssh_server = new ssh2.Server({
     hostKeys: [
-        fs.readFileSync(".adm_key")
+        fs.readFileSync(".id_rsa.admin")
     ]
 }, function (client) {
     const client_uuid = uuid();
-    const client_logger = makeLogger(`client:${client_uuid}`);
-    client_logger.verbose("connected");
+    const logger = makeLogger(`client:${client_uuid}`);
+    logger.verbose("connected");
 
     client.on("authentication", async (ctx) => {
 
         switch (ctx.method) {
             case "password": {
 
-                if (!await isAdmin(ctx.username, ctx.password)) {
-                    client_logger.error(`rejected, wrong credentials`);
+                if (!(ctx.username === "admin" && ctx.password === "admin")) {
+                    logger.error(`rejected, wrong credentials`);
                     return ctx.reject();
                 }
 
@@ -29,36 +28,39 @@ const ssh_server = new ssh2.Server({
             }
 
             default: {
-                client_logger.error(`rejected, unsupported method ${ctx.method}`);
+                logger.error(`rejected, unsupported method ${ctx.method}`);
                 return ctx.reject();
             }
         }
 
         ctx.accept();
 
-    }).on("ready", function () {
-        client_logger.verbose("client authenticated");
+    });
+
+    client.on("ready", function () {
+        logger.verbose("client authenticated");
 
         client.on("session", function (accept, reject) {
-            const session_uuid = uuid();
-            client_logger.verbose(`creating new session ${session_uuid}`);
-            const session_logger = makeLogger(`session:${session_uuid}`);
+            logger.verbose(`creating new session`);
 
             const session = accept();
 
             session.on("exec", (accept, reject, info) => {
-                session_logger.verbose(`executing command`);
+                logger.verbose(`executing command`);
                 const stream = accept();
-                commander(info.command, stream)
+                cmdExec(info.command, stream)
             });
 
             session.on("close", () => {
-                session_logger.verbose("closed");
+                logger.verbose("session closed");
             });
         });
+
+
     }).on('end', function () {
-        client_logger.verbose('disconnected');
+        logger.verbose('disconnected');
     });
-}).listen(back_env.RSO_ADM.port, "127.0.0.1", function () {
+
+}).listen(back_env.RSO_PORT, "0.0.0.0", function () {
     logger.info(`listening on port ${ssh_server.address().port}`);
 });

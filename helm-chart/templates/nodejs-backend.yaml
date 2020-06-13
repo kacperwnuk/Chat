@@ -19,47 +19,49 @@ spec:
         name: {{ $.Values.appName }}-{{ .type }}
     spec:
       containers:
-          - name: {{ $.Values.appName }}-{{ .type }}
-            image: "master.rso:5000/{{ .imgName }}:{{ $.Chart.Version }}"
+          - name: '{{ $.Values.appName }}-{{ .type }}'
+            image: 'master.rso:5000/{{ $.Values.appName }}:{{ $.Chart.Version }}'
             imagePullPolicy: ""
             env:
               - name: RSO_ENV
                 value: kubernetes
               - name: RSO_SERVER
                 value: {{ .type }}
+              - name: RSO_PORT
+                value: '{{ .port }}'
               {{- with index $.Values.psqlServers 0 }}
               - name: RSO_DB_MAIN
                 value: '[{
-                  "user": "{{ .backendUser.username }}",
-                  "host": "{{ $.Values.appName }}-psql-{{ .name }}",
-                  "password": "{{ .backendUser.password }}",
-                  "database": "{{ $.Values.appPrefix }}-{{ .name }}",
-                  "port": {{ .port }}
-                }]'
+                          "user": "{{ .backendUser.username }}",
+                          "host": "{{ $.Values.appName }}-psql-{{ .name }}",
+                          "password": "{{ .backendUser.password }}",
+                          "database": "{{ $.Values.appPrefix }}-{{ .name }}",
+                          "port": {{ .port }}
+                        }]'
               {{- end }}
               {{- with index $.Values.psqlServers 1 }}
               - name: RSO_DB_USER
                 value: '[{
-                  "user": "{{ .backendUser.username }}",
-                  "host": "{{ $.Values.appName }}-psql-{{ .name }}",
-                  "password": "{{ .backendUser.password }}",
-                  "database": "{{ $.Values.appPrefix }}-{{ .name }}",
-                  "port": {{ .port }}
-                }]'
+                          "user": "{{ .backendUser.username }}",
+                          "host": "{{ $.Values.appName }}-psql-{{ .name }}",
+                          "password": "{{ .backendUser.password }}",
+                          "database": "{{ $.Values.appPrefix }}-{{ .name }}",
+                          "port": {{ .port }}
+                        }]'
               {{- end }}
               - name: RSO_REDIS
                 value: '[{
-                  "host": "{{ $.Values.appName }}-redis",
-                  "port": {{ $.Values.redis.port }}
-                }]'
+                          "host": "{{ $.Values.appName }}-redis",
+                          "port": {{ $.Values.redis.port }}
+                        }]'
               - name: RSO_ADM
                 value: '[{
-                   "port": {{ $.Values.adminServer.port }}
-                 }]'
+                          "port": {{ $.Values.adminServer.port }}
+                        }]'
               - name: RSO_FRONT_ENV
-                value: {{ $.Values.frontendENV }}
+                value: '{{ $.Values.frontendENV }}'
             ports:
-              - containerPort: {{ .imgPort }}
+              - containerPort: {{ .port }}
       imagePullSecrets:
         - name: {{ $.Values.dockerRegister.secret }}
       restartPolicy: Always
@@ -77,8 +79,8 @@ spec:
     name: {{ $.Values.appName }}-{{ .type }}
   ports:
       - protocol: TCP
-        port: {{ .imgPort }}
-        targetPort: {{ .imgPort }}
+        port: {{ .port }}
+        targetPort: {{ .port }}
   externalIPs:
   {{- range $.Values.workers }}
   - {{ .ip }}
@@ -99,7 +101,7 @@ spec:
             - path: /
               backend:
                 serviceName: {{ $.Values.appName }}-{{ .type }}
-                servicePort: {{ .imgPort }}
+                servicePort: {{ .port }}
 ---
 
 {{- end }}

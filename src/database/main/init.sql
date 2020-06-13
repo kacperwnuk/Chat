@@ -8,11 +8,11 @@ SET check_function_bodies = false;
 -- ddl-end --
 
 -- object: "backend-server" | type: ROLE --
-DROP ROLE IF EXISTS "backend-server";
-CREATE ROLE "backend-server" WITH 
-	INHERIT
-	LOGIN
-	ENCRYPTED PASSWORD 'a6a09838afff6c0c9046904dd3fc2f86';
+-- DROP ROLE IF EXISTS "backend-server";
+--CREATE ROLE "backend-server" WITH
+--	INHERIT
+--	LOGIN
+--	ENCRYPTED PASSWORD '********';
 -- ddl-end --
 
 
@@ -168,25 +168,25 @@ CREATE TABLE public.user_contacts (
 -- ALTER TABLE public.user_contacts OWNER TO postgres;
 -- ddl-end --
 
--- object: grant_4636335612 | type: PERMISSION --
+-- object: grant_f7b352ece1 | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.messages
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_5945bb2664 | type: PERMISSION --
+-- object: grant_413a5cdd81 | type: PERMISSION --
 GRANT SELECT,INSERT
    ON TABLE public.sessions
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_b1283f8863 | type: PERMISSION --
+-- object: grant_eafb8193c6 | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.session_events
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_62433e71ed | type: PERMISSION --
+-- object: grant_bb704f6771 | type: PERMISSION --
 GRANT SELECT,INSERT
    ON TABLE public.server_journal
    TO "backend-server";

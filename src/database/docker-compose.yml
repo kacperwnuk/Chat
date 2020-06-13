@@ -1,0 +1,24 @@
+version: "3.3"
+services:
+
+  psql-main:
+    image: postgres:12.2
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=03c3eabc0fbe1cdbd9f46a82acd5fe46
+      - POSTGRES_DB=rso-main
+    ports:
+      - "6000:5432"
+    expose:
+      - "6000"
+
+  psql-user:
+    image: postgres:12.2
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=337fb5d4ff41d94dc389b3734e9dff20
+      - POSTGRES_DB=rso-user
+    ports:
+      - "6001:5432"
+    expose:
+      - "6001"
