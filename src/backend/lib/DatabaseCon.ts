@@ -41,10 +41,7 @@ export default class DatabaseCon {
 
         let db_cfg = this.dbs[0];
 
-        // this.logger = makeLogger(DatabaseCon.name, `${db_cfg.user}@${db_cfg.database}(${db_cfg.host}:${db_cfg.port})`);
         this.logger = makeLogger(DatabaseCon.name, `${db_cfg.user}@${db_cfg.database}(${db_cfg.host}:${db_cfg.port})`);
-        console.log(DatabaseCon.name, `${db_cfg.user}@${db_cfg.database}(${db_cfg.host}:${db_cfg.port})`);
-
 
         this.pool = new pg.Pool(db_cfg);
 

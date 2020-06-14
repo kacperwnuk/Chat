@@ -33,6 +33,8 @@ export default function (socket: socket_io.Socket) {
         auth_data = await isAuthData(auth_data);
         let session = await getSession(auth_data.session_id);
 
+        console.log(session, auth_data);
+
         if (session === null || session.secret_key !== auth_data.secret_key) {
             session_logger.warn("auth failed");
 

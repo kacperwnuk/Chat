@@ -76,13 +76,13 @@ ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE public.basic_auth ADD CONSTRAINT basic_auth_uq UNIQUE (user_id);
 -- ddl-end --
 
--- object: grant_dcb73b0ff9 | type: PERMISSION --
+-- object: grant_09877a5b93 | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.users
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_cddedb7bf1 | type: PERMISSION --
+-- object: grant_1dc4f8b8d2 | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.basic_auth
    TO "backend-server";

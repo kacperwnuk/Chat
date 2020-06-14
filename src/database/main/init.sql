@@ -110,12 +110,7 @@ ON DELETE SET NULL ON UPDATE CASCADE;
 CREATE VIEW public.active_sessions
 AS 
 
-SELECT sessions.input_time,
-    sessions.version,
-    sessions.server_address,
-    sessions.args,
-    sessions.user_id,
-    sessions.session_id
+SELECT *
    FROM sessions
   WHERE (sessions.input_time > (CURRENT_TIMESTAMP - '00:02:00'::interval));
 -- ddl-end --
@@ -168,31 +163,31 @@ CREATE TABLE public.user_contacts (
 -- ALTER TABLE public.user_contacts OWNER TO postgres;
 -- ddl-end --
 
--- object: grant_b817e3148a | type: PERMISSION --
+-- object: grant_224c0a07cc | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.messages
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_8ab346473f | type: PERMISSION --
+-- object: grant_67a2810770 | type: PERMISSION --
 GRANT SELECT,INSERT
    ON TABLE public.sessions
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_c7530065e5 | type: PERMISSION --
+-- object: grant_9ada2e6936 | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.session_events
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_805b4aa54e | type: PERMISSION --
+-- object: grant_42b286149b | type: PERMISSION --
 GRANT SELECT,INSERT
    ON TABLE public.server_journal
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_2e218dfea3 | type: PERMISSION --
+-- object: grant_bc4a95006b | type: PERMISSION --
 GRANT SELECT
    ON TABLE public.active_sessions
    TO "backend-server";
