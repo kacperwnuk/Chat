@@ -18,3 +18,9 @@ export interface MessagePrototypeData {
 
 export type PromisifyFunction<Func extends (...params: any[]) => any> =
     (...params: Parameters<Func>) => Promise<ReturnType<Func>> | ReturnType<Func>;
+
+export type UserStatus = {
+    user_id: string
+    status: "online" | "offline"
+    timestamp:number
+}

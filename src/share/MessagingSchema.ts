@@ -1,5 +1,5 @@
 import DatabaseT from "./DatabaseT";
-import {MessagePrototypeData, SessionAuthData} from "./types";
+import {MessagePrototypeData, SessionAuthData, UserStatus} from "./types";
 import AppData from "../frontend/redux/AppData";
 
 
@@ -21,6 +21,7 @@ export interface SessionMessagingSchemaByClient {
 
     "getMyContacts": () => string[]
     "getUserData": (user_id: string) => DatabaseT.User
+    "getUserStatus": (user_id: string) => UserStatus
     "makeNewContact": (user_id: string) => void
 }
 
@@ -31,7 +32,6 @@ export interface SessionMessagingSchemaByServer {
     "newMessage": (message: DatabaseT.Message) => void
     "newContact": (user_id: string) => void
 }
-
 
 /**
  * Wszystkie komunikaty muszą być zwracać taki obiekt, który odpowiada za informowanie o błędach

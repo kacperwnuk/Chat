@@ -6,6 +6,7 @@ import {makeCurrentConversationIdChangeAction} from "../redux/reducers/current_c
 import UserDisplay from "./UserDisplay";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
+import {useUserStatus} from "../redux/reducers/user_status";
 
 
 const useStyle = makeStyles(theme => ({
@@ -29,6 +30,7 @@ export default function ContactRow(props: {
     const classes = useStyle();
     const dispatch = useDispatch();
     const user_data = useUserData(props.userId);
+    const user_status = useUserStatus(props.userId)
 
     function handleClick() {
         dispatch(makeCurrentConversationIdChangeAction(props.userId))
@@ -41,7 +43,7 @@ export default function ContactRow(props: {
                 <UserDisplay user={user_data}/>
             </Typography>
             <Typography variant="caption" className={classes.subtitle}>
-                Pod tytuł
+                {user_status?.status}
             </Typography>
         </div>
     </div>

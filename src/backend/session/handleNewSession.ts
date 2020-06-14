@@ -7,11 +7,11 @@ import sendMessage from "../data/sendMessage";
 import getUserContacts from "../data/getUserContacts";
 import {MessagePrototypeData, SessionAuthData} from "../../share/types";
 import getUserData from "../data/getUserData";
+import {addSubscription, removeSubscription} from "../lib/informSessionsAboutMessage";
 import DatabaseT from "../../share/DatabaseT";
 import isUUID from "../../share/data-checker/isUUID";
 import {makeLogger} from "../../share/logger";
-import noop from "../../share/noop";
-import {redisBroker} from "../lib/server";
+import getUserStatus from "../data/getUserStatus";
 
 export default function (socket: socket_io.Socket) {
     const session_logger = makeLogger('Session', socket.id);
@@ -19,10 +19,9 @@ export default function (socket: socket_io.Socket) {
     session_logger.verbose("connected");
 
     let user_id = "", session_id = "";
-    let unsubscribeBroker = noop;
 
     socket.on("disconnect", async () => {
-        unsubscribeBroker();
+        removeSubscription(user_id, onNewMessage);
         session_logger.verbose("disconnected");
     });
 
@@ -52,8 +51,7 @@ export default function (socket: socket_io.Socket) {
 
     function initMessagingWithAuthSocket(socket: socket_io.Socket) {
 
-        const subscription = redisBroker.subscribeForNewMessages(user_id, onNewMessage)
-        unsubscribeBroker = () => subscription.unsubscribe();
+        addSubscription(user_id, onNewMessage);
 
         socketOnMiddleware(socket, "sendMessage", async (msg_proto: MessagePrototypeData) => {
             msg_proto = await isMessagePrototypeData(msg_proto);
@@ -79,6 +77,14 @@ export default function (socket: socket_io.Socket) {
             session_logger.data(`executing: getUserData("${user_id}")`);
 
             return await getUserData(user_id);
+        });
+
+        socketOnMiddleware(socket, "getUserStatus", async (user_id: string) => {
+            user_id = await isUUID(user_id);
+
+            session_logger.data(`executing: getUserStatus("${user_id}")`);
+
+            return await getUserStatus(user_id);
         });
     }
 }

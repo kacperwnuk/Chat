@@ -1,14 +1,13 @@
 import fs from "fs";
 import path from "path";
-import {DatabaseConParams} from "./DatabaseCon";
+import {DatabaseConParams, RedisDatabaseConParams} from "./DatabaseCon";
 import {exit, EXIT_TYPE} from "./exit";
-import {BrokerConParams} from "./BrokerCon";
 
 interface ENV {
     database: {
         main: DatabaseConParams[]
         user: DatabaseConParams[]
-        redis: BrokerConParams[]
+        redis: RedisDatabaseConParams[]
     }
 }
 

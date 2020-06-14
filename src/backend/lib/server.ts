@@ -6,7 +6,6 @@ import About from "./About";
 import bodyParser from "body-parser";
 import DatabaseCon from "./DatabaseCon";
 import env from "./env";
-import BrokerCon from "./BrokerCon";
 
 const package_json = require("../../../package");
 
@@ -16,7 +15,6 @@ export let io: socket_io.Server;
 
 export let databaseUser: DatabaseCon;
 export let databaseMain: DatabaseCon;
-export let redisBroker: BrokerCon;
 
 export async function makeServer(args: {
     port: number
@@ -25,7 +23,6 @@ export async function makeServer(args: {
     // łączenia z bazą
     databaseUser = new DatabaseCon(env.database.user);
     databaseMain = new DatabaseCon(env.database.main);
-    redisBroker = new BrokerCon(env.database.redis);
 
     app = express();
 

@@ -7,6 +7,7 @@ import {commitUserData} from "./reducers/user_data";
 import {commitCurrentConversationId} from "./reducers/current_conversationt";
 import {commitMessageAdd} from "./reducers/messages";
 import {commitNotificationAdd, commitNotificationRemove} from "./reducers/notifications";
+import {commitUserStatus} from "./reducers/user_status";
 
 const initial_state: AppData.State = {
     // credentials_data: {
@@ -35,7 +36,7 @@ const initial_state: AppData.State = {
     backend_data: {
         cdn_url: "localhost:8080",
         auth_url: "localhost:8082",
-        session_url: "localhost:8001"
+        session_url: "localhost:8081"
     }
 };
 
@@ -63,6 +64,8 @@ export default function myApp(state: AppData.State = initial_state, action: Acti
             return commitSession(state, action.data);
         case "CONTACT_LIST_SET":
             return commitContactList(state, action.data);
+        case "USER_STATUS_SET":
+            return commitUserStatus(state, action.data);
         case "USER_DATA_SET":
             return commitUserData(state, action.data);
         case "CURRENT_CONVERSATION_ID_SET":
