@@ -13,6 +13,7 @@ import {makeLogger} from "../../share/logger";
 import noop from "../../share/noop";
 import {redisBroker} from "../lib/server";
 import getHistoricalMessages from "../data/getHistoricalMessages";
+import getUserStatus from "../data/getUserStatus";
 
 export default function (socket: socket_io.Socket) {
     const session_logger = makeLogger('Session', socket.id);
@@ -31,6 +32,8 @@ export default function (socket: socket_io.Socket) {
 
         auth_data = await isAuthData(auth_data);
         let session = await getSession(auth_data.session_id);
+
+        console.log(session, auth_data);
 
         if (session === null || session.secret_key !== auth_data.secret_key) {
             session_logger.warn("auth failed");
@@ -88,6 +91,14 @@ export default function (socket: socket_io.Socket) {
             session_logger.data(`executing: getHistoricalData("${conversation_id}")`);
 
             return await getHistoricalMessages(conversation_id, offset);
+        });
+
+        socketOnMiddleware(socket, "getUserStatus", async (user_id: string) => {
+            user_id = await isUUID(user_id);
+
+            session_logger.data(`executing: getUserStatus("${user_id}")`);
+
+            return await getUserStatus(user_id);
         });
     }
 }

@@ -5,7 +5,7 @@ import logger from "../../share/logger";
 /**
  * Każdy błąd musi być przerobiony i odesłany do klienta
  */
-export default function resolveError(error: any): {
+export default function (error: any): {
     msg: string,
     type: number
 } {
@@ -13,7 +13,7 @@ export default function resolveError(error: any): {
     if (error instanceof ServerError) {
         return {
             type: error.type,
-            msg: error.msg
+            msg: error.name
         }
     }
 

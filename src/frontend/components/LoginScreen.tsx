@@ -19,6 +19,8 @@ import {AppErrorType} from "../lib/AppError";
 import FatalError from "./FatalError";
 import {useDispatch} from "react-redux";
 import {makeCredentialsDataRequestAction, useCredentialsError} from "../redux/reducers/credentials_data";
+import LanguageSwitch from "./LanguageSwitch";
+import AppLink from "./AppLink";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -38,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     }
-}));
+}), {name: "LoginScreen"});
 
 export default function () {
     const classes = useStyles();
@@ -91,7 +93,7 @@ export default function () {
                         required
                         fullWidth
                         id="email"
-                        label={translate("login_screen.email_label")}
+                        label={translate("login_screen.username_label")}
                         name="email"
                         autoComplete="email"
                         autoFocus
@@ -128,23 +130,32 @@ export default function () {
                     >
                         {translate("login_screen.submit")}
                     </Button>
+
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
+                            <AppLink to="/forgot_password">
                                 {translate("login_screen.forgot_password")}
-                            </Link>
+                            </AppLink>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <AppLink to="/register">
                                 {translate("login_screen.sign_up")}
-                            </Link>
+                            </AppLink>
                         </Grid>
                     </Grid>
                 </form>
             </div>
-            <Box mt={8}>
+
+            <Box mt={4}>
+                <Typography variant="body2" color="textSecondary" align="center">
+                    <LanguageSwitch type="text"/>
+                </Typography>
+            </Box>
+
+            <Box mt={4} mb={8}>
                 <Copyright/>
             </Box>
+
         </Container>
     );
 }

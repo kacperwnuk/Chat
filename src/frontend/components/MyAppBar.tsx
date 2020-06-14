@@ -16,7 +16,7 @@ import InboxIcon from '@material-ui/icons/Inbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import {useCredentials} from "../redux/reducers/credentials_data";
 import UserDisplay from "./UserDisplay";
-import LanguageButton from "./LanguageButton";
+import LanguageSwitch from "./LanguageSwitch";
 import AppError, {AppErrorType} from "../lib/AppError";
 
 const useStyles = makeStyles((theme) => ({
@@ -59,7 +59,7 @@ export default function MyAppBar() {
                     <SessionStatusIcon/>
                 </div>
 
-                <LanguageButton/>
+                <LanguageSwitch/>
 
                 <div>
                     <UserDisplay user={credentials.user}/>

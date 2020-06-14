@@ -1,5 +1,5 @@
 import {databaseMain} from "../lib/server";
-import DatabaseT from "../../share/DatabaseT";
+import type DatabaseT from "../../share/DatabaseT";
 
 export default async function (conversation_id: string, offset: number): Promise<DatabaseT.Message[]> {
     const messagesAmount = 5;

@@ -59,7 +59,6 @@ export default function Conversation(props: {
     const messages = useMessagesByConversationId(props.conversationId);
 
     function handleClick() {
-        console.log(messages.length);
         dispatch(makeGetHistoricalDataAction(props.conversationId, messages.length));
     }
 

@@ -1,0 +1,95 @@
+# Dobry tutorial: https://severalnines.com/database-blog/using-kubernetes-deploy-postgresql
+
+{{- range $.Values.psqlServers }}
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ $.Values.appName }}-psql-{{ .name }}
+  labels:
+    type: local
+    app: {{ $.Values.appName }}
+    name: {{ $.Values.appName }}-psql-{{ .name }}
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: /mnt/data/{{ $.Values.appName }}/psql-{{ .name }}-volume
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ $.Values.appName }}-psql-{{ .name }}
+  labels:
+    app: {{ $.Values.appName }}
+    name: {{ $.Values.appName }}-psql-{{ .name }}
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $.Values.appName }}-psql-{{ .name }}
+  labels:
+    app: {{ $.Values.appName }}
+    name: {{ $.Values.appName }}-psql-{{ .name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ $.Values.appName }}
+      name: {{ $.Values.appName }}-psql-{{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ $.Values.appName }}
+        name: {{ $.Values.appName }}-psql-{{ .name }}
+    spec:
+      containers:
+          - name: postgres
+            image: postgres:12.2
+            imagePullPolicy: "IfNotPresent"
+            ports:
+              - containerPort: 5432
+            env:
+              - name: POSTGRES_USER
+                value: {{ .adminUser.username }}
+              - name: POSTGRES_PASSWORD
+                value: {{ .adminUser.password }}
+              - name: POSTGRES_DB
+                value: {{ $.Values.appPrefix }}-{{ .name }}
+            volumeMounts:
+                - mountPath: /var/lib/postgresql/data
+                  name: postgredb
+      volumes:
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: {{ $.Values.appName }}-psql-{{ .name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Values.appName }}-psql-{{ .name }}
+  labels:
+    app: {{ $.Values.appName }}
+    name: {{ $.Values.appName }}-psql-{{ .name }}
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: {{ .port }}
+      targetPort: 5432
+  selector:
+    name: {{ $.Values.appName }}-psql-{{ .name }}
+  externalIPs:
+  {{- range $.Values.workers }}
+  - {{ .ip }}
+  {{- end }}
+---
+{{- end }}

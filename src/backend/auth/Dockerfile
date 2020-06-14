@@ -3,7 +3,6 @@ FROM node:14-alpine
 WORKDIR /app
 COPY package*.json /app/
 COPY src /app/src
-COPY .env*.json /app/
 COPY webpack.config.js tsconfig.json /app/
 
 RUN npm install

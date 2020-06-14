@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.2" last-position="0,191" last-zoom="1" max-obj-count="6"
+<dbmodel pgmodeler-ver="0.9.2" last-position="0,0" last-zoom="1" max-obj-count="6"
 	 default-schema="public" default-owner="postgres">
 <role name="backend-server"
       inherit="true"
@@ -165,12 +165,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<role name="postgres"/>
 	<position x="700" y="540"/>
 	<reference>
-		<expression><![CDATA[ SELECT sessions.input_time,
-    sessions.version,
-    sessions.server_address,
-    sessions.args,
-    sessions.user_id,
-    sessions.session_id
+		<expression><![CDATA[ SELECT *
    FROM sessions
   WHERE (sessions.input_time > (CURRENT_TIMESTAMP - '00:02:00'::interval));]]></expression>
 	<column name="input_time">
@@ -273,5 +268,10 @@ end]]></definition>
 	<object name="public.server_journal" type="table"/>
 	<roles names="&quot;backend-server&quot;"/>
 	<privileges select="true" insert="true"/>
+</permission>
+<permission>
+	<object name="public.active_sessions" type="view"/>
+	<roles names="&quot;backend-server&quot;"/>
+	<privileges select="true"/>
 </permission>
 </dbmodel>

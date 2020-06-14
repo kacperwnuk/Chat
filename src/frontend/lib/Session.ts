@@ -20,7 +20,7 @@ export default class Session {
 
         this.backend_data = backend_data;
 
-        this.socket = io(`http://${backend_data.session_url}`);
+        this.socket = io(`${location.protocol}//${location.hostname}${backend_data.session_url}`);
 
         this.socket.on("connect", async () => {
             let ok = await this.emit("authSession", auth_data);

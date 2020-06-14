@@ -35,6 +35,7 @@ export default async function (msg: {
 
     let message = response.rows[0];
 
+    // informowanie innych sesji niech będzie asynchroniczne
     redisBroker.publishNewMessage(message);
 
     return message;

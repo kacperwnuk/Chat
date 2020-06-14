@@ -2,11 +2,11 @@ import HttpStatus from "http-status-codes";
 
 export default class ServerError {
     readonly type: number;
-    readonly msg: string;
+    readonly name: string;
 
-    constructor(type: number, msg: string = "") {
+    constructor(type: number, name: string = "") {
         this.type = type;
-        this.msg = msg;
+        this.name = name;
     }
 
     static Type = HttpStatus;

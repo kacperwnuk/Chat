@@ -22,7 +22,7 @@ const logger = winston.createLogger({
     transports: []
 });
 
-// if (process.env.NODE_ENV !== 'production')
+// if (process.front_env.NODE_ENV !== 'production')
 logger.add(new winston.transports.Console({
     format: winston.format.printf(info => {
 
@@ -45,7 +45,7 @@ logger.add(new winston.transports.Console({
         if (info.level === "error") {
             msg = colors.red(msg);
         } else if (info.level === "info") {
-            msg = colors.blue(msg);
+            msg = colors.cyan(msg);
         } else if (info.level === "data") {
             msg = colors.white(msg);
         }
