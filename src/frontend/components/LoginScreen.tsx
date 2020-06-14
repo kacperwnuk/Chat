@@ -94,7 +94,7 @@ export default function () {
                         required
                         fullWidth
                         id="email"
-                        label={translate("login_screen.email_label")}
+                        label={translate("login_screen.username_label")}
                         name="email"
                         autoComplete="email"
                         autoFocus

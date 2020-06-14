@@ -10,6 +10,7 @@ export default {
     login_screen: {
         sign_invite: "Sign in",
         email_label: "Email Address",
+        username_label: "Username",
         password_label: "Password",
         remember_me: "Remember me",
         submit: "Sign in",

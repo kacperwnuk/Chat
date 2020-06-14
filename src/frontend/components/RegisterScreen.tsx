@@ -76,7 +76,6 @@ export default function () {
 
     function registerUser(event: React.MouseEvent) {
        if (validate()){
-           console.log("udało się");
             event.preventDefault();
             dispatch("REGISTRATION_REQUEST", {
                 username,
