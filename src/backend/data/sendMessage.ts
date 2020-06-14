@@ -1,8 +1,10 @@
-import {databaseMain, redisBroker} from "../lib/server";
+import {databaseMain} from "../lib/server";
 import About from "../lib/About";
 import {v4 as uuid} from 'uuid';
 import ServerError from "../lib/ServerError";
 import type DatabaseT from "../../share/DatabaseT";
+import {MessagePrototypeData} from "../../share/types";
+import informSessionsAboutMessage from "../lib/informSessionsAboutMessage";
 
 export default async function (msg: {
     from_user_id: string,
@@ -35,7 +37,8 @@ export default async function (msg: {
 
     let message = response.rows[0];
 
-    redisBroker.publishNewMessage(message);
+    // informowanie innych sesji niech będzie asynchroniczne
+    informSessionsAboutMessage(message);
 
     return message;
 }

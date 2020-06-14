@@ -35,7 +35,7 @@ declare namespace DatabaseT {
     }
 
     interface Message extends MessageKey {
-        input_time: string
+        input_type: string
         version: string
         content: MessageContent
         session_id: string

@@ -89,6 +89,14 @@ export default function (socket: socket_io.Socket) {
 
             return await getHistoricalMessages(conversation_id, offset);
         });
+
+        socketOnMiddleware(socket, "getUserStatus", async (user_id: string) => {
+            user_id = await isUUID(user_id);
+
+            session_logger.data(`executing: getUserStatus("${user_id}")`);
+
+            return await getUserStatus(user_id);
+        });
     }
 }
 

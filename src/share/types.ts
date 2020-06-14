@@ -24,3 +24,9 @@ export type RsoEnv = "development" | "docker-compose" | "kubernetes";
 export type RsoServerType = "cdn" | "auth" | "session" | "adm";
 
 export type HumanGender = "male" | "female" | "other";
+
+export type UserStatus = {
+    user_id: string
+    status: "online" | "offline"
+    timestamp:number
+}

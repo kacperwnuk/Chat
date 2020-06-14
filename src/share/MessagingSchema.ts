@@ -22,6 +22,7 @@ export interface SessionMessagingSchemaByClient {
 
     "getMyContacts": () => string[]
     "getUserData": (user_id: string) => DatabaseT.User
+    "getUserStatus": (user_id: string) => UserStatus
     "makeNewContact": (user_id: string) => void
     "getHistoricalData": (conversation_id: string, offset: number) => DatabaseT.Message[]
 }
@@ -33,7 +34,6 @@ export interface SessionMessagingSchemaByServer {
     "newMessage": (message: DatabaseT.Message) => void
     "newContact": (user_id: string) => void
 }
-
 
 /**
  * Wszystkie komunikaty muszą być zwracać taki obiekt, który odpowiada za informowanie o błędach
