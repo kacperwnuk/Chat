@@ -13,6 +13,7 @@ import {makeLogger} from "../../share/logger";
 import noop from "../../share/noop";
 import {redisBroker} from "../lib/server";
 import getHistoricalMessages from "../data/getHistoricalMessages";
+import getUserStatus from "../data/getUserStatus";
 
 export default function (socket: socket_io.Socket) {
     const session_logger = makeLogger('Session', socket.id);

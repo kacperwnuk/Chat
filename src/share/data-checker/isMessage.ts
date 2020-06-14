@@ -14,8 +14,5 @@ const requestBody = yup.object({
 });
 
 export default function (data: any): Promise<DatabaseT.Message> {
-    if (typeof data === "string")
-        data = JSON.parse(data);
-
     return requestBody.validate(data);
 }

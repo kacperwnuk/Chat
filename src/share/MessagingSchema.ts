@@ -1,5 +1,5 @@
 import type DatabaseT from "./DatabaseT";
-import type {HumanGender, MessagePrototypeData, SessionAuthData} from "./types";
+import type {HumanGender, MessagePrototypeData, SessionAuthData, UserStatus} from "./types";
 import type AppData from "../frontend/redux/AppData";
 
 
