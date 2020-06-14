@@ -10,6 +10,7 @@ export default {
     login_screen: {
         sign_invite: "Zaloguj się",
         email_label: "Adres Email",
+        username_label: "Nazwa użytkownika",
         password_label: "Hasło",
         remember_me: "Zapamiętaj mnie",
         submit: "Zaloguj",
