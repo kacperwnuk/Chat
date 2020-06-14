@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
 }), {name: "LoginScreen"});
 
 export default function () {
-    console.log("Login");
     const classes = useStyles();
     const translate = useTranslate();
 

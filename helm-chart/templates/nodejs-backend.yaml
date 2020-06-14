@@ -87,6 +87,7 @@ spec:
       - protocol: TCP
         port: {{ .port }}
         targetPort: {{ .port }}
+  sessionAffinity: ClientIP
   externalIPs:
   {{- range $.Values.workers }}
   - {{ .ip }}
