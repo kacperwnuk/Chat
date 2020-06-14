@@ -144,7 +144,7 @@ export default function () {
                         autoComplete="current-password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
-                        style={{border: !passwordValid ? "1px solid red" : ""}}
+                        error={!passwordValid ?? false}
                     />
 
                     <TextField
@@ -159,7 +159,7 @@ export default function () {
                         autoComplete="current-password"
                         value={password2}
                         onChange={e => setPassword2(e.target.value)}
-                        style={{border: !passwordValid ? "1px solid red" : ""}}
+                        error={!passwordValid ?? false}
                     />
 
                     <Button
@@ -224,6 +224,6 @@ const Field = React.forwardRef((props: {
         name={props.name}
         onChange={e => props.setter(e.target.value)}
         value={props.value}
-        style={{border: props.invalid ? "1px solid red" : ""}}
+        error={props.invalid ?? false}
     />
 });
