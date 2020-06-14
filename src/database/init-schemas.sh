@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+#TODO sprawdzanie czy argument został podany
 host=$1
 
 project_dir=$(dirname $0)/../../

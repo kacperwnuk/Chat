@@ -2,9 +2,9 @@
 layout: default
 title: "Tworzenie cluster'a"
 ---
-Tworzenie cluster'a
-============
+Poniższy tekst prenetuje, sposób na stworzenie clustra na komputerze domowym.
 
+![Schemat clusta postawionego na libvirt.](assets/libvirt-cluster.png)
 
 ## libvirt
 
@@ -15,6 +15,15 @@ Zainstaluj `libvirt` wraz z klientem graficznym `virt-manager`:
 |Ubuntu|`apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager`|
 |ArchLinux|`pacman -S qemu libvirt virt-manager`|
 
+Dodaj samego siebie do grupy `kvm` (niewymagana):
+```bash
+sudo usermod $(whoami) -a -G kvm
+```
+
+Uruchom serwis:
+```bash
+sudo systemctl enable --now libvirtd.service
+```
 
 Utwórz sieć o nazwie `rso`, przykładowy XML sieci:
 ```xml
@@ -91,23 +100,26 @@ user@master $ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/
 ```
 
 Sprawdź czy wszystkie pody są uruchomione
-```
+```bash
 user@master $ kubectl get pods --all-namespaces
-``
+```
 
 Warto jednak zajrzeć na stronę [github.com](https://github.com/kubernetes/dashboard) w celu zmienienia wersji.
 
 ```bash
 root@worker $ kubeadm join ...
 ```
-kubeadm join 192.168.100.10:6443 --token dz2b9w.o0g45d9n3xe9nwlf \
-    --discovery-token-ca-cert-hash sha256:18478553679300e33bb6e153b3747f4578e73ef850c60a972e7efea4348849d0
 
-# Instalacja Kubernetes DashBoard
+# Instalacja Kubernetes Dashboard
 
+Zainstaluj `Kubernetes Dashboard`:
 ```bash
 user@master $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.1/aio/deploy/recommended.yaml
-cat <<EOF | kubectl apply -f -
+```
+
+Następnie stwórz użytkownika `admin-user`:
+```bash
+user@master $ cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -128,7 +140,26 @@ subjects:
   namespace: kubernetes-dashboard
 EOF
 ```
-kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+
+Pobierz token uwierzytelniania:
+```bash
+user@master $ kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+```
+
+Zaloguje się do maszyny `master`:
+```bash
+my@computer $ ssh user@master.rso -L 8001:localhost:8001
+```
+
+Uruchom proxy
+```bash
+user@master $ kubectl proxy
+```
+
+
+Udaj się na stronę:
+
+[`http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login`](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login)
 
 ## Docker registry
 

@@ -19,10 +19,14 @@ Każda baza danych jest folderem z następującą strukturą:
 
 Aby postawić bazy danych lokalnie, należy użyć `docker-compose`:
 ```bash
-docker-compose -f ./src/database/docker-compose.yml  --project-name rso-chat up
+docker-compose -f ./src/database/docker-compose.yml --project-name rso-chat up
+# Analogicznie wyłączenie
+docker-compose -f ./src/database/docker-compose.yml --project-name rso-chat down
 ```
 
-Inicjowanie baz danych z schematami odbywa się ręcznie za pomocą komendy:
+Bazy danych pop postawieniu są puste !!!
+
+Inicjowanie baz danych ze schematami odbywa się ręcznie za pomocą komendy:
 ```bash
 ./src/database/init-schemas.sh hostname
 ```

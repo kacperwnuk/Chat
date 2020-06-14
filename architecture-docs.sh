@@ -17,5 +17,6 @@ agen(){
 }
 
 agen 0 architecture
-agen 3 chart-process1
-agen 4 chart-process2
+agen 1 chart-process1
+agen 2 chart-process2
+agen 4 libvirt-cluster

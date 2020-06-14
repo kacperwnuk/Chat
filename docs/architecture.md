@@ -97,32 +97,14 @@ Dla każdego logowania będzie dostępna osobna tabela, jeżeli taka będzie pot
 
 Każda sesja musi być odnotowana.
 
- - `input_time:timestamp`
- - `id:uuid` - id sesji
- - `user_id:uuid` - id użytkownika
- - `auth_method:text` - nazwa metody logowania jaka była użyta
-
 #### Tabela historii sesji
 
 Do tej tabeli sesje z użytkownikiem będą raportować swój stan.
 Tak aby można było określić, kto kiedy się logował.
 
- - `input_time:timestamp` - czas wejścia do systemu
- - `id:uuid` - id sesji
- - `event:text` - nazwa eventu sesji
- - `params:json` - parametry eventu, tak w postgre jest tym `json` :D, co ułatwia wiele rzeczy
-
 #### Tabela wiadomości
 
 Tabela przechowuje historyczne wiadomości.
-
- - `input_time:timestamp`
- - `session_id:uuid`
- - `id:uuid`
- - `from:uuid`
- - `to_type:text`
- - `conversation_id:uuid`
- - `content:json`
 
 ## Serwery
 

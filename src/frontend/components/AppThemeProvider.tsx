@@ -2,15 +2,16 @@ import React from "react";
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import green from "@material-ui/core/colors/green";
 import yellow from "@material-ui/core/colors/yellow";
+import red from "@material-ui/core/colors/red";
 
 // https://material-ui.com/customization/color/#playground
 
 const theme = createMuiTheme({
     //
-    palette: {
-        primary: green,
-        secondary: yellow,
-    },
+    // palette: {
+    //     primary: red,
+    //     secondary: green,
+    // },
     //
 });
 
