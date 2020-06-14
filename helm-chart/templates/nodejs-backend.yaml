@@ -11,11 +11,13 @@ spec:
   replicas: {{ .replicas }}
   selector:
     matchLabels:
+      app: {{ $.Values.appName }}
       name: {{ $.Values.appName }}-{{ .type }}
   strategy: {}
   template:
     metadata:
       labels:
+        app: {{ $.Values.appName }}
         name: {{ $.Values.appName }}-{{ .type }}
     spec:
       containers:
@@ -58,9 +60,17 @@ spec:
                 value: '{{ $.Values.frontendENV }}'
             ports:
               - containerPort: {{ .port }}
+            volumeMounts:
+              - name: cert
+                mountPath: "/app/cert"
+                readOnly: true
       imagePullSecrets:
         - name: {{ $.Values.dockerRegister.secret }}
       restartPolicy: Always
+      volumes:
+        - name: cert
+          secret:
+            secretName: {{ $.Values.appName }}-cert
 ---
 apiVersion: v1
 kind: Service

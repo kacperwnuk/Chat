@@ -17,6 +17,11 @@ export let databaseUser: DatabaseCon;
 export let databaseMain: DatabaseCon;
 export let redisBroker: BrokerCon;
 
+export async function makeDatabaseCon() {
+    databaseUser = new DatabaseCon(back_env.RSO_DB_USER);
+    databaseMain = new DatabaseCon(back_env.RSO_DB_MAIN);
+    redisBroker = new BrokerCon(back_env.RSO_REDIS);
+}
 
 export async function makeServer(): Promise<void> {
     const makeServerLogger = makeLogger("makeServer");
@@ -24,9 +29,7 @@ export async function makeServer(): Promise<void> {
     makeServerLogger.info("starting ...")
 
     // łączenia z bazą
-    databaseUser = new DatabaseCon(back_env.RSO_DB_USER);
-    databaseMain = new DatabaseCon(back_env.RSO_DB_MAIN);
-    redisBroker = new BrokerCon(back_env.RSO_REDIS);
+    await makeDatabaseCon();
 
     app = express();
 
@@ -51,6 +54,7 @@ export async function makeServer(): Promise<void> {
     });
 
     server.listen(back_env.RSO_PORT);
+    makeServerLogger.info(`listening on port ${back_env.RSO_PORT}`)
 
     makeServerLogger.info("finished")
 }

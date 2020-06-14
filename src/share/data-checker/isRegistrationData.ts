@@ -8,9 +8,9 @@ const requestBody = yup.object({
     email: yup.string().email().required(),
     name_family: yup.string().required(),
     name_given: yup.string().required(),
-    name_middle: yup.string().required(),
-    name_prefix: yup.string().required(),
-    name_suffix: yup.string().required(),
+    name_middle: yup.string().nullable(),
+    name_prefix: yup.string().nullable(),
+    name_suffix: yup.string().nullable(),
     gender: yup.string().matches(gender_regex).required(),
     address: yup.string().required(),
 });

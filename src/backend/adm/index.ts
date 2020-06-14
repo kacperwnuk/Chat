@@ -4,10 +4,13 @@ import ssh2 from "ssh2";
 import logger, {makeLogger} from "../../share/logger";
 import back_env from "../lib/back_env";
 import cmdExec from "./cmdExec";
+import {makeDatabaseCon} from "../lib/server";
+
+makeDatabaseCon();
 
 const ssh_server = new ssh2.Server({
     hostKeys: [
-        fs.readFileSync(".id_rsa.admin")
+        fs.readFileSync("cert/.id_rsa")
     ]
 }, function (client) {
     const client_uuid = uuid();
@@ -16,22 +19,22 @@ const ssh_server = new ssh2.Server({
 
     client.on("authentication", async (ctx) => {
 
-        // switch (ctx.method) {
-        //     case "password": {
-        //
-        //         if (!(ctx.username === "admin" && ctx.password === "admin")) {
-        //             logger.error(`rejected, wrong credentials`);
-        //             return ctx.reject();
-        //         }
-        //
-        //         break;
-        //     }
-        //
-        //     default: {
-        //         logger.error(`rejected, unsupported method ${ctx.method}`);
-        //         return ctx.reject();
-        //     }
-        // }
+        switch (ctx.method) {
+            case "password": {
+
+                if (!(ctx.username === "admin" && ctx.password === "admin")) {
+                    logger.error(`rejected, wrong credentials`);
+                    return ctx.reject();
+                }
+
+                break;
+            }
+
+            default: {
+                logger.error(`rejected, unsupported method ${ctx.method}`);
+                return ctx.reject();
+            }
+        }
 
         ctx.accept();
 
@@ -45,19 +48,24 @@ const ssh_server = new ssh2.Server({
 
             const session = accept();
 
-            session.on("exec", (accept, reject, info) => {
-                logger.verbose(`executing command`);
-                const stream = accept();
-                cmdExec(info.command, stream)
+            session.on("exec", async (accept, reject, info) => {
+                if (info.command === "exec") {
+                    const stream = accept();
+                    await cmdExec(logger, stream);
+                } else {
+                    reject?.();
+                }
             });
 
             session.on("close", () => {
-                logger.verbose("session closed");
+                logger.verbose('session closed');
             });
         });
 
 
-    }).on('end', function () {
+    });
+
+    client.on("end", function () {
         logger.verbose('disconnected');
     });
 

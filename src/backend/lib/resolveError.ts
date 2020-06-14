@@ -13,7 +13,7 @@ export default function resolveError(error: any): {
     if (error instanceof ServerError) {
         return {
             type: error.type,
-            msg: error.msg
+            msg: error.name
         }
     }
 

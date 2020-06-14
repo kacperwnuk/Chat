@@ -2,4 +2,4 @@ apiVersion: v2
 name: rso-chat
 description: RSO-Chat
 type: application
-version: 0.0.51
+version: 0.0.53
