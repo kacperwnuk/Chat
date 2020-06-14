@@ -14,6 +14,7 @@ import LanguageSwitch from "./LanguageSwitch";
 import useAppDispatch from "../hooks/useAppDispatch";
 import {HumanGender} from "../../share/types";
 import AppLink from "./AppLink";
+import {email_regex} from "../../share/regex";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -53,22 +54,43 @@ export default function () {
     const [gender, setGender] = React.useState<HumanGender>("other");
 
     const [password, setPassword] = React.useState("");
+    const [password2, setPassword2] = React.useState("");
+
+    const [emailValid, setEmailValid] = React.useState(true);
+    const [usernameValid, setUsernameValid] = React.useState(true);
+    const [nameValid, setNameValid] = React.useState(true);
+    const [passwordValid, setPasswordValid] = React.useState(true);
+
+    function validate(){
+        let mailCheck = email_regex.test(email);
+        let usernameCheck = username.length > 0;
+        let nameCheck = name_given.length > 0;
+        let passwordCheck = password.length > 0 && password === password2;
+
+        setEmailValid(mailCheck);
+        setUsernameValid(usernameCheck);
+        setNameValid(nameCheck);
+        setPasswordValid(passwordCheck);
+        return mailCheck && usernameCheck && nameCheck && passwordCheck;
+    }
 
     function registerUser(event: React.MouseEvent) {
-        event.preventDefault();
-
-        dispatch("REGISTRATION_REQUEST", {
-            username,
-            password,
-            email,
-            name_family,
-            name_given,
-            name_middle,
-            name_prefix,
-            name_suffix,
-            gender,
-            address
-        });
+       if (validate()){
+           console.log("udało się");
+            event.preventDefault();
+            dispatch("REGISTRATION_REQUEST", {
+                username,
+                password,
+                email,
+                name_family,
+                name_given,
+                name_middle,
+                name_prefix,
+                name_suffix,
+                gender,
+                address
+            });
+       }
     }
 
     return (
@@ -83,14 +105,14 @@ export default function () {
                     {translate("register_screen.sign_invite")}
                 </Typography>
 
-                <form className={classes.form} noValidate>
+                {/*<form className={classes.form}>*/}
 
-                    <Field name="email" value={email} setter={setEmail} required/>
-                    <Field name="username" value={username} setter={setUsername} required/>
+                    <Field name="email" value={email} setter={setEmail} required invalid={!emailValid}/>
+                    <Field name="username" value={username} setter={setUsername} required invalid={!usernameValid}/>
 
                     <Grid container spacing={3}>
                         <Grid item xs>
-                            <Field name="name_given" value={name_given} setter={setNameGiven} required/>
+                            <Field name="name_given" value={name_given} setter={setNameGiven} required invalid={!nameValid}/>
                         </Grid>
                         <Grid item xs>
                             <Field name="name_middle" value={name_middle} setter={setNameMiddle}/>
@@ -108,7 +130,7 @@ export default function () {
                         </Grid>
                     </Grid>
 
-                    <Field name="address" value={address} setter={setAddress} required/>
+                    <Field name="address" value={address} setter={setAddress}/>
 
                     <TextField
                         variant="outlined"
@@ -122,6 +144,22 @@ export default function () {
                         autoComplete="current-password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
+                        style={{border: !passwordValid ? "1px solid red" : ""}}
+                    />
+
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password2"
+                        label={translate("register_screen.password2_label")}
+                        type="password"
+                        id="password2"
+                        autoComplete="current-password"
+                        value={password2}
+                        onChange={e => setPassword2(e.target.value)}
+                        style={{border: !passwordValid ? "1px solid red" : ""}}
                     />
 
                     <Button
@@ -149,7 +187,7 @@ export default function () {
                         </Grid>
                     </Grid>
 
-                </form>
+                {/*</form>*/}
             </div>
 
             <Box mt={4}>
@@ -172,6 +210,7 @@ const Field = React.forwardRef((props: {
     value: string
     setter: (new_val: string) => void
     required?: boolean
+    invalid?: boolean
 }, ref: React.Ref<HTMLDivElement>) => {
 
     const translate = useTranslate();
@@ -185,5 +224,6 @@ const Field = React.forwardRef((props: {
         name={props.name}
         onChange={e => props.setter(e.target.value)}
         value={props.value}
+        style={{border: props.invalid ? "1px solid red" : ""}}
     />
 });

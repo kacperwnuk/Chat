@@ -20,7 +20,7 @@ export default {
         sign_invite: "Registration",
         email_label: "Email Address",
         password_label: "Password",
-        password2_label: "Repeat password",
+        password2_label: "Confirm password",
         username_label: "Username",
         name_family_label: "Surname",
         name_given_label: "Name",
