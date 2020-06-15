@@ -70,7 +70,7 @@
                         <a href=".">Strona Domowa</a>
                     </li>
                     {% for page in site.pages %}
-                    {% if page.title | size > 0 and page.url != '/' %}
+                    {% if (page.title | size > 0) and (page.url != '/') %}
                     <li>
                         <a href=".{{ page.url }}">{{ page.title }}</a>
                     </li>
