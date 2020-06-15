@@ -35,12 +35,12 @@ Inicjowanie baz danych ze schematami odbywa się ręcznie za pomocą komendy:
 
 Aby zbudować projekt jednorazowo:
 ```
-npm run-script bulid
+npm run-script build
 ```
 
 W przypadku kiedy wprawadzamy zmiany na bieżąco, ta komenda będzie na rekompilowała cały projekt gdy pliki źródłowe zostaną zmienione. 
 ```
-npm run-script dev-bulid
+npm run-script dev-build
 ```
 
 ## Uruchamianie

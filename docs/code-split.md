@@ -14,7 +14,7 @@ Podzielimy kod na następująco:
      - `data` - funkcje manipulacji danych
      - `lib` - różne
      - `session` - kod wykonywalny serwera sesji
-   - `frondend` - kod należący tylko do frontend'u
+   - `frontend` - kod należący tylko do frontend'u
      - `components` - komponenty UI
      - `hooks` - haki pomiędzy UI i resztą systemu
      - `i18n` - tłumaczenia

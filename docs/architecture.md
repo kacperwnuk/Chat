@@ -62,7 +62,7 @@ Parametry wiadomości:
 
 ### Baza użytkowników
 
-Ta baza podlega pod RODO/GIODO/SRODO.
+Ta baza podlega pod RODO.
 
 ![Schemat bazy danych](assets/db-user-model.png)
  
@@ -110,7 +110,7 @@ Tabela przechowuje historyczne wiadomości.
 
 Wszystkie komunikacje odbywają się za pośrednictwem funkcji [`fetch`](node-fetch).
 Parametry przesyłane po `POST`.
-W dalszej części będe adresy URL pisał jakby miąły GET, ale będzie się to odnosiło do POST.
+W dalszej części będę adresy URL pisał jakby miały GET, ale będzie się to odnosiło do POST.
 
 Wszystkie serwery komunikacji będą stały na [`expressjs`](https://expressjs.com/) oraz socketIO do subskrypcji danych.
 
