@@ -66,19 +66,14 @@
             <nav>
                 <h1>Nawigacja</h1>
                 <ul>
+                    <li>
+                        <a href=".">Strona Domowa</a>
+                    </li>
                     {% for page in site.pages %}
-                    {% if page.platform != "" %}
-
-                    {% if page.url == "/" %}
+                    {% if page.title | size > 0 and page.url != '/' %}
                     <li>
-                        <a href="index.html">{{ page.title }}</a>
+                        <a href=".{{ page.url }}">{{ page.title }}</a>
                     </li>
-                    {% else %}
-                    <li>
-                        <a href="{{ page.url | remove_first:'/' }}">{{ page.title }}</a>
-                    </li>
-                    {% endif %}
-
                     {% endif %}
                     {% endfor %}
                 </ul>
