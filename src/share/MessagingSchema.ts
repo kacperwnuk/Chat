@@ -35,6 +35,16 @@ export interface SessionMessagingSchemaByServer {
     "newContact": (user_id: string) => void
 }
 
+export interface AdminMessagingSchema {
+    getUser(args: { user_id: string }): DatabaseT.User
+
+    getUser(args: { email: string }): DatabaseT.User
+
+    getUser(args: { username: string }): DatabaseT.User
+
+    addUser(args: RegistrationData): DatabaseT.User
+}
+
 /**
  * Wszystkie komunikaty muszą być zwracać taki obiekt, który odpowiada za informowanie o błędach
  */

@@ -25,3 +25,15 @@ export async function getUserDataByEmail(email: string) {
         throw new ServerError(ServerError.Type.NOT_FOUND, "user not found")
     }
 }
+
+export async function getUserDataByUsername(username: string) {
+    let result = await databaseUser.query<DatabaseT.User>(`
+        select * from users where username=$1::text;
+    `, [username]);
+
+    if (result.rows.length === 1) {
+        return result.rows[0];
+    } else {
+        throw new ServerError(ServerError.Type.NOT_FOUND, "user not found")
+    }
+}

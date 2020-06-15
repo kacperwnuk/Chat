@@ -69,8 +69,12 @@ Jeżeli nie masz cierpliwości do wpisywania komend, przedstawiam małego haka:
 sleep 2 && xdotool type 'CMD' 
 ```
 
-
 ## Maszyny Ubuntu 20.04
+
+Zainstaluj system Ubuntu wraz z oprogramowaniem `OpenSSH`.
+
+ sudo apt-get install docker.io
+
 
 ## Kubernetes
 
