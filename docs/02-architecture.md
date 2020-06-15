@@ -130,7 +130,9 @@ Użytkownik łączy się z serwerem i podaje klucz sesji.
 Komunikacja z serwerem sesji jest opisana w pliku `./src/share/MessagingSchema.ts` 
 
 ### Serwer Admin
-W celu obsługi Panelu administracyjnego użyto serwera ssh. Do serwera przesyłane są pliki .yml zawierające dane zapytania (przykładowo stworzenia nowych użytkowników). Serwer przetwarza dane i zwraca wynik zapytania.
+W celu obsługi Panelu administracyjnego użyto serwera ssh.
+Do serwera przesyłane są pliki .yml zawierające dane zapytania (przykładowo stworzenia nowych użytkowników).
+Serwer przetwarza dane i zwraca wynik zapytania.
 
 ## Diagramy sekwencji
 
