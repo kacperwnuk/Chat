@@ -46,6 +46,7 @@ export default async function (logger: winston.Logger, stream: ssh2.ServerChanne
             body = isCommandBody.validateSync(body);
 
             if (commands.hasOwnProperty(body.command)) {
+                // @ts-ignore
                 body.return = await commands[body.command](body.argument);
                 body.code = 0;
             } else {

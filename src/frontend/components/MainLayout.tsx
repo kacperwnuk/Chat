@@ -1,9 +1,8 @@
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import MyAppBar from "./MyAppBar";
-import ContactList from "./ContactList";
-import ConversationContainer from "./ConversationContainer";
 import Grid from "@material-ui/core/Grid";
+import Navigation from "./Navigation";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -17,7 +16,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function () {
+export default function (props: {
+    children: React.ReactNode
+}) {
     const classes = useStyles();
 
     return <div className={classes.root}>
@@ -29,11 +30,11 @@ export default function () {
             <Grid container>
 
                 <Grid item xs={3}>
-                    <ContactList/>
+                    <Navigation/>
                 </Grid>
 
                 <Grid item xs={9}>
-                    <ConversationContainer/>
+                    {props.children}
                 </Grid>
 
             </Grid>

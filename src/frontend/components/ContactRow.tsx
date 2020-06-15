@@ -1,51 +1,41 @@
 import React from "react";
 import UserAvatar from "./UserAvatar";
 import {useUserData} from "../redux/reducers/user_data";
-import {useDispatch} from "react-redux";
-import {makeCurrentConversationIdChangeAction} from "../redux/reducers/current_conversationt";
 import UserDisplay from "./UserDisplay";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Typography from "@material-ui/core/Typography";
 import {useUserStatus} from "../redux/reducers/user_status";
-
+import AppLink from "./AppLink";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemText from "@material-ui/core/ListItemText";
 
 const useStyle = makeStyles(theme => ({
-    root: {
-        display: "flex",
-        flexDirection: "row",
-        padding: theme.spacing(0.5),
-        alignItems: "center"
-    },
-    title: {},
-    subtitle: {},
-    avatar: {
-        marginRight: theme.spacing(1)
-    },
+
 }), {name: "ContactRow"});
 
 
 export default function ContactRow(props: {
     userId: string
+    selected: boolean
 }) {
     const classes = useStyle();
-    const dispatch = useDispatch();
     const user_data = useUserData(props.userId);
     const user_status = useUserStatus(props.userId)
 
-    function handleClick() {
-        dispatch(makeCurrentConversationIdChangeAction(props.userId))
-    }
 
-    return <div onClick={handleClick} className={classes.root}>
-        <UserAvatar user={user_data} className={classes.avatar}/>
-        <div>
-            <Typography variant="body1" className={classes.title}>
-                <UserDisplay user={user_data}/>
-            </Typography>
-            <Typography variant="caption" className={classes.subtitle}>
-                {user_status?.status}
-            </Typography>
-        </div>
-    </div>
+    return <AppLink to={`/conversation/${props.userId}`}>
+        <ListItem selected={props.selected}>
+            <ListItemAvatar>
+                <UserAvatar user={user_data}/>
+            </ListItemAvatar>
+            <ListItemText
+                primaryTypographyProps={{
+                    color: "textPrimary"
+                }}
+                primary={<UserDisplay user={user_data}/>}
+                secondary={user_status?.status}
+            />
+        </ListItem>
+    </AppLink>
 }
 

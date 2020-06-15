@@ -23,8 +23,6 @@ export interface Actions {
     USER_DATA_REQUEST: string
     USER_DATA_SET: DatabaseT.User
 
-    CURRENT_CONVERSATION_ID_SET: string
-
     MESSAGE_SEND_REQUEST: MessagePrototypeData
     MESSAGE_LIST_REQUEST: {}
     MESSAGE_ADD2DIC: DatabaseT.Message

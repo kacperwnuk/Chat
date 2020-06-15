@@ -1,6 +1,6 @@
 {
     "name": "rso-chat",
-    "version": "0.0.55",
+    "version": "0.0.60",
     "description": "Projekt na przedmiot RSO - Chat",
     "scripts": {
         "build": "webpack --mode production",
