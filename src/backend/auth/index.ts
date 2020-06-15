@@ -1,13 +1,10 @@
-import About from "../lib/About";
 import {app, makeServer} from "../lib/server";
 import root_auth from "./root/auth"
+import root_registration from "./root/registration"
 
-About.instance_type = "auth";
-
-makeServer({
-    port: 8082
-}).then(() => {
+makeServer().then(() => {
 
     root_auth(app);
+    root_registration(app);
 
-})
+});

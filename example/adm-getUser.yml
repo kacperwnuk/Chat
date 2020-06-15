@@ -1,0 +1,13 @@
+
+command: getUser
+argument:
+  user_id: 9460a338-7bce-4712-b63a-4fb17d5c1230
+---
+command: getUser
+argument:
+  email: email2@example.com
+---
+command: getUser
+argument:
+  username: email2@example.com
+

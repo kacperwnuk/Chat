@@ -10,7 +10,6 @@ function contactListSelector(store: AppData.State): AppData.ContactList | null {
 }
 
 export function useContactList() {
-    console.log("lista kontaktow");
     const is_session_ready = useIsSessionReady();
     const dispatch = useDispatch();
     const contact_list = useSelector(contactListSelector);
@@ -18,7 +17,7 @@ export function useContactList() {
     if (is_session_ready && contact_list === null) {
         dispatch(makeAction("CONTACT_LIST_REQUEST", undefined));
     }
-    console.log(contact_list);
+
     return contact_list;
 }
 

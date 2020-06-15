@@ -4,7 +4,8 @@ import {Action, makeAction} from "../actions";
 import {call, put, select} from "redux-saga/effects";
 import Session from "../../lib/Session";
 import {sessionSelector, useIsSessionReady} from "./session";
-import {useDispatch, useSelector} from "react-redux";
+import useAppSelector from "../../hooks/useAppSelector";
+import useAppDispatch from "../../hooks/useAppDispatch";
 
 export function userDataSelector(state: AppData.State, user_id: string): DatabaseT.User | null {
     return state?.user_data_dictionary?.[user_id] ?? null;
@@ -12,11 +13,11 @@ export function userDataSelector(state: AppData.State, user_id: string): Databas
 
 export function useUserData(user_id: string) {
     const is_session_ready = useIsSessionReady();
-    const dispatch = useDispatch();
-    const user_data = useSelector((state: AppData.State) => userDataSelector(state, user_id));
+    const dispatch = useAppDispatch();
+    const user_data = useAppSelector(state => userDataSelector(state, user_id));
 
     if (is_session_ready && user_data === null) {
-        dispatch(makeAction("USER_DATA_REQUEST", user_id));
+        dispatch("USER_DATA_REQUEST", user_id);
     }
 
     return user_data;

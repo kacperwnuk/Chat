@@ -1,4 +1,4 @@
-import type {MessageContent} from "./types";
+import type {HumanGender, MessageContent} from "./types";
 
 declare namespace DatabaseT {
 
@@ -14,7 +14,7 @@ declare namespace DatabaseT {
         address: string
         address_data: any
         deleted: boolean
-        gender: string
+        gender: HumanGender
         email: string
     }
 
@@ -35,7 +35,6 @@ declare namespace DatabaseT {
     }
 
     interface Message extends MessageKey {
-        input_time: string
         version: string
         content: MessageContent
         session_id: string

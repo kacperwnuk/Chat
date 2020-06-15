@@ -5,7 +5,7 @@ import socket_io from "socket.io";
 import About from "./About";
 import bodyParser from "body-parser";
 import DatabaseCon from "./DatabaseCon";
-import env from "./env";
+import back_env from "./back_env";
 import BrokerCon from "./BrokerCon";
 import {makeLogger} from "../../share/logger";
 
@@ -17,23 +17,23 @@ export let databaseUser: DatabaseCon;
 export let databaseMain: DatabaseCon;
 export let redisBroker: BrokerCon;
 
+export async function makeDatabaseCon() {
+    databaseUser = new DatabaseCon(back_env.RSO_DB_USER);
+    databaseMain = new DatabaseCon(back_env.RSO_DB_MAIN);
+    redisBroker = new BrokerCon(back_env.RSO_REDIS);
+}
 
-export async function makeServer(args: {
-    port: number
-}): Promise<number> {
+export async function makeServer(): Promise<void> {
     const makeServerLogger = makeLogger("makeServer");
 
-    makeServerLogger.info("start")
+    makeServerLogger.info("starting ...")
 
     // łączenia z bazą
-    databaseUser = new DatabaseCon(env.database.user);
-    databaseMain = new DatabaseCon(env.database.main);
-    redisBroker = new BrokerCon(env.database.redis);
+    await makeDatabaseCon();
 
     app = express();
 
     //https://stackoverflow.com/questions/5710358/how-to-retrieve-post-query-parameters
-
 
     // to support URL-encoded bodies
     app.use(bodyParser.urlencoded({
@@ -46,7 +46,6 @@ export async function makeServer(args: {
     // enable CORS
     app.use(cors());
 
-
     server = new http.Server(app);
     io = socket_io(server);
 
@@ -54,9 +53,8 @@ export async function makeServer(args: {
         res.json(About);
     });
 
-    server.listen(args.port);
+    server.listen(back_env.RSO_PORT);
+    makeServerLogger.info(`listening on port ${back_env.RSO_PORT}`)
 
-    makeServerLogger.info("end")
-
-    return args.port;
+    makeServerLogger.info("finished")
 }

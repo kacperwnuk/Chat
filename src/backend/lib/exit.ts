@@ -10,9 +10,9 @@ interface ExitDictionary {
 }
 
 export const EXIT_TYPE = {
-    ENV_FILE: {
+    WRONG_ENV: {
         code: 1,
-        msg: 'Brak lub uszkodzony plik konfiguracyjny.'
+        msg: 'Złe zmienne środowiskowe.'
     }
 };
 

@@ -8,9 +8,7 @@ const nodeExternals = require("webpack-node-externals");
 const serverConfig = {
     target: "node",
     entry: {
-        auth: "./src/backend/auth",
-        session: "./src/backend/session",
-        cdn: "./src/backend/cdn"
+        index: "./src/backend/index.ts",
     },
     output: {
         filename: "[name].js",
@@ -32,7 +30,7 @@ const serverConfig = {
 const clientConfig = {
     target: "web",
     entry: {
-        main: "./src/frontend/index.tsx"
+        index: "./src/frontend/index.tsx"
     },
     output: {
         filename: "[name].js",
@@ -55,9 +53,9 @@ const clientConfig = {
         new HtmlWebpackPlugin({
             title: "ChatRSO",
             filename: "index.html",
-            chunks: ["main"],
-        }),
-        new webpack.EnvironmentPlugin(["NODE_ENV", "DEBUG"])
+            template: "src/frontend/index.ejs",
+            chunks: ["index"],
+        })
     ]
 };
 

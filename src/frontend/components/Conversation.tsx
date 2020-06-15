@@ -9,6 +9,9 @@ import useWindowSize from "../hooks/useWindowSize";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import UserDisplay from "./UserDisplay";
+import Button from "@material-ui/core/Button";
+import {makeGetHistoricalDataAction, useMessagesByConversationId} from "../redux/reducers/messages";
+import {useDispatch} from "react-redux";
 
 
 const useStyle = makeStyles(theme => ({
@@ -21,18 +24,27 @@ const useStyle = makeStyles(theme => ({
         boxSizing: "border-box",
         paddingBottom: theme.spacing(1.5),
         bottom: 0,
+        backgroundColor: "white",
     },
     user_avatar: {
         marginRight: theme.spacing(2),
     },
     title: {
         flexGrow: 1,
+    },
+    buttonAlign:{
+        textAlign: "center",
+    },
+    list: {
+        overflowY: "scroll",
+        marginBottom: 10,
     }
+
+
 }));
 
 
 export default function Conversation(props: {
-    display: boolean,
     conversationId: string
 }) {
 
@@ -42,7 +54,12 @@ export default function Conversation(props: {
     const window_size = useWindowSize();
     // z uwagi na to, że id konwersacji jest tożsame z id użytkownika ...
     const user_data = useUserData(props.conversationId);
+    const dispatch = useDispatch();
+    const messages = useMessagesByConversationId(props.conversationId);
 
+    function handleClick() {
+        dispatch(makeGetHistoricalDataAction(props.conversationId, messages.length));
+    }
 
     // zmiana szerokości elementu tworzenia wiadomości
     React.useEffect(() => {
@@ -52,14 +69,19 @@ export default function Conversation(props: {
     }, [root_ref, composer_ref, window_size]);
 
 
-    return <div style={{display: props.display ? "block" : "none"}} ref={root_ref}>
+    return <div ref={root_ref}>
         <Toolbar component={Paper} className={classes.header}>
             <UserAvatar userId={user_data?.user_id} className={classes.user_avatar}/>
             <Typography variant="h6" className={classes.title}>
                 <UserDisplay user={user_data}/>
             </Typography>
         </Toolbar>
-        <MessageList conversationId={props.conversationId}/>
+        <div className={classes.buttonAlign}>
+            <Button variant="contained" color="primary" onClick={handleClick}> Wczytaj poprzednie wiadomości </Button>
+        </div>
+        <div className={classes.list}>
+            <MessageList conversationId={props.conversationId}/>
+        </div>
         <div className={classes.composer} ref={composer_ref}>
             <MessageComposer conversationId={props.conversationId}/>
         </div>

@@ -1,0 +1,59 @@
+# Generator adresów
+# https://www.fakenamegenerator.com/gen-random-pl-pl.php
+
+command: addUser
+argument:
+  username: k.wnuk
+  email: email3@example.com
+  gender: male
+  name_family: Wnuk
+  name_given: Kacper
+  name_middle:
+  name_prefix:
+  name_suffix:
+  address: ul. Ceglana 98
+  deleted: false
+  password: kacper
+---
+command: addUser
+argument:
+  username: k.najda
+  email: email4@example.com
+  gender: male
+  name_family: Najda
+  name_given: Krzysztof
+  name_middle:
+  name_prefix:
+  name_suffix:
+  address: ul. Świętopełka 147
+  deleted: false
+  password: krzysztof
+---
+command: addUser
+argument:
+  username: m.nawrot
+  email: email5@example.com
+  gender: male
+  name_family: Nawrot
+  name_given: Mateusz
+  name_middle:
+  name_prefix:
+  name_suffix:
+  address: ul. Kurantowa 92
+  address_data: {}
+  deleted: false
+  password: mateusz
+---
+command: addUser
+argument:
+  username: m.derdak
+  email: email6@example.com
+  gender: male
+  name_family: Derdak
+  name_given: Michał
+  name_middle:
+  name_prefix:
+  name_suffix:
+  address: ul. Księdza Łazarskiego 75
+  deleted: false
+  password: michal

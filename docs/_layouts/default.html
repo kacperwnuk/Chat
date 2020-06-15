@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html lang="pl-PL">
+
+<head>
+
+    <title>RSO/Chat - {{ page.title }}</title>
+    <meta charset="UTF-8">
+
+    <style>
+        header {
+            border-bottom: 1px solid black;
+        }
+
+        #main {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #left {
+            min-width: 250px;
+            border-right: 1px solid black;
+        }
+
+        #center {
+            flex-grow: 1;
+        }
+
+        #center main {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        #center img {
+            max-width: 750px;
+        }
+
+        .video_wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+        }
+
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div id="page">
+
+    <header>
+        <h1>RSO / Chat / {{ page.title }} </h1>
+    </header>
+
+    <div id="main">
+
+        <div id="left">
+
+            <nav>
+                <h1>Nawigacja</h1>
+                <ul>
+                    <li>
+                        <a href=".">Strona Domowa</a>
+                    </li>
+                    {% for page in site.pages %}
+                    {% if (page.title | size > 0) and (page.url != '/') %}
+                    <li>
+                        <a href=".{{ page.url }}">{{ page.title }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
+
+            <div>
+                <h1>Autorzy</h1>
+                <ul>
+                    {% for author in site.data.authors %}
+                    <li>
+                        {{ author.name }}<br/>
+                        <small>{{ author.job }}</small>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div>
+                <h1>Linki</h1>
+                <ul>
+                    {% for link in site.data.links %}
+                    <li>
+                        <a href="{{ link.href }}">{{ link.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+
+        <div id="center">
+            <main>
+                <h1>{{ page.title }}</h1>
+
+                {{ content }}
+            </main>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,6 +1,6 @@
-import DatabaseT from "./DatabaseT";
-import {MessagePrototypeData, SessionAuthData} from "./types";
-import AppData from "../frontend/redux/AppData";
+import type DatabaseT from "./DatabaseT";
+import type {HumanGender, MessagePrototypeData, SessionAuthData, UserStatus} from "./types";
+import type AppData from "../frontend/redux/AppData";
 
 
 /**
@@ -8,6 +8,7 @@ import AppData from "../frontend/redux/AppData";
  */
 export interface AuthMessagingSchema {
     "auth": (login_data: BasicLoginData) => AppData.CredentialsData
+    "registration": (registration_data: RegistrationData) => AppData.CredentialsData | null
 }
 
 /**
@@ -21,7 +22,9 @@ export interface SessionMessagingSchemaByClient {
 
     "getMyContacts": () => string[]
     "getUserData": (user_id: string) => DatabaseT.User
+    "getUserStatus": (user_id: string) => UserStatus
     "makeNewContact": (user_id: string) => void
+    "getHistoricalData": (conversation_id: string, offset: number) => DatabaseT.Message[]
 }
 
 /**
@@ -32,6 +35,15 @@ export interface SessionMessagingSchemaByServer {
     "newContact": (user_id: string) => void
 }
 
+export interface AdminMessagingSchema {
+    getUser(args: { user_id: string }): DatabaseT.User
+
+    getUser(args: { email: string }): DatabaseT.User
+
+    getUser(args: { username: string }): DatabaseT.User
+
+    addUser(args: RegistrationData): DatabaseT.User
+}
 
 /**
  * Wszystkie komunikaty muszą być zwracać taki obiekt, który odpowiada za informowanie o błędach
@@ -44,4 +56,22 @@ export interface SocketMiddlewareReturn<T = any> {
 export interface BasicLoginData {
     username: string
     password: string
+}
+
+export interface HistoricalMessagesData {
+    conversation_id: string
+    offset: number
+}
+
+export interface RegistrationData {
+    username: string
+    password: string
+    email: string
+    gender: HumanGender
+    name_family: string
+    name_given: string
+    name_middle: string
+    name_prefix: string
+    name_suffix: string
+    address: string
 }

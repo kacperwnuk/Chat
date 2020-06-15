@@ -8,11 +8,11 @@ SET check_function_bodies = false;
 -- ddl-end --
 
 -- object: "backend-server" | type: ROLE --
-DROP ROLE IF EXISTS "backend-server";
-CREATE ROLE "backend-server" WITH 
-	INHERIT
-	LOGIN
-	ENCRYPTED PASSWORD 'a6a09838afff6c0c9046904dd3fc2f86';
+-- DROP ROLE IF EXISTS "backend-server";
+--CREATE ROLE "backend-server" WITH
+--	INHERIT
+--	LOGIN
+--	ENCRYPTED PASSWORD '********';
 -- ddl-end --
 
 
@@ -110,12 +110,7 @@ ON DELETE SET NULL ON UPDATE CASCADE;
 CREATE VIEW public.active_sessions
 AS 
 
-SELECT sessions.input_time,
-    sessions.version,
-    sessions.server_address,
-    sessions.args,
-    sessions.user_id,
-    sessions.session_id
+SELECT *
    FROM sessions
   WHERE (sessions.input_time > (CURRENT_TIMESTAMP - '00:02:00'::interval));
 -- ddl-end --
@@ -168,27 +163,33 @@ CREATE TABLE public.user_contacts (
 -- ALTER TABLE public.user_contacts OWNER TO postgres;
 -- ddl-end --
 
--- object: grant_fc3257dbe6 | type: PERMISSION --
+-- object: grant_224c0a07cc | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.messages
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_2150bb91de | type: PERMISSION --
+-- object: grant_67a2810770 | type: PERMISSION --
 GRANT SELECT,INSERT
    ON TABLE public.sessions
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_18419b0233 | type: PERMISSION --
+-- object: grant_9ada2e6936 | type: PERMISSION --
 GRANT SELECT,INSERT,UPDATE,DELETE
    ON TABLE public.session_events
    TO "backend-server";
 -- ddl-end --
 
--- object: grant_dd72af1ee0 | type: PERMISSION --
+-- object: grant_42b286149b | type: PERMISSION --
 GRANT SELECT,INSERT
    ON TABLE public.server_journal
+   TO "backend-server";
+-- ddl-end --
+
+-- object: grant_bc4a95006b | type: PERMISSION --
+GRANT SELECT
+   ON TABLE public.active_sessions
    TO "backend-server";
 -- ddl-end --
 
