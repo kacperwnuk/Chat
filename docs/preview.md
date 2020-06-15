@@ -10,7 +10,7 @@ Nowi użytkownicy mają możliwość zarejestrowania się poprzez formularz reje
 
 Jako Panel administracyjny użyto serwera ssh. Do serwera przesyłane są pliki .yml zawierające dane zapytania (przykładowo stworzenia nowych użytkowników). Serwer przetwarza dane i zwraca wynik zapytania.
 
-![Zrzut ekranu](assets/screen4.jpg)
+![Zrzut ekranu](assets/screen4.png)
 
 ![Zrzut ekranu](assets/screen1.jpg)
 
