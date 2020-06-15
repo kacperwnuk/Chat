@@ -6,12 +6,7 @@ title: "Architektura"
 ## Opis ogólny
 
 
-Chat składający się z trzech serwerów: logowania, sesji i cdn.
-Architektura będzie umożliwiała użytkownikowi zalogowanie się na swój profil za pomocą kilku metod logowania.
-
-Na początku łączy się z serwerem cdn, aby pobrać frontend, następnie do serwera logowania, przesyła poświadczenia, a ten zwraca mu adres serwera sesji z którym ma się połączyć.
-Dzięki temu będzie możliwość wielokrotnego łączenia się na to samo konto, np. z różnych urządzeń.
-Crash jednego serwera nie wpłynie na działanie pozostałych, już uruchomionych.
+Chat składa się z 4 mikroserwisów. Pierwszy mikroserwis odpowiada za logowanie, kolejny za utrzymanie sesji, a kolejny jest serwerem CDN. Czwarty mikroserwis, to serwer administratora. Klient na początku łączy się z serwerem CDN, aby pobrać frontend, następnie przesyła poświadczenia do serwera logowania, a ten zwraca mu adres serwera sesji, z którym ma się połączyć. Dzięki temu będzie możliwość wielokrotnego łączenia się na to samo konto, np. z różnych urządzeń. Crash jednego serwera nie wpłynie na działanie pozostałych, już uruchomionych. W systemie występują dwie bazy danych. Pierwsza z nich (PostgresDB-User) zawiera wszystkie dane dotyczące użytkowników- dane przekazane przez nich oraz dane logowania. Baza ta podlega pod RODO. Dane dotyczące logowania- obecnie hasła są przechowywane w osobnej tabeli niż reszta danych użytkowników, co umożliwia rozbudowanie platformy o zewnętrzne platformy uwierzytelniania. Drugą bazą (PostgresDB-Main) jest baza zawierająca wysłane wiadomości oraz aktywne i nieaktywne sesje. 
 
 
 ![Architektura](assets/architecture.png)
@@ -138,6 +133,8 @@ Serwer ten odpowiada za komunikacje z użytkownikiem, przyjmowaniem nowych wiado
 Użytkownik łączy się z serwerem i podaje klucz sesji.
 Komunikacja z serwerem sesji jest opisana w pliku `./src/share/MessagingSchema.ts` 
 
+### Serwer Admin
+W celu obsługi Panelu administracyjnego użyto serwera ssh. Do serwera przesyłane są pliki .yml zawierające dane zapytania (przykładowo stworzenia nowych użytkowników). Serwer przetwarza dane i zwraca wynik zapytania.
 
 ## Diagramy sekwencji
 
