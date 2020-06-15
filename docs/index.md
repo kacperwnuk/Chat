@@ -5,7 +5,7 @@ title: "Strona domowa"
 
 <div class="video_wrapper">
 <iframe 
-    src="https://www.youtube.com/embed/hFOjz7BhsPo"
+    src="https://www.youtube.com/embed/lGUVPyG218U"
     frameborder="0"
     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen></iframe>
