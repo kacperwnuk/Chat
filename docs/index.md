@@ -3,6 +3,14 @@ layout: default
 title: "Strona domowa"
 ---
 
+<div class="video_wrapper">
+<iframe 
+    src="https://www.youtube.com/embed/hFOjz7BhsPo"
+    frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen></iframe>
+</div>
+
 Projekt zakłada wykonanie systemu komunikacji w postaci chatu.
 Użytkownik będzie miał dostęp do listy kontaktów oraz do archiwalnych wiadomości.
 Użytkownicy będą się logować do systemu poprzez zewnętrzne uwierzytelnianie np. Google. 

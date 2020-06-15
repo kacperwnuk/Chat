@@ -23,7 +23,6 @@ declare namespace AppData {
         user_data_dictionary?: Dictionary<DatabaseT.User>
         unread_messages?: Dictionary<DatabaseT.Message>
         conversation_list?: Dictionary<Conversation>
-        current_conversation_id?: string
 
         next_notification_id?: number
         notification_dictionary?: Dictionary<Notification>

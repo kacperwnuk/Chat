@@ -1,11 +1,14 @@
 import addUser from "./cmd/addUser";
 import getUser from "./cmd/getUser";
+import type {AdminMessagingSchema} from "../../share/MessagingSchema";
 
 const commands: {
-    [key: string]: (args: any) => Promise<any>
+    [Key in keyof AdminMessagingSchema]: (
+        ...args: Parameters<AdminMessagingSchema[Key]>
+    ) => Promise<ReturnType<AdminMessagingSchema[Key]>>
 } = {
-    "addUser": addUser,
-    "getUser": getUser
+    addUser,
+    getUser
 }
 
 export default commands;

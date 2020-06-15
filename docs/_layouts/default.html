@@ -34,6 +34,19 @@
             max-width: 750px;
         }
 
+        .video_wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+        }
+
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
     </style>
 
 </head>
@@ -53,12 +66,15 @@
             <nav>
                 <h1>Nawigacja</h1>
                 <ul>
+                    <li>
+                        <a href=".">Strona Domowa</a>
+                    </li>
                     {% for page in site.pages %}
-                        {% if page.platform != "" %}
-                        <li>
-                            <a href="{{ page.url | remove_first:'/' }}">{{ page.title }}</a>
-                        </li>
-                        {% endif %}
+                    {% if page.title | size > 0 and page.url != '/' %}
+                    <li>
+                        <a href=".{{ page.url }}">{{ page.title }}</a>
+                    </li>
+                    {% endif %}
                     {% endfor %}
                 </ul>
             </nav>

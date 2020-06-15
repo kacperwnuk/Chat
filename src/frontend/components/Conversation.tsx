@@ -45,7 +45,6 @@ const useStyle = makeStyles(theme => ({
 
 
 export default function Conversation(props: {
-    display: boolean,
     conversationId: string
 }) {
 
@@ -70,7 +69,7 @@ export default function Conversation(props: {
     }, [root_ref, composer_ref, window_size]);
 
 
-    return <div style={{display: props.display ? "block" : "none"}} ref={root_ref}>
+    return <div ref={root_ref}>
         <Toolbar component={Paper} className={classes.header}>
             <UserAvatar userId={user_data?.user_id} className={classes.user_avatar}/>
             <Typography variant="h6" className={classes.title}>

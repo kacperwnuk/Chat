@@ -67,22 +67,12 @@ Ta baza podlega pod RODO.
 ![Schemat bazy danych](assets/db-user-model.png)
  
 
-#### Tabela ludzi:
+#### Tabela ludzi
 
 Tabela zawiera podstawowe informacje o użytkowniku.
 Zawiera również flagę oznaczającą usunięcie użytkownika.
 
- - `id:uuid` - id użytkownika
- - `nation:text` - informacja o nacji(kulturze), czy ma tekst od prawej do lewej itp.
- - `name_family:text` - składowa imienia
- - `name_given:text` - składowa imienia
- - `name_middle:text` - składowa imienia
- - `name_prefix:text` - składowa imienia
- - `name_suffix:text` - składowa imienia
- - `address:text` - adres
- - `deleted:boolean=false` - flaga usunięcia konta
-
-Wszystkie, za wyjątkiem `id` i `deleted` mogą być null, co będzie oznaczało, że konto jest usunięte
+Wszystkie, z wyjątkiem `id` i `deleted` mogą być null, co będzie oznaczało, że konto jest usunięte
  
 #### Tabele dla metod logowania
 
@@ -114,10 +104,6 @@ W dalszej części będę adresy URL pisał jakby miały GET, ale będzie się t
 
 Wszystkie serwery komunikacji będą stały na [`expressjs`](https://expressjs.com/) oraz socketIO do subskrypcji danych.
 
-### Komunikacja
-
-Komunikacja `serwer:serwer` i `klient:serwer` wygląda następująco.
-
 ### Serwer CDN
 
 Serwer przechowuje i udostępnia pliki takie jak: html, js, css, png, json.
@@ -137,6 +123,10 @@ Komunikacja z logowania sesji jest opisana w pliku `./src/share/MessagingSchema.
 Serwer ten odpowiada za komunikacje z użytkownikiem, przyjmowaniem nowych wiadomości i odpowiadanie na zapytania użytkownika.
 Użytkownik łączy się z serwerem i podaje klucz sesji.
 Komunikacja z serwerem sesji jest opisana w pliku `./src/share/MessagingSchema.ts` 
+
+### Serwer administracyjny
+
+Serwer to wykonywania czynności administracyjnych.
 
 
 ## Diagramy sekwencji

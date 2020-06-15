@@ -38,6 +38,16 @@ export default {
         name: "Zespół E",
         suffix: "."
     },
+    profile: {
+        username_label: "Nazwa użytkownika",
+        name_family_label: "Nazwisko",
+        name_given_label: "Imię",
+        name_middle_label: "Drugie imię",
+        name_prefix_label: "Prefiks",
+        name_suffix_label: "Suffiks",
+        address_label: "Adres",
+        empty: "Brak"
+    },
     error_msg: {
         credentials_fail: "Błędny użytkownik/hasło",
         message_send_fail: "Błąd wysyłania wiadomości"

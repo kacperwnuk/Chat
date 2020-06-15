@@ -6,7 +6,7 @@ const package_json = require("./../../../package");
 const About = {
     instance_id: uuid(),
     version: package_json.version,
-    server_type: back_env.RSO_SERVER
+    rso_server: back_env.RSO_SERVER
 };
 
 export default About;

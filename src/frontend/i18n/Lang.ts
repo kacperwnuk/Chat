@@ -10,6 +10,7 @@ export default interface Lang {
     login_screen: {
         sign_invite: string,
         email_label: string
+        username_label: string
         password_label: string
         remember_me: string
         submit: string
@@ -37,6 +38,16 @@ export default interface Lang {
         name: string
         suffix: string
     },
+    profile: {
+        username_label: string
+        name_family_label: string
+        name_given_label: string
+        name_middle_label: string
+        name_prefix_label: string
+        name_suffix_label: string
+        address_label: string
+        empty: string
+    }
     error_msg: {
         credentials_fail: string
         message_send_fail: string

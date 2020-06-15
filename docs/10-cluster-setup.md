@@ -69,8 +69,30 @@ Jeżeli nie masz cierpliwości do wpisywania komend, przedstawiam małego haka:
 sleep 2 && xdotool type 'CMD' 
 ```
 
-
 ## Maszyny Ubuntu 20.04
+
+Zainstaluj system Ubuntu wraz z oprogramowaniem `OpenSSH`.
+
+Zainstaluj `docker`:
+```bash
+apt-get install docker.io
+systemctl enable --now docker
+```
+
+Zainstaluj `kubernetes`:
+```bash
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
+apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+apt-get install kubeadm kubelet kubectl
+apt-mark hold kubeadm kubelet kubectl
+kubeadm version
+```
+
+Wyłącz `swap`:
+```bash
+swapoff –a
+nano /etc/fstab
+```
 
 ## Kubernetes
 
@@ -156,7 +178,6 @@ Uruchom proxy
 user@master $ kubectl proxy
 ```
 
-
 Udaj się na stronę:
 
 [`http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login`](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login)
@@ -199,6 +220,11 @@ services:
       - /docker-registry/data:/var/lib/registry
       - /docker-registry/certs:/certs
       - /docker-registry/auth:/auth
+```
+
+Uruchom `docker-compose`:
+```bash
+docker-compose -f /docker-registry/docker-compose.yml --project-name rso-registry up
 ```
 
 Na każdym komputerze zaloguj się do repozytorium:

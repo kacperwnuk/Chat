@@ -6,7 +6,7 @@ export default function (props: {
     children: React.ReactNode
     to: string
 }) {
-    return <Link component={RouterLink} to={props.to}>
+    return <Link component={RouterLink} to={props.to} style={{textDecoration: 'none'}}>
         {props.children}
     </Link>
 }
